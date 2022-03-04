@@ -1,0 +1,3 @@
+[submodule "game-ui"]
+	path = game-ui
+	url = https://github.com/yfatima/letter-boxed-game
