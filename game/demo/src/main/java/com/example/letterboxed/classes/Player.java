@@ -1,10 +1,13 @@
 package com.example.letterboxed.classes;
 
+import java.util.List;
+
 public class Player {
 
     private String userName;
     private String email;
     private String password;
+    private List<String> wordList;
 
     public Player() {}
 
@@ -12,6 +15,7 @@ public class Player {
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.wordList = null;
     }
 
     public String getUserName() {
@@ -38,5 +42,16 @@ public class Player {
         this.password = password;
     }
 
+    public List<String> getWordList() {
+        return wordList;
+    }
+
+    public void setWordList(List<String> wordList) {
+        this.wordList = wordList;
+    }
+
+    public void addWord(String word) {
+        this.wordList.add(word);
+    }
     
 }

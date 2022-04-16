@@ -7,21 +7,10 @@ public class Game {
     private Player P1;
     private Player P2;
     private String gameStatus;
-    private Integer boxHeight;
-    private Integer boxWidth;
     private List<String> letters;
-    private List<String> wordUsed;
-
+    
     public Game(){
 
-    }
-
-    public Game(String id, Player P1, Player P2,  String gameStatus, Integer boxWidth, Integer boxHeight, List<String> letters) {
-        this.id = id;
-        this.boxWidth = boxWidth;
-        this.boxHeight = boxHeight;
-        this.letters = letters;
-        this.gameStatus = gameStatus;
     }
 
     public void setId(String id) {
@@ -31,22 +20,6 @@ public class Game {
     public String getId() {
         return id; 
     }
-
-    public void setBoxWidth(Integer width) {
-        this.boxWidth = width;
-    }
-
-    public Integer getBoxWidth() {
-        return boxWidth;
-    }
-
-    public void setBoxHeight(Integer height) {
-        this.boxHeight = height;
-    }
-
-    public Integer getBoxHeight() {
-        return boxHeight;
-    }
     
     public void setLetters(List<String> letters) {
         this.letters = letters;
@@ -54,14 +27,6 @@ public class Game {
     
     public List<String> getLetters() {
         return letters;
-    }
-
-    public List<String> getWordUsed() {
-        return wordUsed;
-    }
-
-    public void setWordUsed(List<String> wordUsed) {
-        this.wordUsed = wordUsed;
     }
 
     public Player getP1() {
@@ -82,6 +47,10 @@ public class Game {
 
     public String getGameStatus() {
         return gameStatus;
+    }
+
+    public void setGameStatus(String status) {
+        this.gameStatus = status;
     }
 
     

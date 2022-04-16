@@ -1,0 +1,13 @@
+[
+    {
+        "id": "game1",
+        "P1": "none",
+        "P2": "none",
+        "gamestatus": "inactive",
+        "letters" : [
+            "L", "J", "K", "N", "Q", "I", "B", "Z", "A", "Z", "T", "O"
+        ],
+        "wordsUsed" : []
+
+    }
+]

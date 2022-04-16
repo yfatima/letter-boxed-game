@@ -1,32 +1,38 @@
 package com.example.letterboxed.services;
 
 
-import com.example.letterboxed.classes.*;
-import com.example.letterboxed.repository.MoveRepository;
+import java.io.File;
+import java.io.FileWriter;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.letterboxed.classes.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SequenceWriter;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class MoveService {
 
-    private final MoveRepository moveRepository;
+    public MoveService() {}
 
-
-    @Autowired
-    public MoveService(MoveRepository moveRepository) {
-        this.moveRepository = moveRepository;
-    }
-
-    public Move createMove(Game game, Player player, Move moveDTO) {
+    public Move createMove(String gameId, String playerUsername, Move moveDTO) {
         Move move = new Move();
         move.setWord(moveDTO.getWord());
-        move.setPlayer(player);
-        //move.setGame(optional);
+        move.setPlayerUsername(playerUsername);
+        move.setGameId(gameId);
 
-        moveRepository.save(move);
+        try {
+            File file = new File("../data/move.json");
+            FileWriter fileWriter = new FileWriter(file, true);
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
+            seqWriter.write(move);
+            seqWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         return move;
     }

@@ -1,6 +1,4 @@
 package com.example.letterboxed.Controller;
-
-import com.example.letterboxed.DTO.GameDTO;
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.services.GameService;
 import com.example.letterboxed.services.PlayerService;
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/game")
@@ -37,9 +34,9 @@ public class GameController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Game createNewGame(@RequestBody GameDTO gameDTO) {
+    public Game createNewGame(@RequestBody int gameNumber) {
 
-        Game game = gameService.createNewGame(playerService.getLoggedUser(), gameDTO);
+        Game game = gameService.createNewGame(playerService.getLoggedUser(), gameNumber);
         httpSession.setAttribute("gameId", game.getId());
 
         logger.info("new game id: " + httpSession.getAttribute("gameId")+ " stored in session" );
@@ -48,8 +45,8 @@ public class GameController {
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public Game joinGame(@RequestBody GameDTO gameDTO) {
-        Game game = gameService.joinGame(playerService.getLoggedUser(), gameDTO);
+    public Game joinGame(@RequestBody int gameNumber) {
+        Game game = gameService.joinGame(playerService.getLoggedUser(), gameNumber);
         return game;
     }
 
@@ -61,9 +58,7 @@ public class GameController {
 
     @RequestMapping(value = "/{id}")
     public Game getGameProperties(@PathVariable String id) {
-
         httpSession.setAttribute("gameId", id);
-
         return gameService.getGame(id);
     }
 

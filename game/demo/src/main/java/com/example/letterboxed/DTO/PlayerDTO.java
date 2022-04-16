@@ -1,11 +1,5 @@
 package com.example.letterboxed.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
-
-
-@Getter
-@Setter
 public class PlayerDTO {
 
     private String userName; 

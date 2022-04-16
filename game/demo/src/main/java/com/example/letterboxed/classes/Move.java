@@ -2,40 +2,40 @@ package com.example.letterboxed.classes;
 
 public class Move {
 
-    private Game game;
-    private Player player;
+    private String gameId;
+    private String playerUsername;
     private String word;
     
     public Move() {}
 
-    public Move (Game game, Player player, String word) {
-        this.game = game;
-        this.player = player;
+    public Move (String gameId, String playerUsername, String word) {
+        this.gameId = gameId;
+        this.playerUsername = playerUsername;
         this.word = word;
     }
 
-    public Game getGame() {
-        return game;
+    public String getGameId() {
+        return this.gameId;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGameId(String id) {
+        this.gameId = id;
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getPlayer() {
+        return this.playerUsername;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayerUsername(String username) {
+        this.playerUsername = username;
     }
 
     public String getWord() {
-        return word;
+        return this.word;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setWord(String string) {
+        this.word = string;
     }
 
     

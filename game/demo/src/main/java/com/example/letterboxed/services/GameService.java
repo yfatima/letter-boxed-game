@@ -1,53 +1,128 @@
 package com.example.letterboxed.services;
 
+import java.io.File;
 import java.util.List;
 
-import com.example.letterboxed.DTO.GameDTO;
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
-import com.example.letterboxed.repository.GameRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GameService {
     private Game g1 = new Game();
 
-    private final GameRepository gameRepository;
-
-
-    @Autowired
-    public GameService(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
+    public GameService() {
     }
 
-    public Game createNewGame(Player player, GameDTO gameDTO) {
+    public Game createNewGame(Player player, int gameNumber) {
         Game game = new Game();
         game.setP1(player);
+        game.setId("game" + gameNumber);
+        game.setGameStatus("inactive");
 
-        gameRepository.save(game);
+        // find the game in games json file and add player 1 
+        // then create a new json file for the game
+        File file = new File("../data/games.json");
+        File file2 = new File("../data/game2.json");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            List<Game> games = objectMapper.readValue(file, new TypeReference<List<Game>>() {});
+            for (Game game2 : games) {
+                if (game.getId() == game2.getId()) {
+                    game.setLetters(game2.getLetters());
+                }
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        try {
+            objectMapper2.writeValue(file2, game);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return game;
     }
+
     public Game getG1() {
         return g1;
     }
 
-    public Game joinGame(Player player, GameDTO gameDTO) {
-        Game game =  getGame(gameDTO.getId());
-        game.setP2(player);
-        gameRepository.save(game);
+    public Game joinGame(Player player, int gameNumber) {
+        // find the game in json file and add player 2
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        File file = new File("../data/game2.json");
+
+        Game game = null;
+        try {
+            game = objectMapper.readValue(file, Game.class);
+            if ("game" + gameNumber == game.getId() && game.getP1() != player) {
+                game.setP2(player);
+                game.setGameStatus("active");
+                objectMapper.writeValue(file, game);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return game;
 
     }
 
     public Game getGame(String id) {
-        return gameRepository.findById(id);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("../data/game2.json");
+
+        Game game = null;
+        try {
+            game = objectMapper.readValue(file, Game.class);
+            if (id == game.getId()) {
+                return game;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return game;
+
     }
 
     public List<Game> getGames() {
-        return gameRepository.getGames();
+        File file = new File("../data/games.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Game> games = null;
+        try {
+            games = objectMapper.readValue(file, new TypeReference<List<Game>>() {});
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return games;
+    }
+
+    public boolean updateGameStatus(String nextPlayerUsername, String id) {
+        Game game = getGame(id);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        File file = new File("../data/game2.json");
+        try {
+            game = objectMapper.readValue(file, Game.class);
+            if (game.getId() == id) {
+                game.setGameStatus(nextPlayerUsername);
+                objectMapper.writeValue(file, game);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
-
