@@ -8,6 +8,7 @@ public class Player {
     private String email;
     private String password;
     private List<String> wordList;
+    private Integer score;
 
     public Player() {}
 
@@ -16,6 +17,14 @@ public class Player {
         this.email = email;
         this.password = password;
         this.wordList = null;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public String getUserName() {

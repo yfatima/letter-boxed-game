@@ -8,10 +8,21 @@ public class Game {
     private Player P2;
     private String gameStatus;
     private List<String> letters;
+    private Integer winScore;
     
     public Game(){
 
     }
+
+    public Integer getWinScore() {
+        return winScore;
+    }
+
+
+    public void setWinScore(Integer winScore) {
+        this.winScore = winScore;
+    }
+
 
     public void setId(String id) {
         this.id = id;
