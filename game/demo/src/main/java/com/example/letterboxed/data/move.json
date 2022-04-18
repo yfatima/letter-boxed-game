@@ -1,7 +1,7 @@
 [
     {
-       "game": "game1",
-       "player" : "yfatima",
+       "gameId": "game1",
+       "playerUsername" : "yfatima",
        "word": "none"
     }
 ]

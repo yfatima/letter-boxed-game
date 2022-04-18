@@ -26,3 +26,12 @@ What to turn in for the project
     - why do you believe it's secure (assurance case; most of the report)
 
 
+    Two Players credentials
+
+    username: yfatima
+    password: superwoman
+
+    username: ssmith
+    password: admin
+
+

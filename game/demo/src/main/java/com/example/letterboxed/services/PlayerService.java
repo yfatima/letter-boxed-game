@@ -52,10 +52,11 @@ public class PlayerService {
         List<Player> players = null;
 
         try {
-            File file = new File("../data/players.json");
+            File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
             ObjectMapper objectMapper = new ObjectMapper();
-            players = objectMapper.readValue(file, new TypeReference<List<Player>>() {
-            });
+            players = objectMapper.readValue(file, new TypeReference<List<Player>>() {});
+            System.out.println(players);
+            return players;
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -66,7 +67,8 @@ public class PlayerService {
     public Player getPlayerByUsername(String username) {
         List<Player> players = listPlayers();
         for (Player player2 : players) {
-            if (username == player2.getUserName()) {
+            if (username.equals(player2.getUserName())) {
+                System.out.println(player2.getUserName());
                 return player2;
             }
         }
@@ -75,7 +77,7 @@ public class PlayerService {
 
     public boolean savePlayer(Player player) {
         try {
-            File file = new File("/Users/yumnafatima/Desktop/ISA 681/letter-boxed-game/game/demo/src/main/java/com/example/letterboxed/data/players.json");
+            File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
             FileWriter fileWriter = new FileWriter(file, true);
 
             ObjectMapper mapper = new ObjectMapper();
@@ -119,4 +121,5 @@ public class PlayerService {
         }
         return false;
     }
+
 }

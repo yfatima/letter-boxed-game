@@ -62,6 +62,12 @@ public class GameController {
         return gameService.getGame(id);
     }
 
+    @RequestMapping(value = "/gamestatus", method = RequestMethod.POST)
+    public String getGameStatus(@RequestBody String id) {
+        httpSession.setAttribute("gameId", id);
+        return gameService.getGame(id).getGameStatus();
+    }
+
 
 
 }

@@ -1,0 +1,32 @@
+<div class="content" role="main">
+  
+    <h2>Type your word here!</h2>
+  
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Current Word</mat-label>
+        <input type="text" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+               placeholder="Type any letters that are displayed on the box">
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Please enter a valid word
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('pattern')">
+          Type a word with <strong>5 letters</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  
+  
+    <div><h1>Player Board</h1></div>
+    
+    <canvas id="letteredbox" class="letterbox">
+      
+    </canvas>
+    <canvas id="tutorial" class="dotbox">
+    </canvas>
+  
+    <!-- Footer -->
+    <footer>
+        <!--footer&nbsp;-->
+    </footer>
+</div>

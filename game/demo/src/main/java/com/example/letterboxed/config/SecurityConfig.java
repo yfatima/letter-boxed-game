@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .formLogin()
                      .usernameParameter("username")
                      .passwordParameter("password")
+                     .defaultSuccessUrl("http://localhost:4200/", true)
                 .and()
                     .httpBasic()
                 .and()

@@ -1,4 +1,4 @@
-  :host {
+:host {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 14px;
     color: #333;
@@ -302,3 +302,19 @@
     flex: 1 1 auto;
   }
 
+  canvas.letterbox { 
+    //border: 1px solid black; 
+    width: 700px !important;
+    height: 400px !important;
+    //background-color: #6a9cce;
+    position: relative;
+  }
+
+  canvas.dotbox { 
+    border: 2px solid black; 
+    width: 600px !important;
+    height: 300px !important;
+    background-color: #eaebec;
+    position: absolute;
+    margin-top: 220px;
+}

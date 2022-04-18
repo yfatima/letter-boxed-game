@@ -32,7 +32,7 @@ public class GameService {
         try {
             List<Game> games = objectMapper.readValue(file, new TypeReference<List<Game>>() {});
             for (Game game2 : games) {
-                if (game.getId() == game2.getId()) {
+                if (game.getId().equals(game2.getId())) {
                     game.setLetters(game2.getLetters());
                 }
             }
@@ -43,6 +43,7 @@ public class GameService {
         ObjectMapper objectMapper2 = new ObjectMapper();
         try {
             objectMapper2.writeValue(file2, game);
+            return game;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,12 +60,13 @@ public class GameService {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        File file = new File("../data/game2.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
 
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
-            if ("game" + gameNumber == game.getId() && game.getP1() != player) {
+            String gameid = "game" + gameNumber;
+            if (game.getId().equals(gameid) && game.getP1() != player) {
                 game.setP2(player);
                 game.setGameStatus("active");
                 objectMapper.writeValue(file, game);
@@ -80,12 +82,12 @@ public class GameService {
     public Game getGame(String id) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("../data/game2.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
 
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
-            if (id == game.getId()) {
+            if (game.getId().equals(id)) {
                 return game;
             }
         } catch (Exception e) {
@@ -96,11 +98,12 @@ public class GameService {
     }
 
     public List<Game> getGames() {
-        File file = new File("../data/games.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
         ObjectMapper objectMapper = new ObjectMapper();
         List<Game> games = null;
         try {
             games = objectMapper.readValue(file, new TypeReference<List<Game>>() {});
+            return games;
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -112,10 +115,10 @@ public class GameService {
         Game game = getGame(id);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        File file = new File("../data/game2.json");
+        File file = new File(".game/demo/src/main/java/com/example/letterboxed/data/game.json");
         try {
             game = objectMapper.readValue(file, Game.class);
-            if (game.getId() == id) {
+            if (game.getId().equals(id)) {
                 game.setGameStatus(nextPlayerUsername);
                 objectMapper.writeValue(file, game);
                 return true;
