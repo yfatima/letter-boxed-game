@@ -16,9 +16,11 @@ public class GameLogic {
     public static boolean playerTurn() {
         return false;
     }
-    public boolean valid_move(String word, String gameId){
-        ObjectMapper objectMapper = new ObjectMapper();
 
+    //TODO: NEED TO CHECK WITH DICTIONARY FOR REAL WORDS
+    public static boolean valid_move(String word, String gameId){
+        //check if all letters are in the game
+        ObjectMapper objectMapper = new ObjectMapper();
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
         List <Character> letters=null;
         Game game = null;
@@ -30,16 +32,19 @@ public class GameLogic {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        char[] array = word.toCharArray();
+        char[] array = word.toUpperCase().toCharArray();
         for(char i:array)
         {
             if(!letters.contains(i))
             {
+                System.out.println("Word " + word +" is invalid. ");
                 return false;
             }
         }
-       
-        return false;
+
+
+        
+        return true;
     }
 
 }
