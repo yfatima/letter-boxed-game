@@ -1,9 +1,13 @@
 <div class="content" role="main">
 
+    <h2>Choose a game to play with a friend!</h2>
+
+    <div class="card2">
+        <h2>Game ID Letters Difficulty</h2>
+    </div>
     <!-- Highlight Card -->
-    <div class="card highlight-card " style="text-align: center;">
+    <div class="card highlight-card " style="text-align: center;" *ngFor="let game of typesOfGames" [value]="game">
 
-        <span>{{ appname }} app is running!</span>
-
+        <h3 class="listmargin">{{game.id}} {{game.letters}} {{game.winScore>3?"difficult": "easy"}}</h3> <button mat-raised-button color="basic" (click)="beginGame(game)">{{game.p1Id!="none"?"Join":"Start"}}</button>
     </div>
 </div>

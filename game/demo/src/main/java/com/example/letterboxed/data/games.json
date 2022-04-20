@@ -1,9 +1,9 @@
 [
     {
         "id": "game1",
-        "P1": "none",
-        "P2": "none",
-        "gamestatus": "inactive",
+        "p1Id": "none",
+        "p2Id": "none",
+        "gameStatus": "inactive",
         "letters" : [
             "L", "J", "K", "N", "Q", "I", "B", "Z", "A", "Z", "T", "O"
         ],
@@ -13,9 +13,9 @@
     },
     {
         "id": "game2",
-        "P1": "none",
-        "P2": "none",
-        "gamestatus": "inactive",
+        "p1Id": "none",
+        "p2Id": "none",
+        "gameStatus": "inactive",
         "letters" : [
             "L", "M", "K", "P", "Q", "I", "D", "Z", "A", "X", "T", "O"
         ],

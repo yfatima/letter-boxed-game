@@ -30,5 +30,16 @@ public class Test {
             }
         }
 
+        List<Game> games = null;
+        
+        try {
+            File file2 = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            games = objectMapper.readValue(file2, new TypeReference<List<Game>>() {});
+            System.out.println(games);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
     }
 }

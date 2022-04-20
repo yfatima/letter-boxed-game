@@ -93,6 +93,24 @@
     align-items: center;
     transition: all 0.2s ease-in-out;
     line-height: 24px;
+    text-align: center;
+  }
+
+  .card2 {
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    height: 40px;
+    width: 300px;
+    margin: 0 8px 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+    text-align: center;
   }
 
   .card-container .card:not(:last-child) {
@@ -300,4 +318,8 @@
 
   .example-spacer {
     flex: 1 1 auto;
+  }
+
+  .listmargin {
+    margin: 10px;
   }

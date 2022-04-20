@@ -4,14 +4,32 @@ import java.util.List;
 
 public class Game {
     private String id;
-    private Player P1;
-    private Player P2;
+    private String p1Id;
+    private String p2Id;
     private String gameStatus;
     private List<String> letters;
+    private List<String> wordsUsed;
     private Integer winScore;
     
-    public Game(){
+    public Game(){}
 
+    public Game(String id, String p1Id, String p2Id, String gameStatus, List<String> letters, List<String> wordsUsed,
+            Integer winScore) {
+        this.id = id;
+        this.p1Id = p1Id;
+        this.p2Id = p2Id;
+        this.gameStatus = gameStatus;
+        this.letters = letters;
+        this.wordsUsed = wordsUsed;
+        this.winScore = winScore;
+    }
+
+    public List<String> getWordsUsed() {
+        return wordsUsed;
+    }
+
+    public void setWordsUsed(List<String> wordsUsed) {
+        this.wordsUsed = wordsUsed;
     }
 
     public Integer getWinScore() {
@@ -40,20 +58,20 @@ public class Game {
         return letters;
     }
 
-    public Player getP1() {
-        return P1;
+    public String getP1Id() {
+        return this.p1Id;
     }
 
-    public void setP1(Player p1) {
-        P1 = p1;
+    public void setP1Id(String p1Id) {
+        this.p1Id = p1Id;
     }
 
-    public Player getP2() {
-        return P2;
+    public String getP2Id() {
+        return this.p2Id;
     }
 
-    public void setP2(Player p2) {
-        P2 = p2;
+    public void setP2Id(String P2Id) {
+        this.p2Id = P2Id;
     }
 
     public String getGameStatus() {

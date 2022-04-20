@@ -34,9 +34,9 @@ public class GameController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Game createNewGame(@RequestBody int gameNumber) {
-
-        Game game = gameService.createNewGame(playerService.getLoggedUser(), gameNumber);
+    public Game createNewGame(@RequestBody String gameId) {
+        System.out.println("hellooooooo");
+        Game game = gameService.createNewGame(playerService.getLoggedUser(), gameId);
         httpSession.setAttribute("gameId", game.getId());
 
         logger.info("new game id: " + httpSession.getAttribute("gameId")+ " stored in session" );
@@ -45,13 +45,13 @@ public class GameController {
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public Game joinGame(@RequestBody int gameNumber) {
-        Game game = gameService.joinGame(playerService.getLoggedUser(), gameNumber);
+    public Game joinGame(@RequestBody String gameId) {
+        Game game = gameService.joinGame(playerService.getLoggedUser(), gameId);
         return game;
     }
 
 
-    @RequestMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/list")
     public List<Game> getGames() {
         return gameService.getGames();
     }

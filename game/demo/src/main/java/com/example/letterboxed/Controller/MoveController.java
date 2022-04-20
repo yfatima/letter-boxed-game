@@ -45,10 +45,10 @@ public class MoveController {
         Player currentplayer = playerService.getLoggedUser(); 
         Player otherplayer;
 
-        if (game.getP1() == currentplayer) {
-            otherplayer = game.getP2();
+        if (game.getP1Id() == currentplayer.getUserName()) {
+            otherplayer = playerService.getPlayerByUsername(game.getP2Id());
         } else {
-            otherplayer = game.getP1();
+            otherplayer = playerService.getPlayerByUsername(game.getP1Id());
         }
         List<String> curentplayer_wordlist = currentplayer.getWordList();
         List<String> otherplayer_wordlist = otherplayer.getWordList();

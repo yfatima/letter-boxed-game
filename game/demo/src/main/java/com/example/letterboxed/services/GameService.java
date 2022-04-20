@@ -16,16 +16,16 @@ public class GameService {
     public GameService() {
     }
 
-    public Game createNewGame(Player player, int gameNumber) {
+    public Game createNewGame(Player player, String gameId) {
         Game game = new Game();
-        game.setP1(player);
-        game.setId("game" + gameNumber);
+        game.setP1Id(player.getUserName());
+        game.setId(gameId);
         game.setGameStatus("inactive");
 
         // find the game in games json file and add player 1 
         // then create a new json file for the game
-        File file = new File("../data/games.json");
-        File file2 = new File("../data/game2.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
+        File file2 = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -55,7 +55,7 @@ public class GameService {
         return g1;
     }
 
-    public Game joinGame(Player player, int gameNumber) {
+    public Game joinGame(Player player, String gameId) {
         // find the game in json file and add player 2
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -65,9 +65,8 @@ public class GameService {
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
-            String gameid = "game" + gameNumber;
-            if (game.getId().equals(gameid) && game.getP1() != player) {
-                game.setP2(player);
+            if (game.getId().equals(gameId) && game.getP1Id().equals(player.getUserName())) {
+                game.setP2Id(player.getUserName());
                 game.setGameStatus("active");
                 objectMapper.writeValue(file, game);
             }
