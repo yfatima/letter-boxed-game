@@ -3,16 +3,13 @@ package com.example.letterboxed.services;
 import java.io.File;
 import java.security.SecureRandom;
 import java.util.List;
-import java.io.FileReader;
+
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +22,7 @@ public class GameService {
     }
 
     public Game createNewGame(Player player) {
-
+        System.out.println("Creating new game");
         //create the letters available for the game
         Random random = new SecureRandom();
         Character vowels []= {'A', 'E', 'I', 'O', 'U', 'Y'};
