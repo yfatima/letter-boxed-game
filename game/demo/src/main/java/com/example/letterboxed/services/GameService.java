@@ -24,13 +24,13 @@ public class GameService {
     public GameService() {
     }
 
-    public Game createNewGame(Player player, String gameId) {
+    public Game createNewGame(Player player) {
 
         //create the letters available for the game
         Random random = new SecureRandom();
-        String vowels []= {"A", "E", "I", "O", "U", "Y"};
-        String consonants [] = {"B", "C", "D", "F", "G", "H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Y","Z"};
-        ArrayList <String> letters = new ArrayList<String>();
+        Character vowels []= {'A', 'E', 'I', 'O', 'U', 'Y'};
+        Character consonants [] = {'B', 'C', 'D', 'F', 'G', 'H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'};
+        ArrayList <Character> letters = new ArrayList<Character>();
         while (letters.size()<4)
         {
             
@@ -69,11 +69,10 @@ public class GameService {
         // find the game in games json file and add player 1 
         // then create a new json file for the game
        
-        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
-
+        File file2 = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
         ObjectMapper objectMapper2 = new ObjectMapper();
         try {
-            objectMapper2.writeValue(file, game);
+            objectMapper2.writeValue(file2, game);
             return game;
         } catch (Exception e) {
             e.printStackTrace();
