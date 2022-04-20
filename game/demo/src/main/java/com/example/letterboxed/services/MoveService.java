@@ -9,21 +9,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 @Service
 public class MoveService {
 
     public MoveService() {}
 
-    public Move createMove(String gameId, String playerUsername, Move moveDTO) {
+    public Move createMove(String gameId, String playerUsername, String word) {
         Move move = new Move();
-        move.setWord(moveDTO.getWord());
+        move.setWord(word);
         move.setPlayerUsername(playerUsername);
         move.setGameId(gameId);
 
         try {
             File file = new File("../data/move.json");
             FileWriter fileWriter = new FileWriter(file, true);
-
             ObjectMapper mapper = new ObjectMapper();
 
             SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
