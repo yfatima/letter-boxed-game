@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Game } from 'src/models/game.model';
 import { GameService } from 'src/services/game.service';
@@ -13,9 +14,11 @@ export class HomeComponent implements OnInit {
 
   appname = 'Letter Boxed Game';
   typesOfGames: Game[];
-  gameId: string;
+  gameId: string = "newgame";
 
   constructor(private gameService: GameService, private router: Router, private playerService: PlayerService) { }
+
+  gameidFormControl = new FormControl('', [Validators.pattern('^[0-9]+$')]);
 
   ngOnInit(): void {
 
@@ -29,14 +32,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  beginGame(id: string) {
-    console.log(id);
-    this.gameId = id;
-    this.router.navigate(['/game']);
+  beginGame() {
+    this.router.navigate(['/game', this.gameId]);
   }
 
-  joinGame(id: string) {
-    this.gameId = id;
+  joinGame() {
+    console.log(this.gameidFormControl.hasError('pattern'));
+    if (!this.gameidFormControl.hasError('pattern')) {
+      this.gameId = this.gameidFormControl.value;
+      this.router.navigate(['/game', this.gameId]);
+    }
+    
   }
 
 }

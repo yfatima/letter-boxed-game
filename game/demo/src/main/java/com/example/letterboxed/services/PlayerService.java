@@ -25,7 +25,7 @@ public class PlayerService {
     public Boolean createNewPlayer(Player newPlayer) {
         // Player newPlayer = new Player();
         // newPlayer.setUserName(newPlayer.getUserName());
-        newPlayer.setPassword(passwordEncoder.encode(newPlayer.getPassword()));
+        newPlayer.setPassword(passwordEncoder.encode(newPlayer.getPassword()+newPlayer.getUserName()));
         // newPlayer.setEmail(newPlayerDTO.getEmail());
 
         if (savePlayer(newPlayer)) {
@@ -53,7 +53,7 @@ public class PlayerService {
         List<Player> players = listPlayers();
         
         for (Player p : players) {
-            if (p.getUserName().equals(player.getUserName()) && passwordEncoder.matches(player.getPassword(), p.getPassword())) {
+            if (p.getUserName().equals(player.getUserName()) && passwordEncoder.matches(player.getPassword()+player.getUserName(), p.getPassword())) {
                 return true;
             }
         }

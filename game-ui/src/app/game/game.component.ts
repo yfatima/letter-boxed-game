@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { Game } from 'src/models/game.model';
 import { Player } from 'src/models/player.model';
@@ -116,7 +117,7 @@ function drawOutterBox(data: string[]) {
 })
 export class GameComponent implements OnInit {
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.pattern(
+  wordFormControl = new FormControl('', [Validators.required, Validators.pattern(
     '^[A-Za-z]{5}$')]);
 
   game: Game;
@@ -124,13 +125,16 @@ export class GameComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor(private playerService: PlayerService, private gameService: GameService) { }
+  constructor(private playerService: PlayerService, private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    let action = this.route.snapshot.paramMap.get('action');
+    console.log(action);
     let username = sessionStorage.getItem("username");
     console.log(username);
     //get user by username
-    if (username != null) {
+    if (username != null && action == 'newgame') {
+      console.log("in new game");
       this.playerService.getPlayerByUsername(username).subscribe(data => {
         console.log(data);
         this.player = data;
@@ -143,20 +147,19 @@ export class GameComponent implements OnInit {
         });
       });
 
-    } 
-    // else if (username != null) {
-    //   this.playerService.getPlayerByUsername(username).subscribe(data => {
-    //     console.log(data);
-    //     this.player = data;
-    //     //make a game 
-    //     this.gameService.joinGame(this.chosenGame.gameId, this.player).subscribe(data => {
-    //       this.game = data;
-    //       console.log(this.game);
-    //       drawOutterBox(this.game.letters);
-    //       drawBox();
-    //     });
-    //   });
-    // }
+    } else if (username != null && action != "newgame") {
+      this.playerService.getPlayerByUsername(username).subscribe(data => {
+        console.log(data);
+        this.player = data;
+        //make a game 
+        this.gameService.joinGame(action, this.player).subscribe(data => {
+          this.game = data;
+          console.log(this.game);
+          drawOutterBox(this.game.letters);
+          drawBox();
+        });
+      });
+    }
 
 
 
@@ -164,4 +167,12 @@ export class GameComponent implements OnInit {
 
   }
 
+  checkWord() {
+    console.log(this.wordFormControl.value);
+    //make move
+  }
+
 }
+
+
+

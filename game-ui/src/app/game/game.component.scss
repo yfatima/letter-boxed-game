@@ -94,6 +94,22 @@
     transition: all 0.2s ease-in-out;
     line-height: 24px;
   }
+  .card2 {
+    border-radius: 4px;
+    height: 40px;
+    width: 600px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+  }
+
+  .wordmargin {
+    margin: 10px;
+  }
 
   .card-container .card:not(:last-child) {
     margin-right: 0;

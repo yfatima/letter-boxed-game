@@ -1,32 +1,50 @@
 <div class="content" role="main">
-  
-    <h2>Type your word here!</h2>
-  
+
+
+  <h2>Type your word here!</h2>
+
+  <div class="card2">
     <form class="example-form">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Current Word</mat-label>
-        <input type="text" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-               placeholder="Type any letters that are displayed on the box">
-        <mat-error *ngIf="emailFormControl.hasError('required')">
+        <input type="text" matInput [formControl]="wordFormControl" [errorStateMatcher]="matcher"
+          placeholder="Type any letters that are displayed on the box">
+
+        <mat-error *ngIf="wordFormControl.hasError('required')">
           Please enter a valid word
         </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('pattern')">
+        <mat-error *ngIf="wordFormControl.hasError('pattern')">
           Type a word with <strong>5 letters</strong>
         </mat-error>
       </mat-form-field>
+
+
     </form>
-  
-  
-    <div><h1>Player Board</h1></div>
+    <div class="wordmargin"> 
+      <button mat-raised-button color="primary" (click)="checkWord()">Check</button>
+    </div>
+  </div>
+  <div>
+    <h1>Player Board</h1>
+  </div>
+
+  <canvas id="letteredbox" class="letterbox">
+
+  </canvas>
+  <canvas id="tutorial" class="dotbox">
+  </canvas>
+
+  <!-- Footer -->
+  <footer>
     
-    <canvas id="letteredbox" class="letterbox">
-      
-    </canvas>
-    <canvas id="tutorial" class="dotbox">
-    </canvas>
-  
-    <!-- Footer -->
-    <footer>
-        <!--footer&nbsp;-->
-    </footer>
+    <div class="card2">
+      <h3 class="wordmargin">Player 1:</h3>
+      <h3 class="wordmargin">{{game.p1Id}}</h3>
+    </div>
+    <div class="card2">
+      <h3 class="wordmargin">Player 2:</h3>
+      <h3>{{game.p2Id!="none"?game.p2Id:"open"}}</h3>
+    </div>
+    
+  </footer>
 </div>

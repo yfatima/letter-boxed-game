@@ -94,7 +94,8 @@ public class GameService {
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
-            if (game.getId().equals(gameId) && !game.getP1Id().equals("none") && game.getP2Id().equals("none")) {
+            System.out.println(game.getP1Id().equals(player.getUserName()));
+            if (game.getId().equals(gameId) && game.getP2Id().equals("none") && !(game.getP1Id().equals("none") || game.getP1Id().equals(player.getUserName()))) {
                 game.setP2Id(player.getUserName());
                 game.setGameStatus("active");
                 objectMapper.writeValue(file, game);
