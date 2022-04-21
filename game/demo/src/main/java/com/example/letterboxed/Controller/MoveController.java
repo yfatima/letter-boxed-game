@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import javax.management.InvalidAttributeValueException;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -36,7 +37,7 @@ public class MoveController {
     //Logger logger = LoggerFactory.getLogger(MoveController.class);
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Move createMove(@RequestBody Move MoveDTO) {
+    public Move createMove(@RequestBody Move MoveDTO) throws InvalidAttributeValueException {
         String gameId = (String) httpSession.getAttribute("gameId");
         // logger.info("move to insert:" + MoveDTO.getWord());
 
