@@ -4,6 +4,8 @@ package com.example.letterboxed.services;
 import java.io.File;
 import java.io.FileWriter;
 
+import javax.management.InvalidAttributeValueException;
+
 import com.example.letterboxed.classes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
@@ -15,26 +17,32 @@ public class MoveService {
 
     public MoveService() {}
 
-    public Move createMove(String gameId, String playerUsername, String word) {
-        Move move = new Move();
-        move.setWord(word);
-        move.setPlayerUsername(playerUsername);
-        move.setGameId(gameId);
+    public Move createMove(String gameId, String playerUsername, String word) throws InvalidAttributeValueException {
+        if(GameLogic.valid_move(word, gameId))
+        {
+            Move move = new Move();
+            move.setWord(word);
+            move.setPlayerUsername(playerUsername);
+            move.setGameId(gameId);
 
-        try {
-            File file = new File("../data/move.json");
-            FileWriter fileWriter = new FileWriter(file, true);
-            ObjectMapper mapper = new ObjectMapper();
+            try {
+                File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+                FileWriter fileWriter = new FileWriter(file, true);
+                ObjectMapper mapper = new ObjectMapper();
 
-            SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
-            seqWriter.write(move);
-            seqWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+                SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
+                seqWriter.write(move);
+                seqWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            
+            return move;
         }
-
-
-        return move;
+        else{
+            throw new InvalidAttributeValueException("Invalid move");
+        }
     }
 
     public boolean isPlayerTurn(Game game, Player firstPlayer, Player secondPlayer) {

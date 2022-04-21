@@ -1,7 +1,7 @@
 package com.example.letterboxed.services;
 
 import java.io.File;
-import java.security.SecureRandom;
+//import java.security.SecureRandom;
 import java.util.List;
 
 import com.example.letterboxed.classes.Game;
@@ -24,14 +24,15 @@ public class GameService {
     public Game createNewGame(Player player) {
         System.out.println("Creating new game");
         //create the letters available for the game
-        Random random = new SecureRandom();
+        Random random = new Random();
+        random.setSeed(12345);
         Character vowels []= {'A', 'E', 'I', 'O', 'U', 'Y'};
         Character consonants [] = {'B', 'C', 'D', 'F', 'G', 'H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'};
         ArrayList <Character> letters = new ArrayList<Character>();
         while (letters.size()<4)
         {
             
-            int number = random.nextInt(6);
+            int number = random.nextInt(vowels.length);
             if (letters.contains(vowels[number]))
             {
                 continue;
@@ -43,7 +44,7 @@ public class GameService {
         }
         while (letters.size()<12)
         {
-            int number = random.nextInt(6);
+            int number = random.nextInt(consonants.length);
             if (letters.contains(consonants[number]))
             {
                 continue;
@@ -60,7 +61,6 @@ public class GameService {
         game.setId(Integer.toString(random.nextInt()));
         game.setGameStatus("inactive");
         game.setLetters(letters);
-        ArrayList <String> words_used = new ArrayList<String>();
         game.setWordsUsed(new ArrayList<String>());
 
         // find the game in games json file and add player 1 
