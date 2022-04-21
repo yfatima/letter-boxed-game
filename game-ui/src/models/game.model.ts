@@ -1,11 +1,11 @@
 import { Player } from "./player.model";
 
 export class Game {
-    id: String;
-    p1Id: String;
-    p2Id: String;
-    gameStatus: String;
-    letters: String[];
-    wordsUsed: String[];
+    id: string;
+    p1Id: string;
+    p2Id: string;
+    gameStatus: string;
+    letters: string[];
+    wordsUsed: string[];
     winScore: number;
 }

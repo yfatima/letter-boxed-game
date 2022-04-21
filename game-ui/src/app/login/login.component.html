@@ -1,0 +1,22 @@
+<div class="content" role="main" *ngIf="!loggedIn">
+
+
+    <p>Login</p>
+
+    <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Username</mat-label>
+            <input type="text" matInput [formControl]="usernameFormControl" placeholder="Enter username">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="text" matInput [formControl]="passwordFormControl" placeholder="Enter password">
+        </mat-form-field>
+    </form>
+
+    <div>
+        <button mat-raised-button (click)="authPlayer()">Submit</button>
+        <button mat-raised-button (click)="signUp()">Sign up</button>
+    </div>
+
+</div>

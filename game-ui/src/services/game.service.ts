@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Game } from 'src/models/game.model';
+import { Player } from 'src/models/player.model';
 
 const httpOptions = {
   headers: new HttpHeaders()
@@ -26,12 +27,12 @@ export class GameService {
     return this.http.get<Game>(this.baseURL + "/" + id);
   }
 
-  createGame(gameId: String) {
-    return this.http.post(this.baseURL + "/create", gameId, httpOptions);
+  createGame(player: Player) {
+    return this.http.post<Game>(this.baseURL + "/create", player, httpOptions);
   }
 
-  joinGame(gameId: String) {
-    return this.http.post(this.baseURL + "/join", gameId);
+  joinGame(gameId: String, player: Player) {
+    return this.http.post<Game>(this.baseURL + "/join", {gameId, player}, httpOptions);
   }
 
   getGameStatus(id: String) {

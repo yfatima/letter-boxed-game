@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { PlayerService } from 'src/services/player.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Letter Boxed Game';
+
+  constructor(private playerService: PlayerService, private router: Router) {
+  }
+
+  logout () {
+    this.playerService.playerLogout();
+    this.router.navigate(['/login']);
+  }
 }

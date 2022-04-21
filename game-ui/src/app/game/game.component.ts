@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import Chart from 'chart.js/auto';
+import { Game } from 'src/models/game.model';
+import { Player } from 'src/models/player.model';
+import { GameService } from 'src/services/game.service';
+import { PlayerService } from 'src/services/player.service';
+import { HomeComponent } from '../home/home.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -83,25 +88,25 @@ function drawBox() {
   });
 }
 
-function drawOutterBox() {
+function drawOutterBox(data: string[]) {
   var canvas = <HTMLCanvasElement>document.getElementById('letteredbox');
   var ctx = canvas.getContext('2d');
   //left side
-  ctx.fillText("Y", 10, 35);
-  ctx.fillText("U", 10, 125);
-  ctx.fillText("L", 10, 80);
+  ctx.fillText(data[0], 10, 35);
+  ctx.fillText(data[1], 10, 125);
+  ctx.fillText(data[2], 10, 80);
   //top
-  ctx.fillText("H", 85, 15);
-  ctx.fillText("K", 145, 15);
-  ctx.fillText("U", 210, 15);
+  ctx.fillText(data[3], 85, 15);
+  ctx.fillText(data[4], 145, 15);
+  ctx.fillText(data[5], 210, 15);
   //right side
-  ctx.fillText("W", 285, 35);
-  ctx.fillText("C", 285, 80);
-  ctx.fillText("A", 285, 125);
+  ctx.fillText(data[6], 285, 35);
+  ctx.fillText(data[7], 285, 80);
+  ctx.fillText(data[8], 285, 125);
   //bottom
-  ctx.fillText("B", 85, 145);
-  ctx.fillText("E", 145, 145);
-  ctx.fillText("G", 210, 145);
+  ctx.fillText(data[9], 85, 145);
+  ctx.fillText(data[10], 145, 145);
+  ctx.fillText(data[11], 210, 145);
 }
 
 @Component({
@@ -114,11 +119,49 @@ export class GameComponent implements OnInit {
   emailFormControl = new FormControl('', [Validators.required, Validators.pattern(
     '^[A-Za-z]{5}$')]);
 
+  game: Game;
+  player: Player;
+
   matcher = new MyErrorStateMatcher();
 
+  constructor(private playerService: PlayerService, private gameService: GameService) { }
+
   ngOnInit() {
-    drawOutterBox();
-    drawBox();
+    let username = sessionStorage.getItem("username");
+    console.log(username);
+    //get user by username
+    if (username != null) {
+      this.playerService.getPlayerByUsername(username).subscribe(data => {
+        console.log(data);
+        this.player = data;
+        //make a game 
+        this.gameService.createGame(this.player).subscribe(data => {
+          this.game = data;
+          console.log(this.game);
+          drawOutterBox(this.game.letters);
+          drawBox();
+        });
+      });
+
+    } 
+    // else if (username != null) {
+    //   this.playerService.getPlayerByUsername(username).subscribe(data => {
+    //     console.log(data);
+    //     this.player = data;
+    //     //make a game 
+    //     this.gameService.joinGame(this.chosenGame.gameId, this.player).subscribe(data => {
+    //       this.game = data;
+    //       console.log(this.game);
+    //       drawOutterBox(this.game.letters);
+    //       drawBox();
+    //     });
+    //   });
+    // }
+
+
+
+
+
   }
 
 }

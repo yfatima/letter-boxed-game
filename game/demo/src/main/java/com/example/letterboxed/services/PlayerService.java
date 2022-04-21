@@ -22,21 +22,22 @@ public class PlayerService {
     public PlayerService() {
     }
 
-    public Player createNewPlayer(PlayerDTO newPlayerDTO) {
-        Player newPlayer = new Player();
-        newPlayer.setUserName(newPlayerDTO.getUserName());
-        newPlayer.setPassword(passwordEncoder.encode(newPlayerDTO.getPassword()));
-        newPlayer.setEmail(newPlayerDTO.getEmail());
+    public Boolean createNewPlayer(Player newPlayer) {
+        // Player newPlayer = new Player();
+        // newPlayer.setUserName(newPlayer.getUserName());
+        newPlayer.setPassword(passwordEncoder.encode(newPlayer.getPassword()));
+        // newPlayer.setEmail(newPlayerDTO.getEmail());
 
         if (savePlayer(newPlayer)) {
-            return newPlayer;
+            return true;
         }
 
-        return new Player();
+        return false;
     }
 
     public Player getLoggedUser() {
         ContextUser principal = (ContextUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(principal);
 
         List<Player> players = listPlayers();
         for (Player player : players) {
@@ -46,6 +47,17 @@ public class PlayerService {
         }
 
         return new Player();
+    }
+
+    public Boolean authPlayer(Player player) {
+        List<Player> players = listPlayers();
+        
+        for (Player p : players) {
+            if (p.getUserName().equals(player.getUserName()) && passwordEncoder.matches(player.getPassword(), p.getPassword())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Player> listPlayers() {
@@ -76,15 +88,14 @@ public class PlayerService {
     }
 
     public boolean savePlayer(Player player) {
+
+        List<Player> players = listPlayers();
+        players.add(player);
         try {
             File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
-            FileWriter fileWriter = new FileWriter(file, true);
-
             ObjectMapper mapper = new ObjectMapper();
-
-            SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
-            seqWriter.write(player);
-            seqWriter.close();
+            
+            mapper.writeValue(file, players);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +117,7 @@ public class PlayerService {
 
     public boolean addWord(String word, Player player) {
         List<Player> players = listPlayers();
-        File file = new File("../data/players.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             for (Player player2 : players) {

@@ -8,6 +8,13 @@
     <!-- Highlight Card -->
     <div class="card highlight-card " style="text-align: center;" *ngFor="let game of typesOfGames" [value]="game">
 
-        <h3 class="listmargin">{{game.id}} {{game.letters}} {{game.winScore>3?"difficult": "easy"}}</h3> <button mat-raised-button color="basic" (click)="beginGame(game)">{{game.p1Id!="none"?"Join":"Start"}}</button>
+        <h3 class="listmargin">{{game.id}} {{game.letters}} {{game.winScore>3?"difficult": "easy"}}</h3> 
+        <div *ngIf="game.p1Id=='none'">
+            <button mat-raised-button color="basic" (click)="beginGame(game.id)">Start</button>
+        </div>
+        <div *ngIf="game.p1Id!='none'">
+            <button mat-raised-button color="basic" (click)="joinGame(game.id)">Join</button>
+        </div>
+        
     </div>
 </div>

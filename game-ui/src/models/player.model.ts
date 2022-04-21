@@ -1,7 +1,7 @@
 export class Player {
-    userName: String;
-    email: String;
-    password: String;
-    wordList: String[];
+    userName: string;
+    email: string;
+    password: string;
+    wordList: string[];
     score: number;
 }

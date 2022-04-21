@@ -19,7 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PlayerService playerService;
@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-               .cors().configurationSource((CorsConfigurationSource) new CorsConfigurationSource() {
+                .cors().configurationSource((CorsConfigurationSource) new CorsConfigurationSource() {
 
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -45,9 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                         config.setAllowCredentials(false);
                         return config;
                     }
-                  }).and()
-                  .formLogin()
-                  .usernameParameter("username").passwordParameter("password")
-                  .defaultSuccessUrl("http://localhost:4200");
+                })
+                .and()
+                .csrf().disable();
     }
 }

@@ -35,3 +35,23 @@ What to turn in for the project
     password: admin
 
 
+todo:
+
+- check is user is loggedin before it can go to home page
+
+[
+    {
+        "userName": "yfatima",
+        "email": "yfatima@gmu.edu",
+        "password": "$2a$10$Z2JZ3kNeg6RLIYz8Tw8Rc.SfqQWRKP9jCtNZwVY3XrsjTd99DjN0a",
+        "wordList": [],
+        "score": 0
+    },
+    {
+        "userName": "ssmith",
+        "email": "ssmith@gmu.edu",
+        "password": "$2a$10$cQbhoEkL6buuGIMm1MRSLO2XygkLd6G5dXGx72F1S1jpgl1S5wMza",
+        "wordList": [],
+        "score": 0
+    }
+]

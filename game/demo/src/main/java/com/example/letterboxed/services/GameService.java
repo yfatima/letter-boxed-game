@@ -20,6 +20,8 @@ public class GameService {
         Game game = new Game();
         game.setP1Id(player.getUserName());
         game.setId(gameId);
+        game.setP2Id("none");
+        game.setWinScore(3);
         game.setGameStatus("inactive");
 
         // find the game in games json file and add player 1 
@@ -65,7 +67,7 @@ public class GameService {
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
-            if (game.getId().equals(gameId) && game.getP1Id().equals(player.getUserName())) {
+            if (game.getId().equals(gameId) && !game.getP1Id().equals("none") && game.getP2Id().equals("none")) {
                 game.setP2Id(player.getUserName());
                 game.setGameStatus("active");
                 objectMapper.writeValue(file, game);

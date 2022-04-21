@@ -1,5 +1,7 @@
 package com.example.letterboxed.Controller;
+import com.example.letterboxed.DTO.PlayerDTO;
 import com.example.letterboxed.classes.Game;
+import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.services.GameService;
 import com.example.letterboxed.services.PlayerService;
 
@@ -34,9 +36,9 @@ public class GameController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Game createNewGame(@RequestBody String gameId) {
-        System.out.println("hellooooooo");
-        Game game = gameService.createNewGame(playerService.getLoggedUser(), gameId);
+    public Game createGame(@RequestBody Player player1) {
+        System.out.println(player1);
+        Game game = gameService.createNewGame(player1, "game1");
         httpSession.setAttribute("gameId", game.getId());
 
         logger.info("new game id: " + httpSession.getAttribute("gameId")+ " stored in session" );
@@ -45,8 +47,8 @@ public class GameController {
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public Game joinGame(@RequestBody String gameId) {
-        Game game = gameService.joinGame(playerService.getLoggedUser(), gameId);
+    public Game joinGame(@RequestBody PlayerDTO playerdto) {
+        Game game = gameService.joinGame(playerdto.player, playerdto.gameId);
         return game;
     }
 
