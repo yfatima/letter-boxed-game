@@ -42,8 +42,16 @@ public class GameLogic {
             }
         }
 
-
+        //check if word is already used
+        List<String> previousWords = game.getWordsUsed();
+        if (previousWords.contains(word.toUpperCase()))
+        {
+            System.out.println("Word " + word+ " is already used");
+            return false;
+        }
         
+        previousWords.add(word.toUpperCase());
+        game.setWordsUsed(previousWords);
         return true;
     }
 
