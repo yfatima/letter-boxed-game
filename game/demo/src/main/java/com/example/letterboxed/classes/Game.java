@@ -7,13 +7,13 @@ public class Game {
     private String p1Id;
     private String p2Id;
     private String gameStatus;
-    private List<String> letters;
+    private List<Character> letters;
     private List<String> wordsUsed;
     private Integer winScore;
     
     public Game(){}
 
-    public Game(String id, String p1Id, String p2Id, String gameStatus, List<String> letters, List<String> wordsUsed,
+    public Game(String id, String p1Id, String p2Id, String gameStatus, List<Character> letters, List<String> wordsUsed,
             Integer winScore) {
         this.id = id;
         this.p1Id = p1Id;
@@ -50,11 +50,11 @@ public class Game {
         return id; 
     }
     
-    public void setLetters(List<String> letters) {
+    public void setLetters(List<Character> letters) {
         this.letters = letters;
     }
     
-    public List<String> getLetters() {
+    public List<Character> getLetters() {
         return letters;
     }
 

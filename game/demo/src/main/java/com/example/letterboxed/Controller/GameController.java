@@ -38,9 +38,8 @@ public class GameController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Game createGame(@RequestBody Player player1) {
         System.out.println(player1);
-        Game game = gameService.createNewGame(player1, "game1");
+        Game game = gameService.createNewGame(player1);
         httpSession.setAttribute("gameId", game.getId());
-
         logger.info("new game id: " + httpSession.getAttribute("gameId")+ " stored in session" );
 
         return game;

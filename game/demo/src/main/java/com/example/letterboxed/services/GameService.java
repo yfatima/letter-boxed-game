@@ -1,6 +1,7 @@
 package com.example.letterboxed.services;
 
 import java.io.File;
+import java.security.SecureRandom;
 import java.util.List;
 
 import com.example.letterboxed.classes.Game;
@@ -9,6 +10,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
+
 @Service
 public class GameService {
     private Game g1 = new Game();
@@ -16,32 +21,54 @@ public class GameService {
     public GameService() {
     }
 
-    public Game createNewGame(Player player, String gameId) {
+    public Game createNewGame(Player player) {
+        System.out.println("Creating new game");
+        //create the letters available for the game
+        Random random = new SecureRandom();
+        Character vowels []= {'A', 'E', 'I', 'O', 'U', 'Y'};
+        Character consonants [] = {'B', 'C', 'D', 'F', 'G', 'H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'};
+        ArrayList <Character> letters = new ArrayList<Character>();
+        while (letters.size()<4)
+        {
+            
+            int number = random.nextInt(6);
+            if (letters.contains(vowels[number]))
+            {
+                continue;
+            }
+            else
+            {
+                letters.add(vowels[number]);
+            }   
+        }
+        while (letters.size()<12)
+        {
+            int number = random.nextInt(6);
+            if (letters.contains(consonants[number]))
+            {
+                continue;
+            }
+            else
+            {
+                letters.add(consonants[number]);
+            }   
+        }
+        Collections.shuffle(letters);
+
         Game game = new Game();
         game.setP1Id(player.getUserName());
-        game.setId(gameId);
         game.setP2Id("none");
         game.setWinScore(3);
+        game.setId(Integer.toString(random.nextInt()));
         game.setGameStatus("inactive");
+        game.setLetters(letters);
+        ArrayList <String> words_used = new ArrayList<String>();
+        game.setWordsUsed(new ArrayList<String>());
 
         // find the game in games json file and add player 1 
         // then create a new json file for the game
-        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
+       
         File file2 = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try {
-            List<Game> games = objectMapper.readValue(file, new TypeReference<List<Game>>() {});
-            for (Game game2 : games) {
-                if (game.getId().equals(game2.getId())) {
-                    game.setLetters(game2.getLetters());
-                }
-            }
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-
         ObjectMapper objectMapper2 = new ObjectMapper();
         try {
             objectMapper2.writeValue(file2, game);

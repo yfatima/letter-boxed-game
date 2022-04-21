@@ -65,7 +65,7 @@ public class MoveController {
         }
         //lastly create move and add it to move json file
 
-        Move move = moveService.createMove(game.getId(), playerService.getLoggedUser().getUserName(), MoveDTO);
+        Move move = moveService.createMove(game.getId(), playerService.getLoggedUser().getUserName(), word);
         return move;
     }
 
