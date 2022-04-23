@@ -116,6 +116,7 @@ public class GameService {
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
+            System.out.println(game);
             if (game.getId().equals(id)) {
                 return game;
             }
@@ -144,14 +145,11 @@ public class GameService {
         Game game = getGame(id);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        File file = new File(".game/demo/src/main/java/com/example/letterboxed/data/game.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
         try {
-            game = objectMapper.readValue(file, Game.class);
-            if (game.getId().equals(id)) {
-                game.setGameStatus(nextPlayerUsername);
-                objectMapper.writeValue(file, game);
-                return true;
-            }
+            game.setGameStatus(nextPlayerUsername);
+            objectMapper.writeValue(file, game);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }

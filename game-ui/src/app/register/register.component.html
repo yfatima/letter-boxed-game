@@ -1,24 +1,40 @@
 <div class="content" role="main">
 
 
-    <p>Sign up page</p>
+    <h1>Sign up</h1>
 
 
     <form class="example-form">
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Username</mat-label>
             <input type="text" matInput [formControl]="usernameFormControl" placeholder="Enter username">
+            <mat-error *ngIf="usernameFormControl.hasError('required')">
+                username cannot be empty
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Email</mat-label>
-            <input type="text" matInput [formControl]="emailFormControl" placeholder="Enter email">
+            <input type="email" matInput [formControl]="emailFormControl" placeholder="Enter email">
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+                email cannot be empty
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Password</mat-label>
-            <input type="text" matInput [formControl]="passwordFormControl" placeholder="Enter password">
+            <input type="password" matInput [formControl]="passwordFormControl" placeholder="Enter password">
+            <mat-error *ngIf="passwordFormControl.hasError('required')">
+                password cannot be empty
+            </mat-error>
+            <!-- <mat-error *ngIf="passwordFormControl.hasError('pattern')">
+                must be 8 characters in length, have uppercase letters, have numbers, and at least one special character
+            </mat-error> -->
         </mat-form-field>
+        <p>must be 8 characters in length, have uppercase letters, have numbers, and at least one special character</p>
     </form>
 
-    <button mat-raised-button (click)="createPlayer()">Register</button>
+    <div class="btnsmargin">
+        <button mat-raised-button class="btnmargin" color="primary" (click)="createPlayer()">Register</button>
+        <button mat-raised-button class="btnmargin" (click)="goLogin()">Back</button>
+    </div>
 
 </div>

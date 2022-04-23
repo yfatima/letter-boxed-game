@@ -24,7 +24,7 @@ export class GameService {
   }
 
   getGame(id: String) {
-    return this.http.get<Game>(this.baseURL + "/" + id);
+    return this.http.get<Game>(this.baseURL + "/" + id, httpOptions);
   }
 
   createGame(player: Player) {
@@ -36,7 +36,11 @@ export class GameService {
   }
 
   getGameStatus(id: String) {
-    return this.http.post(this.baseURL + "/gamestatus", id);
+    return this.http.post<Game>(this.baseURL + "/gamestatus", id, httpOptions);
+  }
+
+  updateGameStatus(player: Player, gameId: String) {
+    return this.http.post(this.baseURL + "/updategamestatus", {gameId, player}, httpOptions);
   }
 
 }

@@ -47,8 +47,12 @@ public class GameController {
 
     @RequestMapping(value = "/join", method = RequestMethod.POST)
     public Game joinGame(@RequestBody PlayerDTO playerdto) {
-        Game game = gameService.joinGame(playerdto.player, playerdto.gameId);
-        return game;
+        Game game;
+        if (playerdto.gameId.matches("[0-9]+")) {
+            game = gameService.joinGame(playerdto.player, playerdto.gameId);
+            return game;
+        }
+        return new Game();
     }
 
 
@@ -57,16 +61,25 @@ public class GameController {
         return gameService.getGames();
     }
 
-    @RequestMapping(value = "/{id}")
-    public Game getGameProperties(@PathVariable String id) {
-        httpSession.setAttribute("gameId", id);
-        return gameService.getGame(id);
-    }
+    // @RequestMapping(value = "/{id}")
+    // public Game getGameProperties(@PathVariable String id) {
+    //     httpSession.setAttribute("gameId", id);
+    //     return gameService.getGame(id);
+    // }
 
     @RequestMapping(value = "/gamestatus", method = RequestMethod.POST)
-    public String getGameStatus(@RequestBody String id) {
+    public Game getGameStatus(@RequestBody String id) {
+        System.out.println(id);
         httpSession.setAttribute("gameId", id);
-        return gameService.getGame(id).getGameStatus();
+        Game result = gameService.getGame(id);
+        System.out.println(result);
+        return result;
+    }
+
+    @RequestMapping(value = "/updategamestatus", method = RequestMethod.POST)
+    public Boolean updateGameStatus(@RequestBody PlayerDTO playerdto) {
+        System.out.println(playerdto);
+        return gameService.updateGameStatus(playerdto.player.getUserName(), playerdto.gameId);
     }
 
 

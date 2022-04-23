@@ -33,7 +33,7 @@ public class Game {
     }
 
     public Integer getWinScore() {
-        return winScore;
+        return this.winScore;
     }
 
 
@@ -47,7 +47,7 @@ public class Game {
     }
 
     public String getId() {
-        return id; 
+        return this.id; 
     }
     
     public void setLetters(List<Character> letters) {
@@ -75,7 +75,7 @@ public class Game {
     }
 
     public String getGameStatus() {
-        return gameStatus;
+        return this.gameStatus;
     }
 
     public void setGameStatus(String status) {

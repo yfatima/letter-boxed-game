@@ -7,7 +7,7 @@
     <form class="example-form">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Current Word</mat-label>
-        <input type="text" matInput [formControl]="wordFormControl" [errorStateMatcher]="matcher"
+        <input type="text" matInput [formControl]="wordFormControl"
           placeholder="Type any letters that are displayed on the box">
 
         <mat-error *ngIf="wordFormControl.hasError('required')">
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div>
-    <h1>Player Board</h1>
+    <h1>Player Board ({{game.gameStatus}})</h1>
   </div>
 
   <canvas id="letteredbox" class="letterbox">

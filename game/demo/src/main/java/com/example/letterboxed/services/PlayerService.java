@@ -37,7 +37,7 @@ public class PlayerService {
 
     public Player getLoggedUser() {
         ContextUser principal = (ContextUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal);
+        System.out.println(principal.getPlayer().getUserName());
 
         List<Player> players = listPlayers();
         for (Player player : players) {

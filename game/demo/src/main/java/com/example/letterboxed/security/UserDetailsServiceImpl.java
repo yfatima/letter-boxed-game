@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        checkNotNull(username);
+        //checkNotNull(username);
 
         Player player = playerService.getPlayerByUsername(username);
         if (player == null) {
