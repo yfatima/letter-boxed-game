@@ -61,7 +61,7 @@ public class GameService {
         game.setP2Id("none");
         game.setWinScore(3);
         game.setId(Integer.toString(random.nextInt()));
-        game.setGameStatus("inactive");
+        game.setGameStatus("active*&^'@");
         game.setLetters(letters);
         game.setWordsUsed(new ArrayList<String>());
 
@@ -94,10 +94,10 @@ public class GameService {
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
-            System.out.println(game.getP1Id().equals(player.getUserName()));
+            //System.out.println(game.getP1Id().equals(player.getUserName()));
             if (game.getId().equals(gameId) && game.getP2Id().equals("none") && !(game.getP1Id().equals("none") || game.getP1Id().equals(player.getUserName()))) {
                 game.setP2Id(player.getUserName());
-                game.setGameStatus("active");
+                game.setGameStatus(game.getP1Id());
                 objectMapper.writeValue(file, game);
             }
         } catch (Exception e) {
@@ -116,7 +116,7 @@ public class GameService {
         Game game = null;
         try {
             game = objectMapper.readValue(file, Game.class);
-            System.out.println(game);
+            //System.out.println(game);
             if (game.getId().equals(id)) {
                 return game;
             }

@@ -2,13 +2,11 @@ package com.example.letterboxed.services;
 
 
 import java.io.File;
-import java.io.FileWriter;
 
 import javax.management.InvalidAttributeValueException;
 
 import com.example.letterboxed.classes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SequenceWriter;
 import org.springframework.stereotype.Service;
 
 
@@ -17,28 +15,36 @@ public class MoveService {
 
     public MoveService() {}
 
-    public Move createMove(String gameId, String playerUsername, String word) throws InvalidAttributeValueException {
+    public Game createMove(String gameId, String playerUsername, String word) throws InvalidAttributeValueException {
         if(GameLogic.valid_move(word, gameId))
         {
-            Move move = new Move();
-            move.setWord(word);
-            move.setPlayerUsername(playerUsername);
-            move.setGameId(gameId);
+            // Move move = new Move();
+            // move.setWord(word);
+            // move.setPlayerUsername(playerUsername);
+            // move.setGameId(gameId);
+            Game game = null;
 
             try {
                 File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
-                FileWriter fileWriter = new FileWriter(file, true);
-                ObjectMapper mapper = new ObjectMapper();
-
-                SequenceWriter seqWriter = mapper.writer().writeValuesAsArray(fileWriter);
-                seqWriter.write(move);
-                seqWriter.close();
+                ObjectMapper objectMapper = new ObjectMapper();
+                game = objectMapper.readValue(file, Game.class);
+                //check if it is this users turn to make a move
+                if (game.getGameStatus().equals(playerUsername)) {
+                    if (game.getGameStatus().equals(game.getP1Id())) {
+                        game.setGameStatus(game.getP2Id());
+                    } else {
+                        game.setGameStatus(game.getP1Id());
+                    }
+                    game.getWordsUsed().add(word);
+                    objectMapper.writeValue(file, game);
+                }
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             
-            return move;
+            return game;
         }
         else{
             throw new InvalidAttributeValueException("Invalid move");

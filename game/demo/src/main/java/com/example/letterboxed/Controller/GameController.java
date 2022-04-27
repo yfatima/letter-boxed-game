@@ -37,7 +37,7 @@ public class GameController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Game createGame(@RequestBody Player player1) {
-        System.out.println(player1);
+        //System.out.println(player1);
         Game game = gameService.createNewGame(player1);
         httpSession.setAttribute("gameId", game.getId());
         logger.info("new game id: " + httpSession.getAttribute("gameId")+ " stored in session" );
@@ -69,16 +69,16 @@ public class GameController {
 
     @RequestMapping(value = "/gamestatus", method = RequestMethod.POST)
     public Game getGameStatus(@RequestBody String id) {
-        System.out.println(id);
+        //System.out.println(id);
         httpSession.setAttribute("gameId", id);
         Game result = gameService.getGame(id);
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 
     @RequestMapping(value = "/updategamestatus", method = RequestMethod.POST)
     public Boolean updateGameStatus(@RequestBody PlayerDTO playerdto) {
-        System.out.println(playerdto);
+        //System.out.println(playerdto);
         return gameService.updateGameStatus(playerdto.player.getUserName(), playerdto.gameId);
     }
 

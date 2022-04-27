@@ -1,5 +1,6 @@
 package com.example.letterboxed.Controller;
 
+import com.example.letterboxed.DTO.MoveDTO;
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Move;
 import com.example.letterboxed.classes.Player;
@@ -37,44 +38,19 @@ public class MoveController {
     //Logger logger = LoggerFactory.getLogger(MoveController.class);
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Move createMove(@RequestBody Move MoveDTO) throws InvalidAttributeValueException {
+    public Game createMove(@RequestBody MoveDTO moveDTO) throws InvalidAttributeValueException {
         String gameId = (String) httpSession.getAttribute("gameId");
         // logger.info("move to insert:" + MoveDTO.getWord());
 
         //check if the move is valid
         Game game = gameService.getGame(gameId);
-        Player currentplayer = playerService.getLoggedUser(); 
-        Player otherplayer;
+        Player currentplayer = moveDTO.player; 
+        String word = moveDTO.word;
 
-        if (game.getP1Id() == currentplayer.getUserName()) {
-            otherplayer = playerService.getPlayerByUsername(game.getP2Id());
-        } else {
-            otherplayer = playerService.getPlayerByUsername(game.getP1Id());
-        }
-        List<String> curentplayer_wordlist = currentplayer.getWordList();
-        List<String> otherplayer_wordlist = otherplayer.getWordList();
-
-        String word = MoveDTO.getWord();
-        if (otherplayer_wordlist.contains(word) || curentplayer_wordlist.contains(word)) {
-            return new Move();
-        }
-
-        //add it to current user word list
-        //update game status to next player's id
-        if (!playerService.addWord(word, currentplayer) || !gameService.updateGameStatus(otherplayer.getUserName(), gameId)) {
-            return new Move();
-        }
-        //lastly create move and add it to move json file
-
-        Move move = moveService.createMove(game.getId(), playerService.getLoggedUser().getUserName(), word);
-        return move;
+        Game updatedGame = moveService.createMove(game.getId(), currentplayer.getUserName(), word);
+        this.playerService.updatePlayerScore(currentplayer.getUserName());
+        return updatedGame;
     }
-
-    // @RequestMapping(value = "/check", method = RequestMethod.GET)
-    // public boolean validateMoves() {
-    //     String gameId = (String) httpSession.getAttribute("gameId");
-    //     return false;
-    // }
 
     @RequestMapping(value = "/turn", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean isPlayerTurn() {

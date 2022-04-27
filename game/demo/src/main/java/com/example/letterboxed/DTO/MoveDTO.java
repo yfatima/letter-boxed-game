@@ -1,9 +1,9 @@
 package com.example.letterboxed.DTO;
 
-public class MoveDTO {
-    private String word;
+import com.example.letterboxed.classes.Player;
 
-    String getWord() {
-        return this.word;
-    }
+public class MoveDTO {
+    public String word;
+    public Player player;
+
 }

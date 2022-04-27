@@ -15,13 +15,15 @@ import { GameComponent } from './game/game.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import {specialPipe} from './specialPipe';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     GameComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    specialPipe
   ],
   imports: [
     BrowserModule,

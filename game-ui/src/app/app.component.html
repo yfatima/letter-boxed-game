@@ -7,8 +7,11 @@
     </button> -->
     <span>LETTER BOXED GAME</span>
     <span class="example-spacer"></span>
-    <div>
+    <div *ngIf="playerStatus">
       <button  mat-raised-button class="example-icon" (click)="logout()">Logout</button>
+    </div>
+    <div *ngIf="!playerStatus">
+      <button  mat-raised-button class="example-icon" (click)="login()">Login</button>
     </div>
     <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
@@ -18,6 +21,10 @@
     </button> -->
   </mat-toolbar>
 <div>
+<!-- <div class="content" *ngIf="!playerStatus">
+  <h1>Welcome to Lettered Box Game!</h1>
+  <p>To get started login or register!</p>
+</div> -->
 
 <router-outlet></router-outlet>
 <!-- <app-home></app-home> -->
