@@ -1,13 +1,17 @@
 package com.example.letterboxed.services;
 
 import java.io.File;
-
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SequenceWriter;
+
+import net.minidev.json.JSONObject;
 
 
 
@@ -54,6 +58,17 @@ public class GameLogic {
         
         previousWords.add(word.toUpperCase());
         game.setWordsUsed(previousWords);
+        try {
+            JSONObject root = objectMapper.readValue(file, JSONObject.class);
+            root.put(game.getId(),game);
+            FileWriter fileWriter = new FileWriter(file, true);
+            SequenceWriter seqWriter = objectMapper.writer().writeValuesAsArray(fileWriter);
+            seqWriter.write(game);
+            seqWriter.close();
+        } catch (Exception e) {
+            
+        }
+        
         return true;
     }
 

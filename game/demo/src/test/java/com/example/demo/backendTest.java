@@ -11,10 +11,11 @@ import com.example.letterboxed.services.MoveService;
 
 public class backendTest {
     public static void main(String []args){
-        System.out.print("Starting game");    
+        System.out.print("Starting game\n");    
         Player myplayer = new Player("oot", "oot@gmail.com", "password");
         GameService myservice = new GameService();
         Game newGame = myservice.createNewGame(myplayer);
+        System.out.println(newGame.getLetters());
         MoveService moveserve = new MoveService();
         // try {
         //     Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "ace");
@@ -26,18 +27,16 @@ public class backendTest {
             newGame.setGameStatus("oot");
             Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "value");
         } catch (InvalidAttributeValueException e) {
-            // TODO Auto-generated catch block
             System.out.println("failed");
         }
         try {
             newGame.setGameStatus("oot");
             Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "value");
         } catch (InvalidAttributeValueException e) {
-            // TODO Auto-generated catch block
-            System.out.println("worked3");
+            System.out.println("worked 3");
         }
         
-        System.out.println(newGame.getLetters());
+        
     }
     
 }
