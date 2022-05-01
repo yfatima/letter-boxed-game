@@ -46,9 +46,11 @@ public class MoveController {
         Game game = gameService.getGame(gameId);
         Player currentplayer = moveDTO.player; 
         String word = moveDTO.word;
-
+        
         Game updatedGame = moveService.createMove(game.getId(), currentplayer.getUserName(), word);
-        this.playerService.updatePlayerScore(currentplayer.getUserName());
+        if (updatedGame.getId() != null) {
+            this.playerService.updatePlayerScore(currentplayer.getUserName());
+        }
         return updatedGame;
     }
 
@@ -60,5 +62,10 @@ public class MoveController {
             return true;
         }
         return false;
+    }
+
+    @RequestMapping(value = "/skipmove", method = RequestMethod.POST)
+    public Game createMove(@RequestBody Player player) {
+        return this.moveService.skipMove(player.getUserName());
     }
 }

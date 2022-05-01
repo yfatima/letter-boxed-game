@@ -124,4 +124,38 @@ public class PlayerService {
         return newScore;
     }
 
+    public int getPlayerScore(String username) {
+        int score = 0;
+        System.out.println("in get score");
+        List<Player> players = listPlayers();
+        for (Player player2 : players) {
+            if (username.equals(player2.getUserName())) {
+                score = player2.getScore();
+            }
+        }
+
+        return score;
+    }
+
+    public int clearPlayerScore(String username) {
+        int newScore = 0;
+        List<Player> players = listPlayers();
+        for (Player player2 : players) {
+            if (username.equals(player2.getUserName())) {
+                player2.setScore(0);
+            }
+        }
+
+        try {
+            File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
+            ObjectMapper mapper = new ObjectMapper();
+            
+            mapper.writeValue(file, players);
+            return newScore;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newScore;
+    }
+
 }
