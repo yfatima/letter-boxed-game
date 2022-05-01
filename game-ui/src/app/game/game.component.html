@@ -1,4 +1,5 @@
 <div class="content" role="main">
+  <h1>Game ID: {{(this.game.id | specialPipe)}}</h1>
   <div class="card3">
     <h2>Words Used:</h2>
     <h3 class="wordmargin">{{game.wordsUsed}}</h3>
@@ -28,7 +29,12 @@
     </form>
     <div class="wordmargin"> 
       <button mat-raised-button color="primary" [disabled]="showbutton" (click)="checkWord()">Check</button>
+      
     </div>
+
+  <div class="skipbtnmargin"> 
+    <button mat-raised-button color="primary" [disabled]="showbutton" (click)="skipMove()">Give Up</button>
+  </div>
 
 
 
@@ -54,7 +60,7 @@
     </div>
     <div class="card2">
       <h3 class="wordmargin">Player 2:</h3>
-      <h3>{{game.p2Id!="none"?(game.p2Id | specialPipe):"open"}}</h3>
+      <h3>{{game.p2Id!="none"?(game.p2Id | specialPipe):"ask a friend to join via game id"}}</h3>
     </div>
     
   </footer>

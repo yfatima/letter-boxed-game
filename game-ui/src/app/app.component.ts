@@ -22,6 +22,14 @@ export class AppComponent {
 
   logout () {
     this.playerService.playerLogout();
-    this.router.navigate(['/login']);
+    this.playerStatus = this.playerService.isPlayerLoggedIn();
+    this.router.navigate(['']);
+  }
+
+  homepage() {
+    if (this.playerService.isPlayerLoggedIn()) {
+      this.router.navigate(['/home']);
+    }
+    
   }
 }

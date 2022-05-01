@@ -1,5 +1,5 @@
 import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -103,6 +103,7 @@ export class GameComponent implements OnInit {
   game: Game;
   player: Player;
   intervelcounter: any;
+  startcounter: any;
   score: number = 1;
   showbutton: boolean = false;
 
@@ -119,13 +120,15 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
 
+    this.showbutton = true;
+    this.wordFormControl.disable();
     let action = this.route.snapshot.paramMap.get('action');
     let username = sessionStorage.getItem("username");
     //get user by username
     if (username != null && action == 'newgame') {
       console.log("in new game");
       this.playerService.getPlayerByUsername(username).subscribe(data => {
-        console.log(data);
+        //console.log(data);
         this.player = data;
         //make a game 
         this.gameService.createGame(this.player).subscribe(data => {
@@ -136,19 +139,24 @@ export class GameComponent implements OnInit {
         });
       });
 
-      this.subscription = timer(15000).subscribe(val => {
+      this.startcounter = setInterval(() => {
         this.gameService.getGameStatus(this.game.id).subscribe((data) => {
           if (data.gameStatus != "active") {
             this.game = data;
-            this.destoryTimer();
+            this.destoryStartInterval();
           }
         });
-      });
+      }, 10000);
 
       this.intervelcounter = setInterval(() => {
         console.log('testing intervel player 1');
+        console.log(this.player);
         this.gameService.getGameStatus(this.game.id).subscribe(data => {
           this.game = data;
+          if (this.game.gameStatus == "finish") {
+            //console.log("generating finish alert");
+            this.destoryIntervel(this.game.p2Id);
+          }
           if (this.game.gameStatus == this.player.userName) {
             this.showbutton = false;
             this.wordFormControl.enable();
@@ -162,7 +170,7 @@ export class GameComponent implements OnInit {
     } else if (username != null && action != "newgame") {
 
       this.playerService.getPlayerByUsername(username).subscribe(data => {
-        console.log(data);
+        //console.log(data);
         this.player = data;
         //make a game 
         this.gameService.joinGame(action, this.player).subscribe(data => {
@@ -173,16 +181,19 @@ export class GameComponent implements OnInit {
           } else {
             this.router.navigate(['/home']);
           }
-          this.showbutton = true;
-          this.wordFormControl.disable();
           //at everytime intervel 
           //check if it is my turn
           //enable move check button else disable and update game
           //if my score is 3 then stop intervel, show win game alert
           this.intervelcounter = setInterval(() => {
             console.log('testing intervel player 2');
+            console.log(this.player);
             this.gameService.getGameStatus(this.game.id).subscribe(data => {
               this.game = data;
+              if (this.game.gameStatus == "finish") {
+                //console.log("generating finish alert");
+                this.destoryIntervel(this.game.p1Id);
+              }
               if (this.game.gameStatus == this.player.userName) {
                 this.showbutton = false;
                 this.wordFormControl.enable();
@@ -206,29 +217,53 @@ export class GameComponent implements OnInit {
     //make move
     if (!this.wordFormControl.hasError('pattern') && this.game.p2Id != "none") {
       this.moveService.createMove(this.player, this.wordFormControl.value).subscribe(data => {
-        this.game = data;
-        console.log(this.score);
-        if (this.score != 2) {
-          this.score = this.score + 1;
-        } else if (this.score == 2) {
-          this.destoryIntervel();
+        //console.log(data);
+        if (data.id == null) {
+          alert("word used before");
+        } else {
+          this.game = data;
+          //console.log("end game");
+          this.playerService.getPlayerScore(this.player.userName).subscribe(data2 => {
+            if (data2 == this.game.winScore) {
+              this.destoryIntervel(this.player.userName);
+            }
+          });
         }
+
       });
     } else {
       alert("please enter a word that matches the pattern");
     }
   }
 
-  destoryTimer() {
-    this.subscription.unsubscribe();
+  skipMove() {
+    this.moveService.skipMove(this.player).subscribe( data => {
+      console.log(data);
+      this.game = data;
+    });
   }
 
-  destoryIntervel() {
+  destoryStartInterval() {
+    if (this.startcounter) {
+      clearInterval(this.startcounter);
+      console.log("start interval destoryed!");
+    }
+  }
+
+  destoryIntervel(username: string) {
+    this.showbutton = true;
+    this.wordFormControl.disable();
     if (this.intervelcounter) {
       clearInterval(this.intervelcounter);
-      alert("player " + this.player.userName + " won!!");
+      alert("player " + username + " won!!");
       //this.router.navigate(['home']);
     }
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.startcounter);
+    clearInterval(this.intervelcounter);
+    console.log("destorying intervals");
   }
 
 }

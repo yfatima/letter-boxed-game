@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Game } from 'src/models/game.model';
 import { Player } from 'src/models/player.model';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders()
@@ -20,6 +22,10 @@ export class MoveService {
   constructor(private http: HttpClient) { }
 
   createMove(player: Player, word: String) {
-    return this.http.post<Game>(this.baseURL + "/create", {word, player}, httpOptions);
+    return this.http.post<Game>(this.baseURL + "/create", { word, player }, httpOptions);
+  }
+
+  skipMove(player: Player) {
+    return this.http.post<Game>(this.baseURL + "/skipmove", player, httpOptions);
   }
 }

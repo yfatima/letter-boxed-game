@@ -13,7 +13,7 @@ import { PlayerService } from 'src/services/player.service';
 export class HomeComponent implements OnInit {
 
   appname = 'Letter Boxed Game';
-  typesOfGames: Game[];
+  startedGame: Game;
   gameId: string = "newgame";
 
   constructor(private gameService: GameService, private router: Router, private playerService: PlayerService) { }
@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
     // if (this.playerService.isPlayerLoggedIn()) {
     //   this.gameService.getGames().subscribe( data => {
     //     console.log(data);
-    //     this.typesOfGames = data;
     //   });
     // } else {
     //   this.router.navigate(['/login']);
@@ -38,13 +37,19 @@ export class HomeComponent implements OnInit {
 
   joinGame() {
     console.log(this.gameidFormControl.hasError('pattern'));
-    if (!this.gameidFormControl.hasError('pattern')) {
-      this.gameId = this.gameidFormControl.value;
-      this.router.navigate(['/game/type', this.gameId]);
-    } else {
-      alert("please enter a valid game id");
-    }
-    
+    this.gameService.getGameStatus(this.gameidFormControl.value).subscribe(data => {
+      if (data.gameStatus == "active") {
+        if (!this.gameidFormControl.hasError('pattern')) {
+          this.gameId = this.gameidFormControl.value;
+          this.router.navigate(['/game/type', this.gameId]);
+        } else {
+          alert("please enter a valid game id");
+        }
+
+      } else {
+        alert("game not started yet");
+      }
+    });
   }
 
 }
