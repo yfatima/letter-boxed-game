@@ -9,8 +9,15 @@ import { PlayerService } from 'src/services/player.service';
 })
 export class AppComponent {
   title = 'Letter Boxed Game';
+  playerStatus = false;
 
   constructor(private playerService: PlayerService, private router: Router) {
+    this.playerStatus = this.playerService.isPlayerLoggedIn();
+  }
+
+  login() {
+    this.playerStatus = true;
+    this.router.navigate(['/login']);
   }
 
   logout () {

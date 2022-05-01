@@ -52,7 +52,7 @@
 
   .content {
     display: flex;
-    margin: 82px auto 32px;
+    margin: 20px auto 32px;
     padding: 0 16px;
     max-width: 960px;
     flex-direction: column;
@@ -99,6 +99,20 @@
     height: 40px;
     width: 600px;
     padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+  }
+
+  .card3 {
+    border-radius: 4px;
+    height: 40px;
+    width: 600px;
+    padding: 16px;
+    position: left;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -332,5 +346,5 @@
     height: 300px !important;
     background-color: #eaebec;
     position: absolute;
-    margin-top: 220px;
+    margin-top: 290px;
 }

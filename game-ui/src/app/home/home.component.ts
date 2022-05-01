@@ -22,25 +22,27 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.playerService.isPlayerLoggedIn()) {
-      this.gameService.getGames().subscribe( data => {
-        console.log(data);
-        this.typesOfGames = data;
-      });
-    } else {
-      this.router.navigate(['/login']);
-    }
+    // if (this.playerService.isPlayerLoggedIn()) {
+    //   this.gameService.getGames().subscribe( data => {
+    //     console.log(data);
+    //     this.typesOfGames = data;
+    //   });
+    // } else {
+    //   this.router.navigate(['/login']);
+    // }
   }
 
   beginGame() {
-    this.router.navigate(['/game', this.gameId]);
+    this.router.navigate(['/game/type', this.gameId]);
   }
 
   joinGame() {
     console.log(this.gameidFormControl.hasError('pattern'));
     if (!this.gameidFormControl.hasError('pattern')) {
       this.gameId = this.gameidFormControl.value;
-      this.router.navigate(['/game', this.gameId]);
+      this.router.navigate(['/game/type', this.gameId]);
+    } else {
+      alert("please enter a valid game id");
     }
     
   }

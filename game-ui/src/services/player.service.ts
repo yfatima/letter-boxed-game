@@ -39,4 +39,8 @@ export class PlayerService {
   getPlayerByUsername(username: string) {
     return this.http.get<Player>(this.baseURL + "/getplayer/" + username, httpOptions);
   }
+
+  getLoggedInPlayer() {
+    return this.http.get<Player>(this.baseURL + "/logged", httpOptions);
+  }
 }

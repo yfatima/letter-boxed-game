@@ -37,7 +37,7 @@ public class PlayerService {
 
     public Player getLoggedUser() {
         ContextUser principal = (ContextUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal);
+        System.out.println(principal.getPlayer().getUserName());
 
         List<Player> players = listPlayers();
         for (Player player : players) {
@@ -103,34 +103,25 @@ public class PlayerService {
         return false;
     }
 
-    public List<String> getPlayerWordList(Player player) {
-        List<String> wordlist = null;
-
+    public int updatePlayerScore(String username) {
+        int newScore = 0;
         List<Player> players = listPlayers();
         for (Player player2 : players) {
-            if (player.getUserName() == player2.getUserName()) {
-                return player.getWordList();
+            if (username.equals(player2.getUserName())) {
+                player2.setScore(player2.getScore()+1);
             }
         }
-        return wordlist;
-    }
 
-    public boolean addWord(String word, Player player) {
-        List<Player> players = listPlayers();
-        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            for (Player player2 : players) {
-                if (player.getUserName() == player2.getUserName()) {
-                    player2.addWord(word);
-                    objectMapper.writeValue(file, players);
-                    return true;
-                }
-            }
+            File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
+            ObjectMapper mapper = new ObjectMapper();
+            
+            mapper.writeValue(file, players);
+            return newScore;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return newScore;
     }
 
 }

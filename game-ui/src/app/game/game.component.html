@@ -1,5 +1,11 @@
 <div class="content" role="main">
-
+  <div class="card3">
+    <h2>Words Used:</h2>
+    <h3 class="wordmargin">{{game.wordsUsed}}</h3>
+    <!-- <div *ngFor="let item of game.wordsUsed" style="position: relative !important;">
+      {{item}}
+    </div> -->
+  </div>
 
   <h2>Type your word here!</h2>
 
@@ -7,7 +13,7 @@
     <form class="example-form">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Current Word</mat-label>
-        <input type="text" matInput [formControl]="wordFormControl" [errorStateMatcher]="matcher"
+        <input type="text" matInput [formControl]="wordFormControl"
           placeholder="Type any letters that are displayed on the box">
 
         <mat-error *ngIf="wordFormControl.hasError('required')">
@@ -21,29 +27,34 @@
 
     </form>
     <div class="wordmargin"> 
-      <button mat-raised-button color="primary" (click)="checkWord()">Check</button>
+      <button mat-raised-button color="primary" [disabled]="showbutton" (click)="checkWord()">Check</button>
     </div>
-  </div>
-  <div>
-    <h1>Player Board</h1>
+
+
+
   </div>
 
-  <canvas id="letteredbox" class="letterbox">
+  
+  <div class="content2">
+    <h1>Player Board ({{game.gameStatus | specialPipe}})</h1>
+    
+    
+  </div>
+  <canvas id="letteredbox" class="letterbox"></canvas>
+  <canvas id="tutorial" class="dotbox"></canvas>
 
-  </canvas>
-  <canvas id="tutorial" class="dotbox">
-  </canvas>
+  
 
   <!-- Footer -->
   <footer>
     
     <div class="card2">
       <h3 class="wordmargin">Player 1:</h3>
-      <h3 class="wordmargin">{{game.p1Id}}</h3>
+      <h3 class="wordmargin">{{game.p1Id | specialPipe}}</h3>
     </div>
     <div class="card2">
       <h3 class="wordmargin">Player 2:</h3>
-      <h3>{{game.p2Id!="none"?game.p2Id:"open"}}</h3>
+      <h3>{{game.p2Id!="none"?(game.p2Id | specialPipe):"open"}}</h3>
     </div>
     
   </footer>
