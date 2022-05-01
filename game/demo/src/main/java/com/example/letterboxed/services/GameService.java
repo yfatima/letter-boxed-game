@@ -60,9 +60,9 @@ public class GameService {
         Game game = new Game();
         game.setP1Id(player.getUserName());
         game.setP2Id("none");
-        game.setWinScore(3);
+        game.setWinScore(2);
         game.setId(Integer.toString(random.nextInt()));
-        game.setGameStatus("active*&^'@");
+        game.setGameStatus("active");
         game.setLetters(letters);
         game.setWordsUsed(new ArrayList<String>());
 

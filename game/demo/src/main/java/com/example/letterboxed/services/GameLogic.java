@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import javax.net.ssl.HttpsURLConnection;
 
 import com.example.letterboxed.classes.Game;
+import com.example.letterboxed.classes.Player;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
@@ -104,6 +106,36 @@ public class GameLogic {
         }
         
         return true;
+    }
+
+    public static boolean winnerFound(String username, Game game) {
+        System.out.println("in winnerfound\n");
+        int playerScore = 0;
+
+        List<Player> players = null;
+
+        try {
+            File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            players = objectMapper.readValue(file, new TypeReference<List<Player>>() {});
+        
+
+            for (Player player2 : players) {
+                if (username.equals(player2.getUserName())) {
+                    playerScore = player2.getScore();
+                }
+            }
+
+            
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+
+        if (playerScore+1 == game.getWinScore()) {
+            return true;
+        }
+        return false;
     }
 
 }

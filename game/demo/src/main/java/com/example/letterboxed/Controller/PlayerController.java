@@ -37,14 +37,14 @@ public class PlayerController {
         return playerService.createNewPlayer(newPlayer);
     }
 
-    @RequestMapping(value = "/players", method = RequestMethod.GET)
-    public void getPlayers() {
-        playerService.listPlayers();
-    }
+    // @RequestMapping(value = "/players", method = RequestMethod.GET)
+    // public void getPlayers() {
+    //     playerService.listPlayers();
+    // }
 
     @RequestMapping(value = "/logged", method = RequestMethod.GET, produces =MediaType.APPLICATION_JSON_VALUE)
     public Player getLoggedPlayer() {
-    return playerService.getLoggedUser();
+        return playerService.getLoggedUser();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -63,6 +63,16 @@ public class PlayerController {
     @RequestMapping(value = "/getplayer/{username}", method = RequestMethod.GET)
     public Player getPlayerByUsername(@PathVariable String username) {
         return playerService.getPlayerByUsername(username);
+    }
+
+    @RequestMapping(value = "/getplayerscore/{username}", method = RequestMethod.GET)
+    public Integer getPlayerScore(@PathVariable String username) {
+        return playerService.getPlayerScore(username);
+    }
+
+    @RequestMapping(value = "/clearplayerscore", method = RequestMethod.POST)
+    public Integer clearPlayerScore(@PathVariable String username) {
+        return playerService.clearPlayerScore(username);
     }
 
 }

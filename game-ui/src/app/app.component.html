@@ -1,17 +1,21 @@
-
 <div>
-  
+
   <mat-toolbar color="primary">
     <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button> -->
     <span>LETTER BOXED GAME</span>
+
+    <div *ngIf="playerStatus">
+      <button mat-button (click)="homepage()"> New Game </button>
+    </div>
     <span class="example-spacer"></span>
     <div *ngIf="playerStatus">
-      <button  mat-raised-button class="example-icon" (click)="logout()">Logout</button>
+      <button mat-raised-button class="example-icon" (click)="logout()">Logout</button>
+
     </div>
     <div *ngIf="!playerStatus">
-      <button  mat-raised-button class="example-icon" (click)="login()">Login</button>
+      <button mat-raised-button class="example-icon" (click)="login()">Login</button>
     </div>
     <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
@@ -20,7 +24,7 @@
       <mat-icon>share</mat-icon>
     </button> -->
   </mat-toolbar>
-<div>
+</div>
 <!-- <div class="content" *ngIf="!playerStatus">
   <h1>Welcome to Lettered Box Game!</h1>
   <p>To get started login or register!</p>

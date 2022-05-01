@@ -7,6 +7,7 @@ import javax.management.InvalidAttributeValueException;
 
 import com.example.letterboxed.classes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.stereotype.Service;
 
 
@@ -22,7 +23,47 @@ public class MoveService {
             // move.setWord(word);
             // move.setPlayerUsername(playerUsername);
             // move.setGameId(gameId);
+
+
             Game game = null;
+
+            try {
+                File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+                ObjectMapper objectMapper = new ObjectMapper();
+                game = objectMapper.readValue(file, Game.class);
+                //check if it is this users turn to make a move
+                if (game.getGameStatus().equals(playerUsername)) {
+                    if (GameLogic.winnerFound(playerUsername, game)) {
+                        game.setGameStatus("finish");
+                    } else if (game.getGameStatus().equals(game.getP1Id())) {
+                        game.setGameStatus(game.getP2Id());
+                    } else {
+                        game.setGameStatus(game.getP1Id());
+                    }
+                    game.getWordsUsed().add(word.toUpperCase());
+                    objectMapper.writeValue(file, game);
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            
+            return game;
+        }
+        else{
+            System.out.println("exception raised\n");
+            return new Game();
+            // throw new InvalidAttributeValueException("Invalid move");
+        }
+    }
+
+    public boolean isPlayerTurn(Game game, Player firstPlayer, Player secondPlayer) {
+        return GameLogic.playerTurn();
+    }
+
+    public Game skipMove(String playerUsername) {
+        Game game = null;
 
             try {
                 File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
@@ -35,25 +76,13 @@ public class MoveService {
                     } else {
                         game.setGameStatus(game.getP1Id());
                     }
-                    game.getWordsUsed().add(word);
                     objectMapper.writeValue(file, game);
                 }
                 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            
-            return game;
-        }
-        else{
-            throw new InvalidAttributeValueException("Invalid move");
-        }
+        return game;
     }
-
-    public boolean isPlayerTurn(Game game, Player firstPlayer, Player secondPlayer) {
-        return GameLogic.playerTurn();
-    }
-
 
 }
