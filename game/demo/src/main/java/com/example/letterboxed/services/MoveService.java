@@ -26,7 +26,7 @@ public class MoveService {
             move.setGameId(gameId);
 
             try {
-                File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+                File file = new File("game/demo/src/main/java/com/example/letterboxed/data/move.json");
                 FileWriter fileWriter = new FileWriter(file, true);
                 ObjectMapper mapper = new ObjectMapper();
 
