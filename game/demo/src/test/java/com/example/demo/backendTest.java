@@ -23,7 +23,7 @@ public class backendTest {
             System.out.println("worked");
         }
         try {
-            Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "value");
+            Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "uelav");
         } catch (InvalidAttributeValueException e) {
             System.out.println("failed");
         }
