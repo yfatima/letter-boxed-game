@@ -67,29 +67,29 @@ public class GameLogic {
         URL url;
          
         
-            try {
-                url = new URL(query);
-                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-                urlConnection.setRequestProperty("Accept","application/json");
-                urlConnection.setRequestProperty("app_id","5de54cbd");
-                urlConnection.setRequestProperty("app_key","a40855da9cbf40ad98ba228576229644");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null) 
-                {
-                    stringBuilder.append(line + "\n");
-                }
+            // try {
+            //     url = new URL(query);
+            //     HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+            //     urlConnection.setRequestProperty("Accept","application/json");
+            //     urlConnection.setRequestProperty("app_id","5de54cbd");
+            //     urlConnection.setRequestProperty("app_key","a40855da9cbf40ad98ba228576229644");
+            //     BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            //     StringBuilder stringBuilder = new StringBuilder();
+            //     String line = null;
+            //     while ((line = reader.readLine()) != null) 
+            //     {
+            //         stringBuilder.append(line + "\n");
+            //     }
     
-                System.out.println( stringBuilder.toString()); 
+            //     System.out.println( stringBuilder.toString()); 
     
-            } catch (MalformedURLException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                return false;
-            }
+            // } catch (MalformedURLException e1) {
+            //     // TODO Auto-generated catch block
+            //     e1.printStackTrace();
+            // } catch (IOException e) {
+            //     // TODO Auto-generated catch block
+            //     return false;
+            // }
                    
 
         previousWords.add(word.toUpperCase());

@@ -11,70 +11,13 @@ import { GameService } from 'src/services/game.service';
 import { MoveService } from 'src/services/move.service';
 import { PlayerService } from 'src/services/player.service';
 
-function drawBox() {
-  var canvas = <HTMLCanvasElement>document.getElementById('tutorial');
-  var ctx = canvas.getContext('2d');
-
-  // set line stroke and line width
-  ctx.strokeStyle = 'red';
-  ctx.lineWidth = 5;
-
-  // draw a red line
-  ctx.beginPath();
-  ctx.moveTo(100, 100);
-  ctx.lineTo(300, 100);
-  ctx.moveTo(50, 50);
-  ctx.lineTo(300, 100);
-  ctx.stroke();
-
-  // const myChart = new Chart(ctx, {
-  //   type: 'line',
-  //   data: {
-  //     datasets: [{
-  //       data: [{
-  //         x: 0.4,
-  //         y: 1
-  //       }, {
-  //         x: 1,
-  //         y: 0.5
-  //       }],
-  //       backgroundColor: '#3f51b5',
-  //     }],
-
-  //   },
-  //   options: {
-  //     plugins: {
-  //       tooltip: {
-  //         enabled: false
-  //       },
-  //       legend: {
-  //         display: false
-  //       },
-  //     },
-  //     scales: {
-  //       x: {
-  //         display: false,
-  //       },
-  //       y: {
-  //         display: false
-  //       }
-  //     },
-  //     elements: {
-  //       point: {
-  //         radius: 10
-  //       },
-  //     },
-  //   }
-  // });
-}
-
 function drawOutterBox(data: string[]) {
   var canvas = <HTMLCanvasElement>document.getElementById('letteredbox');
   var ctx = canvas.getContext('2d');
   //left side
   ctx.fillText(data[0], 10, 35);
-  ctx.fillText(data[1], 10, 125);
-  ctx.fillText(data[2], 10, 80);
+  ctx.fillText(data[2], 10, 125);
+  ctx.fillText(data[1], 10, 80);
   //top
   ctx.fillText(data[3], 85, 15);
   ctx.fillText(data[4], 145, 15);
@@ -88,6 +31,21 @@ function drawOutterBox(data: string[]) {
   ctx.fillText(data[10], 145, 145);
   ctx.fillText(data[11], 210, 145);
 }
+
+const boxcoords: [number, number][] = [
+  [0, 15],
+  [0, 80],
+  [0, 130],
+  [60, 0],
+  [150, 0],
+  [230, 0],
+  [300, 15],
+  [300, 80],
+  [300, 130],
+  [60, 150],
+  [80, 150],
+  [230, 150]
+];
 
 
 @Component({
@@ -135,7 +93,6 @@ export class GameComponent implements OnInit {
           this.game = data;
           //console.log(this.game);
           drawOutterBox(this.game.letters);
-          drawBox();
         });
       });
 
@@ -177,7 +134,6 @@ export class GameComponent implements OnInit {
           this.game = data;
           if (this.game.id != null) {
             drawOutterBox(this.game.letters);
-            drawBox();
           } else {
             this.router.navigate(['/home']);
           }
@@ -214,12 +170,13 @@ export class GameComponent implements OnInit {
 
   checkWord() {
     console.log(this.wordFormControl.value);
+    this.drawLines(this.wordFormControl.value);
     //make move
     if (!this.wordFormControl.hasError('pattern') && this.game.p2Id != "none") {
       this.moveService.createMove(this.player, this.wordFormControl.value).subscribe(data => {
         //console.log(data);
         if (data.id == null) {
-          alert("word used before");
+          alert("word used before or not a valid English word");
         } else {
           this.game = data;
           //console.log("end game");
@@ -237,10 +194,54 @@ export class GameComponent implements OnInit {
   }
 
   skipMove() {
-    this.moveService.skipMove(this.player).subscribe( data => {
+    this.moveService.skipMove(this.player).subscribe(data => {
       console.log(data);
       this.game = data;
     });
+  }
+
+  drawLines(word: string) {
+    const usingSplit = word.split('');
+    var char1Index = this.game.letters.indexOf(usingSplit[0].toUpperCase());
+    var char2Index = this.game.letters.indexOf(usingSplit[1].toUpperCase());
+    var char3Index = this.game.letters.indexOf(usingSplit[2].toUpperCase());
+    var char4Index = this.game.letters.indexOf(usingSplit[3].toUpperCase());
+    var char5Index = this.game.letters.indexOf(usingSplit[4].toUpperCase());
+
+    var canvas = <HTMLCanvasElement>document.getElementById('tutorial');
+    var ctx = canvas.getContext('2d');
+
+    ctx.strokeStyle = 'purple';
+    ctx.lineWidth = 3;
+
+    // draw lines
+    ctx.beginPath();
+    ctx.moveTo(boxcoords[char1Index][0], boxcoords[char1Index][1]);
+    ctx.lineTo(boxcoords[char2Index][0], boxcoords[char2Index][1]);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(boxcoords[char2Index][0], boxcoords[char2Index][1]);
+    ctx.lineTo(boxcoords[char3Index][0], boxcoords[char3Index][1]);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(boxcoords[char3Index][0], boxcoords[char3Index][1]);
+    ctx.lineTo(boxcoords[char4Index][0], boxcoords[char4Index][1]);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(boxcoords[char4Index][0], boxcoords[char4Index][1]);
+    ctx.lineTo(boxcoords[char5Index][0], boxcoords[char5Index][1]);
+    ctx.stroke();
+
+    //console.log(this.game.letters.indexOf(usingSplit[0].toUpperCase()));
+  }
+
+  clearLines() {
+    var canvas = <HTMLCanvasElement>document.getElementById('tutorial');
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
   destoryStartInterval() {

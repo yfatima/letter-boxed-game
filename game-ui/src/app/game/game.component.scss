@@ -126,7 +126,7 @@
   }
 
   .skipbtnmargin {
-    margin: 0.5px;
+    margin: 2px;
   }
 
   .card-container .card:not(:last-child) {
@@ -338,7 +338,7 @@
 
   canvas.letterbox { 
     //border: 1px solid black; 
-    width: 700px !important;
+    width: 400px !important;
     height: 400px !important;
     //background-color: #6a9cce;
     position: relative;
@@ -346,7 +346,7 @@
 
   canvas.dotbox { 
     border: 2px solid black; 
-    width: 600px !important;
+    width: 300px !important;
     height: 300px !important;
     background-color: #eaebec;
     position: absolute;

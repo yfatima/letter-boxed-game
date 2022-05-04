@@ -27,33 +27,37 @@
 
 
     </form>
-    <div class="wordmargin"> 
+    <div class="skipbtnmargin">
       <button mat-raised-button color="primary" [disabled]="showbutton" (click)="checkWord()">Check</button>
-      
+
     </div>
 
-  <div class="skipbtnmargin"> 
-    <button mat-raised-button color="primary" [disabled]="showbutton" (click)="skipMove()">Give Up</button>
-  </div>
+    <div class="skipbtnmargin">
+      <button mat-raised-button color="primary" [disabled]="showbutton" (click)="skipMove()">Give Up</button>
+    </div>
+
+    <div class="skipbtnmargin">
+      <button mat-raised-button color="primary" (click)="clearLines()">Reset Board</button>
+    </div>
 
 
 
   </div>
 
-  
+
   <div class="content2">
     <h1>Player Board ({{game.gameStatus | specialPipe}})</h1>
-    
-    
+
+
   </div>
   <canvas id="letteredbox" class="letterbox"></canvas>
   <canvas id="tutorial" class="dotbox"></canvas>
 
-  
+
 
   <!-- Footer -->
   <footer>
-    
+
     <div class="card2">
       <h3 class="wordmargin">Player 1:</h3>
       <h3 class="wordmargin">{{game.p1Id | specialPipe}}</h3>
@@ -62,6 +66,6 @@
       <h3 class="wordmargin">Player 2:</h3>
       <h3>{{game.p2Id!="none"?(game.p2Id | specialPipe):"ask a friend to join via game id"}}</h3>
     </div>
-    
+
   </footer>
 </div>
