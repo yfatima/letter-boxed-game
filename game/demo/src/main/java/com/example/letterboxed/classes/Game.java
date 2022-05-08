@@ -10,11 +10,12 @@ public class Game {
     private List<Character> letters;
     private List<String> wordsUsed;
     private Integer winScore;
+    private String winner;
     
     public Game(){}
 
     public Game(String id, String p1Id, String p2Id, String gameStatus, List<Character> letters, List<String> wordsUsed,
-            Integer winScore) {
+            Integer winScore, String winner) {
         this.id = id;
         this.p1Id = p1Id;
         this.p2Id = p2Id;
@@ -22,6 +23,15 @@ public class Game {
         this.letters = letters;
         this.wordsUsed = wordsUsed;
         this.winScore = winScore;
+        this.winner = winner;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 
     public List<String> getWordsUsed() {

@@ -9,6 +9,8 @@ public class Player {
     private String password;
     private List<String> wordList;
     private Integer score;
+    private Integer gamesLost;
+    private Integer gamesWon;
 
     public Player() {}
 
@@ -17,6 +19,26 @@ public class Player {
         this.email = email;
         this.password = password;
         this.wordList = null;
+        this.gamesLost = 0;
+        this.gamesWon = 0;
+        this.score = 0;
+    }
+
+
+    public Integer getGamesLost() {
+        return gamesLost;
+    }
+
+    public void setGamesLost(Integer gamesLost) {
+        this.gamesLost = gamesLost;
+    }
+
+    public Integer getGamesWon() {
+        return gamesWon;
+    }
+
+    public void setGamesWon(Integer gamesWon) {
+        this.gamesWon = gamesWon;
     }
 
     public Integer getScore() {

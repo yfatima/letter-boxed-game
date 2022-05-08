@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { GameComponent } from './game/game.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { PastgamesComponent } from './pastgames/pastgames.component';
+import { PlayerinfoComponent } from './playerinfo/playerinfo.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
@@ -11,6 +13,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'pastgames', component: PastgamesComponent },
+  { path: 'playerinfo', component:  PlayerinfoComponent },
   { path: ' ', component: AppComponent }
 ];
 

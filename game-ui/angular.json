@@ -70,7 +70,7 @@
             "proxyConfig": "src/proxy.conf.json",
             "sslKey": "./ssl/localhost.key",
             "sslCert": "./ssl/localhost.crt",
-            "ssl": true
+            "ssl": false
           },
           "configurations": {
             "production": {

@@ -4,4 +4,6 @@ export class Player {
     password: string;
     wordList: string[];
     score: number;
+    gamesWon: number;
+    gamesLost: number;
 }

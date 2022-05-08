@@ -43,6 +43,8 @@ export class RegisterComponent implements OnInit {
       this.p.password = this.passwordFormControl.value;
       this.p.wordList = [];
       this.p.score = 0;
+      this.p.gamesWon = 0;
+      this.p.gamesLost = 0;
       this.playerService.createPlayer(this.p).subscribe(data => {
         console.log(data);
         if (data) {

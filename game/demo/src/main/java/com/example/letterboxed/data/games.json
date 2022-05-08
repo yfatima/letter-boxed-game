@@ -1,26 +1,29 @@
 [
     {
-        "id": "game1",
-        "p1Id": "none",
-        "p2Id": "none",
-        "gameStatus": "inactive",
-        "letters" : [
-            "L", "J", "K", "N", "Q", "I", "B", "Z", "A", "Z", "T", "O"
+        "id": "496460768",
+        "p1Id": "yfatima",
+        "p2Id": "fmaryam",
+        "gameStatus": "finish",
+        "letters": [
+            "X",
+            "R",
+            "S",
+            "O",
+            "V",
+            "G",
+            "K",
+            "E",
+            "L",
+            "U",
+            "A",
+            "T"
         ],
-        "wordsUsed" : [],
-        "winScore": 3
-
-    },
-    {
-        "id": "game2",
-        "p1Id": "none",
-        "p2Id": "none",
-        "gameStatus": "inactive",
-        "letters" : [
-            "L", "M", "K", "P", "Q", "I", "D", "Z", "A", "X", "T", "O"
+        "wordsUsed": [
+            "VLUXE",
+            "KROAV",
+            "KROAG"
         ],
-        "wordsUsed" : [],
-        "winScore": 3
-
+        "winScore": 2,
+        "winner": "yfatima"
     }
 ]

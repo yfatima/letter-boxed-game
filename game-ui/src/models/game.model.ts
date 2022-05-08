@@ -8,4 +8,5 @@ export class Game {
     letters: string[];
     wordsUsed: string[];
     winScore: number;
+    winner: string;
 }

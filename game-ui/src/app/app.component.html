@@ -9,6 +9,12 @@
     <div *ngIf="playerStatus">
       <button mat-button (click)="homepage()"> New Game </button>
     </div>
+    <div *ngIf="playerStatus">
+      <button mat-button (click)="pastgames()"> Past Games </button>
+    </div>
+    <div *ngIf="playerStatus">
+      <button mat-button (click)="showplayerinfo()"> Players </button>
+    </div>
     <span class="example-spacer"></span>
     <div *ngIf="playerStatus">
       <button mat-raised-button class="example-icon" (click)="logout()">Logout</button>

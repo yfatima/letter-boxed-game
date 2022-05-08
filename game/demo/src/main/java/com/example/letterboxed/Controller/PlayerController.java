@@ -1,5 +1,7 @@
 package com.example.letterboxed.Controller;
 
+import java.util.List;
+
 import com.example.letterboxed.DTO.PlayerDTO;
 import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.services.PlayerService;
@@ -74,5 +76,11 @@ public class PlayerController {
     public Integer clearPlayerScore(@PathVariable String username) {
         return playerService.clearPlayerScore(username);
     }
+
+    @RequestMapping(value = "/players", method = RequestMethod.GET)
+    public List<Player> getPlayers() {
+        return playerService.listPlayers();
+    }
+
 
 }

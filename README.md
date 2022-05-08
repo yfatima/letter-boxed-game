@@ -29,7 +29,7 @@ What to turn in for the project
     Two Players credentials
 
     username: yfatima
-    password: superwoman
+    password: hello
 
     username: ssmith
     password: admin

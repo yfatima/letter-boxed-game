@@ -47,4 +47,8 @@ export class PlayerService {
   getPlayerScore(username: string) {
     return this.http.get<number>(this.baseURL + "/getplayerscore/" + username, httpOptions);
   }
+
+  getPlayers() {
+    return this.http.get<Player[]>(this.baseURL + "/players", httpOptions);
+  }
 }

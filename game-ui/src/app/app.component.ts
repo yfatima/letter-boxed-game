@@ -30,6 +30,17 @@ export class AppComponent {
     if (this.playerService.isPlayerLoggedIn()) {
       this.router.navigate(['/home']);
     }
-    
+  }
+
+  pastgames() {
+    if (this.playerService.isPlayerLoggedIn()) {
+      this.router.navigate(['/pastgames']);
+    }
+  }
+
+  showplayerinfo() {
+    if (this.playerService.isPlayerLoggedIn()) {
+      this.router.navigate(['/playerinfo']);
+    }
   }
 }

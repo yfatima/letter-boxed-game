@@ -16,6 +16,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {specialPipe} from './specialPipe';
+import { PastgamesComponent } from './pastgames/pastgames.component';
+import {MatTableModule} from '@angular/material/table';
+import { PlayerinfoComponent } from './playerinfo/playerinfo.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +26,9 @@ import {specialPipe} from './specialPipe';
     GameComponent,
     LoginComponent,
     RegisterComponent,
-    specialPipe
+    specialPipe,
+    PastgamesComponent,
+    PlayerinfoComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,8 @@ import {specialPipe} from './specialPipe';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

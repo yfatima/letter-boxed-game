@@ -65,6 +65,7 @@ public class GameService {
         game.setGameStatus("active");
         game.setLetters(letters);
         game.setWordsUsed(new ArrayList<String>());
+        game.setWinner("not decided");
 
         // find the game in games json file and add player 1 
         // then create a new json file for the game
@@ -156,5 +157,6 @@ public class GameService {
         }
         return false;
     }
+
 
 }
