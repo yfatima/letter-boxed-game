@@ -64,6 +64,7 @@ export class GameComponent implements OnInit {
   startcounter: any;
   score: number = 1;
   showbutton: boolean = false;
+  timeoutcounter: number = 0;
 
   subscription: Subscription;
 
@@ -107,22 +108,32 @@ export class GameComponent implements OnInit {
 
       this.intervelcounter = setInterval(() => {
         console.log('testing intervel player 1');
-        console.log(this.player);
-        this.gameService.getGameStatus(this.game.id).subscribe(data => {
-          this.game = data;
-          if (this.game.gameStatus == "finish") {
-            //console.log("generating finish alert");
-            this.destoryIntervel(this.game.p2Id);
-          }
+        //console.log(this.player);
+        if (this.timeoutcounter != 6) {
+          console.log(this.timeoutcounter);
+          this.gameService.getGameStatus(this.game.id).subscribe(data => {
+            this.game = data;
+            if (this.game.gameStatus == "finish") {
+              //console.log("generating finish alert");
+              this.destoryIntervel(this.game.p2Id);
+            }
+            if (this.game.gameStatus == this.player.userName) {
+              this.showbutton = false;
+              this.wordFormControl.enable();
+            } else {
+              this.showbutton = true;
+              this.wordFormControl.disable();
+            }
+            this.timeoutcounter++;
+          });
+        } else {
           if (this.game.gameStatus == this.player.userName) {
-            this.showbutton = false;
-            this.wordFormControl.enable();
-          } else {
-            this.showbutton = true;
-            this.wordFormControl.disable();
+            this.skipMove();
           }
-        });
-      }, 15000);
+          this.timeoutcounter = 0;
+        }
+
+      }, 10000);
 
     } else if (username != null && action != "newgame") {
 
@@ -141,24 +152,34 @@ export class GameComponent implements OnInit {
           //check if it is my turn
           //enable move check button else disable and update game
           //if my score is 3 then stop intervel, show win game alert
+          
           this.intervelcounter = setInterval(() => {
             console.log('testing intervel player 2');
-            console.log(this.player);
-            this.gameService.getGameStatus(this.game.id).subscribe(data => {
-              this.game = data;
-              if (this.game.gameStatus == "finish") {
-                //console.log("generating finish alert");
-                this.destoryIntervel(this.game.p1Id);
-              }
+            //console.log(this.player);
+            if (this.timeoutcounter != 6) {
+              console.log(this.timeoutcounter);
+              this.gameService.getGameStatus(this.game.id).subscribe(data => {
+                this.game = data;
+                if (this.game.gameStatus == "finish") {
+                  //console.log("generating finish alert");
+                  this.destoryIntervel(this.game.p1Id);
+                }
+                if (this.game.gameStatus == this.player.userName) {
+                  this.showbutton = false;
+                  this.wordFormControl.enable();
+                } else {
+                  this.showbutton = true;
+                  this.wordFormControl.disable();
+                }
+                this.timeoutcounter++;
+              });
+            } else {
               if (this.game.gameStatus == this.player.userName) {
-                this.showbutton = false;
-                this.wordFormControl.enable();
-              } else {
-                this.showbutton = true;
-                this.wordFormControl.disable();
+                this.skipMove();
               }
-            });
-          }, 20000);
+              this.timeoutcounter = 0;
+            }
+          }, 10000);
 
         });
 
@@ -173,6 +194,7 @@ export class GameComponent implements OnInit {
     this.drawLines(this.wordFormControl.value);
     //make move
     if (!this.wordFormControl.hasError('pattern') && this.game.p2Id != "none") {
+      this.timeoutcounter = 0;
       this.moveService.createMove(this.player, this.wordFormControl.value).subscribe(data => {
         //console.log(data);
         if (data.id == null) {
