@@ -38,16 +38,16 @@ export class PlayerService {
     sessionStorage.removeItem("username");
   }
 
-  getPlayerByUsername(username: string) {
-    return this.http.get<Player>(this.baseURL + "/getplayer/" + username, httpOptions);
+  getPlayerByUsername(username: string, hashvalue: string) {
+    return this.http.get<Player>(this.baseURL + "/getplayer/" + username + "/" + hashvalue, httpOptions);
   }
 
   getLoggedInPlayer() {
     return this.http.get<Player>(this.baseURL + "/logged", httpOptions);
   }
 
-  getPlayerScore(username: string) {
-    return this.http.get<number>(this.baseURL + "/getplayerscore/" + username, httpOptions);
+  getPlayerScore(username: string,  hashvalue: string) {
+    return this.http.get<number>(this.baseURL + "/getplayerscore/" + username + "/" + hashvalue, httpOptions);
   }
 
   getPlayers() {

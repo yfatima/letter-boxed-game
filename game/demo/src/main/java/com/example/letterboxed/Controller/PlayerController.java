@@ -1,5 +1,8 @@
 package com.example.letterboxed.Controller;
 
+import java.io.ByteArrayOutputStream;
+import java.security.MessageDigest;
+import javax.xml.bind.DatatypeConverter;
 import java.util.List;
 import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.services.PlayerService;
@@ -40,13 +43,29 @@ public class PlayerController {
         return playerService.authPlayer(newPlayer);
     }
 
-    @RequestMapping(value = "/getplayer/{username}", method = RequestMethod.GET)
-    public Player getPlayerByUsername(@PathVariable String username) {
+    @RequestMapping(value = "/getplayer/{username}/{hashvalue}", method = RequestMethod.GET)
+    public Player getPlayerByUsername(@PathVariable String username, @PathVariable String hashvalue) {
+        // System.out.println(hashvalue);
+        try {
+            if (!checkIntegrity(username, hashvalue)) {
+                return new Player();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         return playerService.getPlayerByUsername(username);
     }
 
-    @RequestMapping(value = "/getplayerscore/{username}", method = RequestMethod.GET)
-    public Integer getPlayerScore(@PathVariable String username) {
+    @RequestMapping(value = "/getplayerscore/{username}/{hashvalue}", method = RequestMethod.GET)
+    public Integer getPlayerScore(@PathVariable String username, @PathVariable String hashvalue) {
+        try {
+            if (!checkIntegrity(username, hashvalue)) {
+                return -1;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return playerService.getPlayerScore(username);
     }
 
@@ -58,6 +77,20 @@ public class PlayerController {
     @RequestMapping(value = "/players", method = RequestMethod.GET)
     public List<Player> getPlayers() {
         return playerService.listPlayers();
+    }
+
+
+    public boolean checkIntegrity(String username, String originalhashvalue)  throws Exception {
+
+        ByteArrayOutputStream byte_Stream = new ByteArrayOutputStream();
+        byte_Stream.write(username.getBytes());
+        byte[] valueToHash = byte_Stream.toByteArray();
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        String testhashvalue = DatatypeConverter.printHexBinary(messageDigest.digest(valueToHash)).toLowerCase();
+        if (testhashvalue.equals(originalhashvalue)) {
+            return true;
+        }
+        return false;
     }
 
 

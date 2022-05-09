@@ -10,6 +10,7 @@ import { Player } from 'src/models/player.model';
 import { GameService } from 'src/services/game.service';
 import { MoveService } from 'src/services/move.service';
 import { PlayerService } from 'src/services/player.service';
+import { sha256, sha224 } from 'js-sha256';
 
 function drawOutterBox(data: string[]) {
   var canvas = <HTMLCanvasElement>document.getElementById('letteredbox');
@@ -65,6 +66,7 @@ export class GameComponent implements OnInit {
   score: number = 1;
   showbutton: boolean = false;
   timeoutcounter: number = 0;
+  playerhashvalue: string;
 
   subscription: Subscription;
 
@@ -83,10 +85,11 @@ export class GameComponent implements OnInit {
     this.wordFormControl.disable();
     let action = this.route.snapshot.paramMap.get('action');
     let username = sessionStorage.getItem("username");
+    this.playerhashvalue = sha256(username);
     //get user by username
     if (username != null && action == 'newgame') {
       console.log("in new game");
-      this.playerService.getPlayerByUsername(username).subscribe(data => {
+      this.playerService.getPlayerByUsername(username, this.playerhashvalue).subscribe(data => {
         //console.log(data);
         this.player = data;
         //make a game 
@@ -137,7 +140,7 @@ export class GameComponent implements OnInit {
 
     } else if (username != null && action != "newgame") {
 
-      this.playerService.getPlayerByUsername(username).subscribe(data => {
+      this.playerService.getPlayerByUsername(username, this.playerhashvalue).subscribe(data => {
         //console.log(data);
         this.player = data;
         //make a game 
@@ -202,7 +205,7 @@ export class GameComponent implements OnInit {
           this.drawLines(this.wordFormControl.value);
           this.game = data;
           //console.log("end game");
-          this.playerService.getPlayerScore(this.player.userName).subscribe(data2 => {
+          this.playerService.getPlayerScore(this.player.userName, this.playerhashvalue).subscribe(data2 => {
             if (data2 == this.game.winScore) {
               this.destoryIntervel(this.player.userName);
             }
