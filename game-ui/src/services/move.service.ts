@@ -11,6 +11,8 @@ const httpOptions = {
 
 httpOptions.headers.append('Access-Control-Allow-Origin', '*');
 httpOptions.headers.append('Content-Type', 'application/json');
+httpOptions.headers.append('X-Frame-Options', 'SAMEORIGIN');
+httpOptions.headers.append('X-Content-Type-Options', 'nosniff');
 
 @Injectable({
   providedIn: 'root'

@@ -23,15 +23,15 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private PlayerService playerService;
+    // @Autowired
+    // private PlayerService playerService;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(new UserDetailsServiceImpl(playerService))
-                .passwordEncoder(new BCryptPasswordEncoder());
-    }
+    // @Autowired
+    // public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    //     auth
+    //             .userDetailsService(new UserDetailsServiceImpl(playerService))
+    //             .passwordEncoder(new BCryptPasswordEncoder());
+    // }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -52,9 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-     return super.authenticationManagerBean();
-    }
+    // @Override
+    // @Bean
+    // public AuthenticationManager authenticationManagerBean() throws Exception {
+    //  return super.authenticationManagerBean();
+    // }
 }
