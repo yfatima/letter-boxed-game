@@ -109,7 +109,7 @@ export class GameComponent implements OnInit {
       this.intervelcounter = setInterval(() => {
         console.log('testing intervel player 1');
         //console.log(this.player);
-        if (this.timeoutcounter != 6) {
+        if (this.timeoutcounter != 10) {
           console.log(this.timeoutcounter);
           this.gameService.getGameStatus(this.game.id).subscribe(data => {
             this.game = data;
@@ -156,8 +156,8 @@ export class GameComponent implements OnInit {
           this.intervelcounter = setInterval(() => {
             console.log('testing intervel player 2');
             //console.log(this.player);
-            if (this.timeoutcounter != 6) {
-              console.log(this.timeoutcounter);
+            if (this.timeoutcounter != 10) {
+              //console.log(this.timeoutcounter);
               this.gameService.getGameStatus(this.game.id).subscribe(data => {
                 this.game = data;
                 if (this.game.gameStatus == "finish") {
@@ -191,7 +191,6 @@ export class GameComponent implements OnInit {
 
   checkWord() {
     console.log(this.wordFormControl.value);
-    this.drawLines(this.wordFormControl.value);
     //make move
     if (!this.wordFormControl.hasError('pattern') && this.game.p2Id != "none") {
       this.timeoutcounter = 0;
@@ -200,6 +199,7 @@ export class GameComponent implements OnInit {
         if (data.id == null) {
           alert("word used before or not a valid English word");
         } else {
+          this.drawLines(this.wordFormControl.value);
           this.game = data;
           //console.log("end game");
           this.playerService.getPlayerScore(this.player.userName).subscribe(data2 => {

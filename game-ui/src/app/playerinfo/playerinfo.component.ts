@@ -10,7 +10,7 @@ import { PlayerService } from 'src/services/player.service';
 export class PlayerinfoComponent implements OnInit {
 
   player : Player[];
-  displayedColumns: string[] = ['username', 'email', 'Wins', 'Loses'];
+  displayedColumns: string[] = ['username', 'Wins', 'Loses'];
 
   constructor(private playerService: PlayerService) { }
 

@@ -2,7 +2,6 @@ package com.example.letterboxed.Controller;
 
 import com.example.letterboxed.DTO.MoveDTO;
 import com.example.letterboxed.classes.Game;
-import com.example.letterboxed.classes.Move;
 import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.services.GameService;
 import com.example.letterboxed.services.MoveService;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 import javax.management.InvalidAttributeValueException;
 import javax.servlet.http.HttpSession;
@@ -36,6 +33,11 @@ public class MoveController {
     private HttpSession httpSession;
 
     //Logger logger = LoggerFactory.getLogger(MoveController.class);
+
+    @RequestMapping("")
+    public String defaultMove() {
+        return "move default path";
+    }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Game createMove(@RequestBody MoveDTO moveDTO) throws InvalidAttributeValueException {

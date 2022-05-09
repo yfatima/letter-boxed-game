@@ -1,15 +1,12 @@
 package com.example.letterboxed.services;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.util.List;
 
-import com.example.letterboxed.DTO.PlayerDTO;
 import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.security.ContextUser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SequenceWriter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,10 +20,7 @@ public class PlayerService {
     }
 
     public Boolean createNewPlayer(Player newPlayer) {
-        // Player newPlayer = new Player();
-        // newPlayer.setUserName(newPlayer.getUserName());
         newPlayer.setPassword(passwordEncoder.encode(newPlayer.getPassword()+newPlayer.getUserName()));
-        // newPlayer.setEmail(newPlayerDTO.getEmail());
 
         if (savePlayer(newPlayer)) {
             return true;
@@ -37,7 +31,7 @@ public class PlayerService {
 
     public Player getLoggedUser() {
         ContextUser principal = (ContextUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal.getPlayer().getUserName());
+        // System.out.println(principal.getPlayer().getUserName());
 
         List<Player> players = listPlayers();
         for (Player player : players) {
@@ -67,7 +61,7 @@ public class PlayerService {
             File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
             ObjectMapper objectMapper = new ObjectMapper();
             players = objectMapper.readValue(file, new TypeReference<List<Player>>() {});
-            System.out.println(players);
+            // System.out.println(players);
             return players;
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -126,7 +120,7 @@ public class PlayerService {
 
     public int getPlayerScore(String username) {
         int score = 0;
-        System.out.println("in get score");
+        // System.out.println("in get score");
         List<Player> players = listPlayers();
         for (Player player2 : players) {
             if (username.equals(player2.getUserName())) {

@@ -29,10 +29,9 @@ public class GameController {
 
     Logger logger = LoggerFactory.getLogger(GameController.class);
 
-    @RequestMapping("/gameinfo")
-    public Game listUsers() {
-        System.out.println("getting game info in controller");
-        return gameService.getG1();
+    @RequestMapping("")
+    public String defaultGame() {
+        return "game default path";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

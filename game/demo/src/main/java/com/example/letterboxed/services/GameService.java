@@ -1,7 +1,7 @@
 package com.example.letterboxed.services;
 
 import java.io.File;
-//import java.security.SecureRandom;
+import java.security.SecureRandom;
 import java.util.List;
 
 import com.example.letterboxed.classes.Game;
@@ -25,8 +25,8 @@ public class GameService {
     public Game createNewGame(Player player) {
         System.out.println("Creating new game");
         //create the letters available for the game
-        Random random = new Random();
-        random.setSeed(12345);
+        Random random = new SecureRandom();
+        // random.setSeed(12345);
         Character vowels []= {'A', 'E', 'I', 'O', 'U', 'Y'};
         Character consonants [] = {'B', 'C', 'D', 'F', 'G', 'H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'};
         ArrayList <Character> letters = new ArrayList<Character>();
