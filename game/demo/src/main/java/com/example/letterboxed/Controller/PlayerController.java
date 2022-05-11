@@ -95,11 +95,6 @@ public class PlayerController {
         return playerService.getPlayerScore(username);
     }
 
-    // @RequestMapping(value = "/clearplayerscore", method = RequestMethod.POST)
-    // public Integer clearPlayerScore(@PathVariable String username) {
-    //     return playerService.clearPlayerScore(username);
-    // }
-
     /**
      * When 'player/players' restful api gets a get request, we return the list of players who have registered 
      * to our game application.

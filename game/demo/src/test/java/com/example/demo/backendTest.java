@@ -4,7 +4,6 @@ import java.lang.System;
 import javax.management.InvalidAttributeValueException;
 
 import com.example.letterboxed.classes.Game;
-import com.example.letterboxed.classes.Move;
 import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.services.GameService;
 import com.example.letterboxed.services.MoveService;

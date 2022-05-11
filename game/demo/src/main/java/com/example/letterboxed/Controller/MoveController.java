@@ -70,16 +70,6 @@ public class MoveController {
         return new Game();
     }
 
-    // @RequestMapping(value = "/turn", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public boolean isPlayerTurn() {
-    //     String gameId = (String) httpSession.getAttribute("gameId");
-    //     Game game = gameService.getGame(gameId);
-    //     if (game.getGameStatus() == playerService.getLoggedUser().getUserName()) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
     /**
      * When 'move/skip' restful api gets a post request, we skip the turn of the given player and update gamestatus.
      * @param player

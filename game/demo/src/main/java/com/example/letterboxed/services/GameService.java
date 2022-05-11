@@ -34,7 +34,7 @@ public class GameService {
         System.out.println("Creating new game");
         //create the letters available for the game
         Random random = new SecureRandom();
-        // random.setSeed(12345);
+        //random.setSeed(12345);
         Character vowels []= {'A', 'E', 'I', 'O', 'U', 'Y'};
         Character consonants [] = {'B', 'C', 'D', 'F', 'G', 'H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'};
         ArrayList <Character> letters = new ArrayList<Character>();
@@ -69,7 +69,7 @@ public class GameService {
         game.setP1Id(player.getUserName());
         game.setP2Id("none");
         game.setWinScore(2);
-        game.setId(Integer.toString(random.nextInt()));
+        game.setId(Integer.toString(Math.abs(random.nextInt())));
         game.setGameStatus("active");
         game.setLetters(letters);
         game.setWordsUsed(new ArrayList<String>());
@@ -112,6 +112,7 @@ public class GameService {
                 game.setGameStatus(game.getP1Id());
                 objectMapper.writeValue(file, game);
             }
+            System.out.println(game.getP2Id());
             return game;
         } catch (IOException e) {
             e.printStackTrace();

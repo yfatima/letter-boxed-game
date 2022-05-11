@@ -16,10 +16,12 @@ export class HomeComponent implements OnInit {
   appname = 'Letter Boxed Game';
   startedGame: Game;
   gameId: string = "newgame";
-  //game id must match this RE pattern
-  gameidFormControl = new FormControl('', [Validators.pattern('^[0-9]+$')]);
+  
 
   constructor(private gameService: GameService, private router: Router, private playerService: PlayerService) { }
+
+  //game id must match this RE pattern
+  gameidFormControl = new FormControl('', [Validators.pattern('^[0-9]+$')]);
 
   ngOnInit(): void {
   }
