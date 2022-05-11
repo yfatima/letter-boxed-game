@@ -1,21 +1,12 @@
 package com.example.letterboxed.config;
 
 import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 
-import com.example.letterboxed.security.UserDetailsServiceImpl;
-import com.example.letterboxed.services.PlayerService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -23,16 +14,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // @Autowired
-    // private PlayerService playerService;
-
-    // @Autowired
-    // public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    //     auth
-    //             .userDetailsService(new UserDetailsServiceImpl(playerService))
-    //             .passwordEncoder(new BCryptPasswordEncoder());
-    // }
-
+    /**
+     * We override configure method for http requests so we are able to process get and post requests from the frontend 
+     * on the local machine.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -52,9 +37,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
     }
 
-    // @Override
-    // @Bean
-    // public AuthenticationManager authenticationManagerBean() throws Exception {
-    //  return super.authenticationManagerBean();
-    // }
 }

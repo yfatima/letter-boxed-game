@@ -1,5 +1,9 @@
 package com.example.letterboxed.classes;
 
+/**
+ * This move class is used to create an instance move object that can contain information about a move made in the game by a player
+ * this class also holds setter and getter for all the attributes of move object
+ */
 public class Move {
 
     private String gameId;

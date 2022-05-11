@@ -18,17 +18,19 @@ import com.fasterxml.jackson.databind.SequenceWriter;
 
 import net.minidev.json.JSONObject;
 
-
-
+/**
+ * This GameLogic class performs input validation for the word and check for a winner.
+ */
 public class GameLogic {
 
     public GameLogic() {}
 
-    public static boolean playerTurn() {
-        return false;
-    }
-
-    //TODO: NEED TO CHECK WITH DICTIONARY FOR REAL WORDS
+    /**
+     * This method validates the word if it contains letters of the specfic game and is a real world word.
+     * @param word
+     * @param gameId
+     * @return boolean
+     */
     public static boolean valid_move(String word, String gameId){
         //check if all letters are in the game
         ObjectMapper objectMapper = new ObjectMapper();
@@ -104,14 +106,19 @@ public class GameLogic {
         } catch (Exception e) {
             
         }
-        
         return true;
     }
 
+    /**
+     * This method check if the player with the given username won the game or not.
+     * @param username
+     * @param game
+     * @return boolean
+     */
     public static boolean winnerFound(String username, Game game) {
         System.out.println("in winnerfound\n");
         int playerScore = 0;
-
+        //list of all players
         List<Player> players = null;
 
         try {
@@ -119,19 +126,17 @@ public class GameLogic {
             ObjectMapper objectMapper = new ObjectMapper();
             players = objectMapper.readValue(file, new TypeReference<List<Player>>() {});
         
-
+            //find the player with the given username and get their score
             for (Player player2 : players) {
                 if (username.equals(player2.getUserName())) {
                     playerScore = player2.getScore();
                 }
             }
 
-            
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-
-
+        // check if they have won
         if (playerScore+1 == game.getWinScore()) {
             return true;
         }

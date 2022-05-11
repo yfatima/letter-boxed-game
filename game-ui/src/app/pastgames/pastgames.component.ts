@@ -9,11 +9,14 @@ import { GameService } from 'src/services/game.service';
 })
 export class PastgamesComponent implements OnInit {
 
-  constructor(private gameService: GameService) { }
+  //local variables used to create the table
   games: Game[];
   displayedColumns: string[] = ['id', 'player 1', 'player 2', 'letters', 'words used', 'winscore', 'winner'];
 
+  constructor(private gameService: GameService) { }
+
   ngOnInit(): void {
+    //gets the list of all past games from the backend 
     this.gameService.getGames().subscribe ( data => {
         this.games = data;
     });

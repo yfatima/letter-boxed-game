@@ -12,6 +12,7 @@ import { PlayerService } from 'src/services/player.service';
 export class RegisterComponent implements OnInit {
 
 
+  //local variables for form inputs and match password to a specfic RE
   usernameFormControl = new FormControl('', [Validators.required]);
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required, Validators.pattern(
@@ -24,13 +25,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //takes the user to the login page
   goLogin() {
     this.router.navigate(['/login']);
   }
 
+  //creates a new user/player if all field are not empty and valid
   createPlayer() {
-    //console.log(this.usernameFormControl.value);
-
     if (this.usernameFormControl.hasError("required") || this.passwordFormControl.hasError('required') || this.emailFormControl.hasError("required")) {
       alert("all inputs are required");
     } else if (this.emailFormControl.hasError("email")) {
@@ -38,15 +39,15 @@ export class RegisterComponent implements OnInit {
     } else if (this.passwordFormControl.hasError("pattern")) {
       alert("please enter a valid password");
     } else {
+      //settings values to the player object to sent to the backend
       this.p.userName = this.usernameFormControl.value;
       this.p.email = this.emailFormControl.value;
       this.p.password = this.passwordFormControl.value;
-      this.p.wordList = [];
       this.p.score = 0;
       this.p.gamesWon = 0;
       this.p.gamesLost = 0;
       this.playerService.createPlayer(this.p).subscribe(data => {
-        console.log(data);
+        //console.log(data);
         if (data) {
           this.router.navigate(['/login']);
         } else {

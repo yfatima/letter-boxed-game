@@ -12,29 +12,25 @@ import { PlayerService } from 'src/services/player.service';
 })
 export class HomeComponent implements OnInit {
 
+  //local variables 
   appname = 'Letter Boxed Game';
   startedGame: Game;
   gameId: string = "newgame";
+  //game id must match this RE pattern
+  gameidFormControl = new FormControl('', [Validators.pattern('^[0-9]+$')]);
 
   constructor(private gameService: GameService, private router: Router, private playerService: PlayerService) { }
 
-  gameidFormControl = new FormControl('', [Validators.pattern('^[0-9]+$')]);
-
   ngOnInit(): void {
-
-    // if (this.playerService.isPlayerLoggedIn()) {
-    //   this.gameService.getGames().subscribe( data => {
-    //     console.log(data);
-    //   });
-    // } else {
-    //   this.router.navigate(['/login']);
-    // }
   }
 
+  //send game type to game component and go there
+  //called when the user clicks new game
   beginGame() {
     this.router.navigate(['/game/type', this.gameId]);
   }
 
+  //validates the game id and then lets the user join the game if backend check is good
   joinGame() {
     console.log(this.gameidFormControl.hasError('pattern'));
     this.gameService.getGameStatus(this.gameidFormControl.value).subscribe(data => {

@@ -9,13 +9,14 @@ import { PlayerService } from 'src/services/player.service';
 })
 export class PlayerinfoComponent implements OnInit {
 
+  //local variables for creating the table 
   player : Player[];
   displayedColumns: string[] = ['username', 'Wins', 'Loses'];
 
   constructor(private playerService: PlayerService) { }
 
   ngOnInit(): void {
-    let username = sessionStorage.getItem("username");
+    //gets the list of all the players and displaying username, wins, and losses only
     this.playerService.getPlayers().subscribe ( data => {
       this.player = data;
     });

@@ -12,30 +12,35 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.stereotype.Service;
 
-
+/**
+ * This MoveService class methods are called by the MoveController to do backend data processing and logical work.
+ */
 @Service
 public class MoveService {
 
     public MoveService() {}
 
+    /**
+     * This method validates the word and then adds it to the game and gives the player who made the move +1 score.
+     * @param gameId
+     * @param playerUsername
+     * @param word
+     * @return Game game (updated)
+     * @throws InvalidAttributeValueException
+     */
     public Game createMove(String gameId, String playerUsername, String word) throws InvalidAttributeValueException {
         if(GameLogic.valid_move(word, gameId))
         {
-            // Move move = new Move();
-            // move.setWord(word);
-            // move.setPlayerUsername(playerUsername);
-            // move.setGameId(gameId);
-
-
             Game game = null;
-
             try {
                 File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
                 ObjectMapper objectMapper = new ObjectMapper();
                 game = objectMapper.readValue(file, Game.class);
                 //check if it is this users turn to make a move
                 if (game.getGameStatus().equals(playerUsername)) {
+                    //adds the word to words used list
                     game.getWordsUsed().add(word.toUpperCase());
+                    //check if anyone won or assign next player turn 
                     if (GameLogic.winnerFound(playerUsername, game)) {
                         game.setGameStatus("finish");
                         game.setWinner(playerUsername);
@@ -58,21 +63,20 @@ public class MoveService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            
             return game;
         }
         else{
             System.out.println("exception raised\n");
             return new Game();
-            // throw new InvalidAttributeValueException("Invalid move");
         }
     }
 
-    public boolean isPlayerTurn(Game game, Player firstPlayer, Player secondPlayer) {
-        return GameLogic.playerTurn();
-    }
-
+    /**
+     * This method updates both player's overall count of games won and lost.
+     * @param playerwonusername
+     * @param playerlostusername
+     * @return boolean
+     */
     public boolean updatePlayersPoints(String playerwonusername, String playerlostusername) {
         List<Player> players = null;
         
@@ -102,6 +106,11 @@ public class MoveService {
         return false;
     }
 
+    /**
+     * This methods adds the game to overall games list after it is complete.
+     * @param game
+     * @return boolean
+     */
     public boolean updateGamesList(Game game) {
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -118,6 +127,11 @@ public class MoveService {
         return false;
     }
 
+    /**
+     * This method skips the turn of the player with the given username in the game.
+     * @param playerUsername
+     * @return Game game (updated)
+     */
     public Game skipMove(String playerUsername) {
         Game game = null;
 

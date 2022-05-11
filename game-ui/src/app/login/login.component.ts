@@ -12,7 +12,7 @@ import { PlayerService } from 'src/services/player.service';
 })
 export class LoginComponent implements OnInit {
 
-
+  //local variables used for the form inputs
   usernameFormControl = new FormControl('', [Validators.required]);
   passwordFormControl = new FormControl('', [Validators.required]);
 
@@ -21,17 +21,18 @@ export class LoginComponent implements OnInit {
 
   constructor(private playerService: PlayerService, private router: Router) { }
 
-
-
   ngOnInit(): void {
     sessionStorage.removeItem("username");
   }
 
+  //takes you to the register/sign up page
   signUp() {
     this.loggedIn = true;
     this.router.navigate(['/register']);
   }
 
+  //check if username and password fields are not empty and valid before sending that information to
+  //the backend to be authenticated
   authPlayer() {
 
     if (this.usernameFormControl.hasError("required")) {
@@ -42,7 +43,8 @@ export class LoginComponent implements OnInit {
       this.logPlayer.userName = this.usernameFormControl.value;
       this.logPlayer.password = this.passwordFormControl.value;
       this.playerService.playerLogIn(this.logPlayer).subscribe(data => {
-        console.log(data);
+        //console.log(data);
+        //user authenticated successfully so they can access the home page
         if (data) {
           sessionStorage.setItem("username", this.logPlayer.userName);
           this.loggedIn = true;

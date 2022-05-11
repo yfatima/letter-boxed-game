@@ -5,7 +5,6 @@ import java.security.SecureRandom;
 import java.util.List;
 
 import com.example.letterboxed.classes.Game;
-import com.example.letterboxed.classes.Move;
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,13 +14,21 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This GameService class methods are called by the GameController to do backend data processing and logical work.
+ */
 @Service
 public class GameService {
-    private Game g1 = new Game();
 
     public GameService() {
     }
 
+    /**
+     * This method creates the new game with the given player assigned as player 1 in the game.
+     * Each game has 4 or less vowels chosen randomly and has 12  or less consonants chosen randomly as well.
+     * @param player
+     * @return Game game (new)
+     */
     public Game createNewGame(Player player) {
         System.out.println("Creating new game");
         //create the letters available for the game
@@ -82,10 +89,12 @@ public class GameService {
         return game;
     }
 
-    public Game getG1() {
-        return g1;
-    }
-
+    /**
+     * This method adds the given player as player 2 in the game and starts the game by changing gamestatus.
+     * @param player
+     * @param gameId
+     * @return Game game (updated)
+     */
     public Game joinGame(Player player, String gameId) {
         // find the game in json file and add player 2
 
@@ -105,11 +114,14 @@ public class GameService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return game;
-
     }
 
+    /**
+     * This method search the game json data file to find the game with the given game id
+     * @param id
+     * @return Game game
+     */
     public Game getGame(String id) {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -129,6 +141,10 @@ public class GameService {
 
     }
 
+    /**
+     * This methods returns the list of all past games.
+     * @return List<Game> games
+     */
     public List<Game> getGames() {
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -143,6 +159,12 @@ public class GameService {
         return games;
     }
 
+    /**
+     * This methods changes the gamestatus by setting it to the username of the player whose turn is next.
+     * @param nextPlayerUsername
+     * @param id
+     * @return boolean
+     */
     public boolean updateGameStatus(String nextPlayerUsername, String id) {
         Game game = getGame(id);
         ObjectMapper objectMapper = new ObjectMapper();

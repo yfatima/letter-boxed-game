@@ -42,9 +42,9 @@ export class PlayerService {
     return this.http.get<Player>(this.baseURL + "/getplayer/" + username + "/" + hashvalue, httpOptions);
   }
 
-  getLoggedInPlayer() {
-    return this.http.get<Player>(this.baseURL + "/logged", httpOptions);
-  }
+  // getLoggedInPlayer() {
+  //   return this.http.get<Player>(this.baseURL + "/logged", httpOptions);
+  // }
 
   getPlayerScore(username: string,  hashvalue: string) {
     return this.http.get<number>(this.baseURL + "/getplayerscore/" + username + "/" + hashvalue, httpOptions);

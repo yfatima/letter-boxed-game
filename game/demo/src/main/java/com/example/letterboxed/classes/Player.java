@@ -1,13 +1,14 @@
 package com.example.letterboxed.classes;
 
-import java.util.List;
-
+/**
+ * This player class is used to create an instance of player/user object when a person registers to our application.
+ * this class also holds setter and getter for all the attributes of player object
+ */
 public class Player {
 
     private String userName;
     private String email;
     private String password;
-    private List<String> wordList;
     private Integer score;
     private Integer gamesLost;
     private Integer gamesWon;
@@ -18,7 +19,6 @@ public class Player {
         this.userName = userName;
         this.email = email;
         this.password = password;
-        this.wordList = null;
         this.gamesLost = 0;
         this.gamesWon = 0;
         this.score = 0;
@@ -71,18 +71,6 @@ public class Player {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<String> getWordList() {
-        return wordList;
-    }
-
-    public void setWordList(List<String> wordList) {
-        this.wordList = wordList;
-    }
-
-    public void addWord(String word) {
-        this.wordList.add(word);
     }
     
 }

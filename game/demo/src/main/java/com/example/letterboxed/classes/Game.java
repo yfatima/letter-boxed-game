@@ -2,6 +2,11 @@ package com.example.letterboxed.classes;
 
 import java.util.List;
 
+/**
+ * This game class is used to create an instance every game with an unique game id and attributes 
+ * depending on the players, letters, and etc.
+ * this class also holds setter and getter for all the attributes of game object
+ */
 public class Game {
     private String id;
     private String p1Id;
