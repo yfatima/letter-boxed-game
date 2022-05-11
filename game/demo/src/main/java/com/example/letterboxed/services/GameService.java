@@ -1,6 +1,7 @@
 package com.example.letterboxed.services;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -82,11 +83,11 @@ public class GameService {
         try {
             objectMapper2.writeValue(file2, game);
             return game;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Can't write game in game.json file");
+            return game;
         }
-
-        return game;
     }
 
     /**
@@ -111,10 +112,13 @@ public class GameService {
                 game.setGameStatus(game.getP1Id());
                 objectMapper.writeValue(file, game);
             }
-        } catch (Exception e) {
+            return game;
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Can't write game in game.json file");
+            return game;
         }
-        return game;
+        
     }
 
     /**
@@ -134,11 +138,13 @@ public class GameService {
             if (game.getId().equals(id)) {
                 return game;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error in reading the game from game.json file");
+            return game;
         }
+        
         return game;
-
     }
 
     /**
@@ -153,10 +159,12 @@ public class GameService {
             games = objectMapper.readValue(file, new TypeReference<List<Game>>() {});
             return games;
 
-        } catch (Exception e1) {
+        } catch (IOException e1) {
             e1.printStackTrace();
+            System.out.println("Error in reading the games from games.json file");
+            return games;
         }
-        return games;
+        
     }
 
     /**
@@ -174,10 +182,11 @@ public class GameService {
             game.setGameStatus(nextPlayerUsername);
             objectMapper.writeValue(file, game);
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error in writing the updated gane in game.json file");
+            return false;
         }
-        return false;
     }
 
 

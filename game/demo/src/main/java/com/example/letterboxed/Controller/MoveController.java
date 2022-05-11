@@ -64,10 +64,10 @@ public class MoveController {
         //add move (word) to the game object
         Game updatedGame = moveService.createMove(game.getId(), currentplayer.getUserName(), word);
         //if move was successful then update the score of the player who made the move
-        if (updatedGame.getId() != null) {
-            this.playerService.updatePlayerScore(currentplayer.getUserName());
+        if (updatedGame.getId() != null && (this.playerService.updatePlayerScore(currentplayer.getUserName()) != -1)) {
+            return updatedGame;
         }
-        return updatedGame;
+        return new Game();
     }
 
     // @RequestMapping(value = "/turn", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

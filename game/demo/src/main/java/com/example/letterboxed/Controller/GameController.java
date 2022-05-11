@@ -50,10 +50,13 @@ public class GameController {
     public Game createGame(@RequestBody Player player1) {
         //System.out.println(player1);
         Game game = gameService.createNewGame(player1);
-        this.playerService.clearPlayerScore(player1.getUserName());
-        httpSession.setAttribute("gameId", game.getId());
-        logger.info("new game id: " + httpSession.getAttribute("gameId")+ " stored in session" );
-        return game;
+        if (this.playerService.clearPlayerScore(player1.getUserName()) != -1) {
+            httpSession.setAttribute("gameId", game.getId());
+            logger.info("new game id: " + httpSession.getAttribute("gameId")+ " stored in session" );
+            return game;
+        }
+        return new Game();
+        
     }
 
     /**
@@ -66,9 +69,11 @@ public class GameController {
     public Game joinGame(@RequestBody PlayerDTO playerdto) {
         Game game;
         if (playerdto.gameId.matches("[0-9]+")) {
-            this.playerService.clearPlayerScore(playerdto.player.getUserName());
-            game = gameService.joinGame(playerdto.player, playerdto.gameId);
-            return game;
+            if (this.playerService.clearPlayerScore(playerdto.player.getUserName()) != -1) {
+                game = gameService.joinGame(playerdto.player, playerdto.gameId);
+                return game;
+            }
+            
         }
         return new Game();
     }

@@ -2,6 +2,7 @@ package com.example.letterboxed.services;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.management.InvalidAttributeValueException;
@@ -60,8 +61,10 @@ public class MoveService {
                     objectMapper.writeValue(file, game);
                 }
                 
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println("Error in reading/writing the game from/in game.json file");
+                return new Game();
             }
             return game;
         }
@@ -99,11 +102,11 @@ public class MoveService {
             mapper.writeValue(file, players);
             return true;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error in reading/writing the player from players.json file");
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -121,10 +124,11 @@ public class MoveService {
             objectMapper.writeValue(file, games);
             return true;
 
-        } catch (Exception e1) {
+        } catch (IOException e1) {
             e1.printStackTrace();
+            System.out.println("Error in reading/writing the updated games list from/in games.json file");
+            return false;
         }
-        return false;
     }
 
     /**
@@ -147,10 +151,11 @@ public class MoveService {
                         game.setGameStatus(game.getP1Id());
                     }
                     objectMapper.writeValue(file, game);
-                }
-                
-            } catch (Exception e) {
+                }     
+            } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println("Error in reading/writing the updated game from/in game.json file");
+                return new Game();
             }
         return game;
     }

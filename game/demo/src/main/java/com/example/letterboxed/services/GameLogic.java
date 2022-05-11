@@ -42,8 +42,10 @@ public class GameLogic {
             if (game.getId().equals(gameId)) {
                 letters = game.getLetters();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error in reading the game from game.json file");
+            return false;
         }
         char[] array = word.toUpperCase().toCharArray();
         for(char i:array)
@@ -103,8 +105,10 @@ public class GameLogic {
             SequenceWriter seqWriter = objectMapper.writer().writeValuesAsArray(fileWriter);
             seqWriter.write(game);
             seqWriter.close();
-        } catch (Exception e) {
-            
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error in reading/writing the game from/in game.json file");
+            return false;
         }
         return true;
     }
@@ -132,9 +136,10 @@ public class GameLogic {
                     playerScore = player2.getScore();
                 }
             }
-
-        } catch (Exception e1) {
+        } catch (IOException e1) {
             e1.printStackTrace();
+            System.out.println("Error in reading the player from players.json file");
+            return false;
         }
         // check if they have won
         if (playerScore+1 == game.getWinScore()) {

@@ -217,7 +217,7 @@ export class GameComponent implements OnInit {
           //console.log("end game");
           //check if the player won after this move
           this.playerService.getPlayerScore(this.player.userName, this.playerhashvalue).subscribe(data2 => {
-            if (data2 == this.game.winScore) {
+            if (data2 == this.game.winScore && data2 != -1) {
               this.destoryIntervel(this.player.userName);
             }
           });

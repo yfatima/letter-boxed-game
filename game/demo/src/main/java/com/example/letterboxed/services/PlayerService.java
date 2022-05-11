@@ -1,6 +1,7 @@
 package com.example.letterboxed.services;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import com.example.letterboxed.classes.Player;
@@ -34,19 +35,6 @@ public class PlayerService {
         return false;
     }
 
-    // public Player getLoggedUser() {
-    //     ContextUser principal = (ContextUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    //     // System.out.println(principal.getPlayer().getUserName());
-
-    //     List<Player> players = listPlayers();
-    //     for (Player player : players) {
-    //         if (principal.getPlayer().getUserName() == player.getUserName()) {
-    //             return player;
-    //         }
-    //     }
-    //     return new Player();
-    // }
-
     /**
      * This method authenticates the player that they have registered before and gave valid username and password.
      * @param player
@@ -75,10 +63,11 @@ public class PlayerService {
             ObjectMapper objectMapper = new ObjectMapper();
             players = objectMapper.readValue(file, new TypeReference<List<Player>>() {});
             return players;
-        } catch (Exception e1) {
+        } catch (IOException e1) {
             e1.printStackTrace();
+            System.out.println("Error in reading the players list from players.json file");
+            return players;
         }
-        return players;
     }
 
     /**
@@ -109,13 +98,13 @@ public class PlayerService {
         try {
             File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
             ObjectMapper mapper = new ObjectMapper();
-            
             mapper.writeValue(file, players);
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error in writing the player in players.json file");
+            return false;
         }
-        return false;
     }
 
     /**
@@ -124,24 +113,25 @@ public class PlayerService {
      * @return int player score (updated)
      */
     public int updatePlayerScore(String username) {
-        int newScore = 0;
+        int newScore = -1;
         List<Player> players = listPlayers();
         for (Player player2 : players) {
             if (username.equals(player2.getUserName())) {
                 player2.setScore(player2.getScore()+1);
+                newScore = player2.getScore();
             }
         }
 
         try {
             File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
             ObjectMapper mapper = new ObjectMapper();
-            
             mapper.writeValue(file, players);
             return newScore;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error in writing the player in players.json file");
+            return -1;
         }
-        return newScore;
     }
 
     /**
@@ -150,7 +140,7 @@ public class PlayerService {
      * @return int player score
      */
     public int getPlayerScore(String username) {
-        int score = 0;
+        int score = -1;
         // System.out.println("in get score");
         List<Player> players = listPlayers();
         for (Player player2 : players) {
@@ -172,18 +162,19 @@ public class PlayerService {
         for (Player player2 : players) {
             if (username.equals(player2.getUserName())) {
                 player2.setScore(0);
+                newScore = 0;
             }
         }
         try {
             File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
             ObjectMapper mapper = new ObjectMapper();
-            
             mapper.writeValue(file, players);
             return newScore;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        return newScore;
+            System.out.println("Error in writing the player in players.json file");
+            return newScore;
+        }  
     }
 
 }
