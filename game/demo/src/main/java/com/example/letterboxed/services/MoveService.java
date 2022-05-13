@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.*;
 import javax.management.InvalidAttributeValueException;
+import org.apache.commons.text.StringEscapeUtils;
 
 import com.example.letterboxed.classes.*;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -42,7 +43,7 @@ public class MoveService {
             e1.printStackTrace();
         }
         
-        if(GameLogic.valid_move(word, gameId))
+        if(GameLogic.valid_move(StringEscapeUtils.escapeJava(word), gameId))
         {
             Game game = null;
             try {
