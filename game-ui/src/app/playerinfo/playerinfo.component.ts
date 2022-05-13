@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Player } from 'src/models/player.model';
 import { PlayerService } from 'src/services/player.service';
 
@@ -10,16 +11,22 @@ import { PlayerService } from 'src/services/player.service';
 export class PlayerinfoComponent implements OnInit {
 
   //local variables for creating the table 
-  player : Player[];
+  player: Player[];
   displayedColumns: string[] = ['username', 'Wins', 'Loses'];
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService, private router: Router) { }
 
   ngOnInit(): void {
-    //gets the list of all the players and displaying username, wins, and losses only
-    this.playerService.getPlayers().subscribe ( data => {
-      this.player = data;
-    });
+
+    if (!this.playerService.isPlayerLoggedIn()) {
+      this.router.navigate(['/login']);
+    } else {
+      //gets the list of all the players and displaying username, wins, and losses only
+      this.playerService.getPlayers().subscribe(data => {
+        this.player = data;
+      });
+    }
+
   }
 
 }

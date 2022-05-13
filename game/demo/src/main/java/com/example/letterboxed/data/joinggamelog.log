@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-13T20:56:33.832217Z</date>
+  <millis>1652475393832</millis>
+  <nanos>217000</nanos>
+  <sequence>108</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameService</class>
+  <method>joinGame</method>
+  <thread>264</thread>
+  <message>player fmaryam joined game 285086442 successfully</message>
+</record>
+</log>

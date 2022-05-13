@@ -85,6 +85,10 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
 
+    if (!this.playerService.isPlayerLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
+    
     this.showbutton = true;
     this.wordFormControl.disable();
     let action = this.route.snapshot.paramMap.get('action');

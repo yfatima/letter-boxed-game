@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-13T20:56:50.876045Z</date>
+  <millis>1652475410876</millis>
+  <nanos>45000</nanos>
+  <sequence>115</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameLogic</class>
+  <method>valid_move</method>
+  <thread>279</thread>
+  <message>word is valid</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-13T20:57:17.793177Z</date>
+  <millis>1652475437793</millis>
+  <nanos>177000</nanos>
+  <sequence>122</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameLogic</class>
+  <method>valid_move</method>
+  <thread>297</thread>
+  <message>word is valid</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-13T20:58:00.610997Z</date>
+  <millis>1652475480610</millis>
+  <nanos>997000</nanos>
+  <sequence>136</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameLogic</class>
+  <method>valid_move</method>
+  <thread>329</thread>
+  <message>word is valid</message>
+</record>
+</log>

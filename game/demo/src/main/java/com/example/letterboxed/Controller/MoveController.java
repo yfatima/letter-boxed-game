@@ -85,6 +85,7 @@ public class MoveController {
      */
     @RequestMapping(value = "/skipmove", method = RequestMethod.POST)
     public Game createSkipMove(@RequestBody String gameId) {
+        //System.out.println(gameId + " in controller skipmove\n");
         if (gameId.matches("[0-9]+")) {
             return this.moveService.skipMove(gameId);
         }

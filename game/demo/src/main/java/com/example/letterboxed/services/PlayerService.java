@@ -3,6 +3,8 @@ package com.example.letterboxed.services;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.*;
 
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,22 +14,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
- * This PlayerService class methods are called by the PlayerController to do backend data processing and logical work.
+ * This PlayerService class methods are called by the PlayerController to do
+ * backend data processing and logical work.
  */
 @Service
 public class PlayerService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private static Logger logger = Logger.getLogger("letterboxed");
 
     public PlayerService() {
     }
 
     /**
      * This method creates the new player from the given information.
+     * 
      * @param newPlayer
      * @return boolean
      */
     public boolean createNewPlayer(Player newPlayer) {
-        newPlayer.setPassword(passwordEncoder.encode(newPlayer.getPassword()+newPlayer.getUserName()));
+        newPlayer.setPassword(passwordEncoder.encode(newPlayer.getPassword() + newPlayer.getUserName()));
 
         if (savePlayer(newPlayer)) {
             return true;
@@ -36,23 +41,49 @@ public class PlayerService {
     }
 
     /**
-     * This method authenticates the player that they have registered before and gave valid username and password.
+     * This method authenticates the player that they have registered before and
+     * gave valid username and password.
+     * 
      * @param player
      * @return boolean
      */
     public boolean authPlayer(Player player) {
-        List<Player> players = listPlayers();
-        
-        for (Player p : players) {
-            if (p.getUserName().equals(player.getUserName()) && passwordEncoder.matches(player.getPassword()+player.getUserName(), p.getPassword())) {
-                return true;
+
+        try {
+            FileHandler logfile = new FileHandler(
+                    "game/demo/src/main/java/com/example/letterboxed/data/userauthlogs.log",
+                    2000, 1, true);
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+
+            List<Player> players = listPlayers();
+
+            for (Player p : players) {
+                if (p.getUserName().equals(player.getUserName())
+                        && passwordEncoder.matches(player.getPassword() + player.getUserName(), p.getPassword())) {
+                    logger.log(Level.FINE, "user was successfully authenticated");
+                    logfile.close();
+                    return true;
+                }
             }
+            logger.log(Level.FINE, "user was not authenticated");
+            logfile.close();
+            return false;
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
         }
+        
         return false;
     }
 
     /**
-     * This method returns the list of all registered players from our players json data file.
+     * This method returns the list of all registered players from our players json
+     * data file.
+     * 
      * @return List<Player> players
      */
     public List<Player> listPlayers() {
@@ -61,7 +92,8 @@ public class PlayerService {
         try {
             File file = new File("game/demo/src/main/java/com/example/letterboxed/data/players.json");
             ObjectMapper objectMapper = new ObjectMapper();
-            players = objectMapper.readValue(file, new TypeReference<List<Player>>() {});
+            players = objectMapper.readValue(file, new TypeReference<List<Player>>() {
+            });
             return players;
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -72,6 +104,7 @@ public class PlayerService {
 
     /**
      * This method returns the player associated the given username.
+     * 
      * @param username
      * @return Player player
      */
@@ -88,6 +121,7 @@ public class PlayerService {
 
     /**
      * This method saves the player in the players json data file.
+     * 
      * @param player
      * @return boolean
      */
@@ -108,7 +142,9 @@ public class PlayerService {
     }
 
     /**
-     * This method updates the player score by increment of 1 given the player username.
+     * This method updates the player score by increment of 1 given the player
+     * username.
+     * 
      * @param username
      * @return int player score (updated)
      */
@@ -117,7 +153,7 @@ public class PlayerService {
         List<Player> players = listPlayers();
         for (Player player2 : players) {
             if (username.equals(player2.getUserName())) {
-                player2.setScore(player2.getScore()+1);
+                player2.setScore(player2.getScore() + 1);
                 newScore = player2.getScore();
             }
         }
@@ -136,6 +172,7 @@ public class PlayerService {
 
     /**
      * This method gets the player's score given their username.
+     * 
      * @param username
      * @return int player score
      */
@@ -152,7 +189,9 @@ public class PlayerService {
     }
 
     /**
-     * This method clears the player score from player object in the players json data file after game is complete.
+     * This method clears the player score from player object in the players json
+     * data file after game is complete.
+     * 
      * @param username
      * @return int player score (updated)
      */
@@ -174,7 +213,7 @@ public class PlayerService {
             e.printStackTrace();
             System.out.println("Error in writing the player in players.json file");
             return newScore;
-        }  
+        }
     }
 
 }

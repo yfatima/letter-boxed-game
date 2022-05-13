@@ -39,7 +39,7 @@ export class GameService {
   }
 
   getGameStatus(id: String) {
-    return this.http.post<Game>(this.baseURL + "/gamestatus", id, httpOptions);
+    return this.http.get<Game>(this.baseURL + "/gamestatus/" + id, httpOptions);
   }
 
   updateGameStatus(player: Player, gameId: String) {
