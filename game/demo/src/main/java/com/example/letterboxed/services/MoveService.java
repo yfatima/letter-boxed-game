@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MoveService {
     private static Logger logger = Logger.getLogger("letterboxed");
-    public MoveService() {}
+
+    public MoveService() {
+    }
 
     /**
      * This method validates the word and then adds it to the game and gives the
@@ -34,9 +36,57 @@ public class MoveService {
      */
     public Game createMove(String gameId, String playerUsername, String word) throws InvalidAttributeValueException {
         try {
-            Handler logfile = new FileHandler("%t/logs.log");
+            FileHandler logfile = new FileHandler(
+                    "game/demo/src/main/java/com/example/letterboxed/data/newmovelogs.log", 2000, 1, true);
             Logger.getLogger("").addHandler(logfile);
             logger.setLevel(Level.ALL);
+
+            if (GameLogic.valid_move(StringEscapeUtils.escapeJava(word), gameId)) {
+                Game game = null;
+                try {
+                    File file = new File(
+                            "game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    game = objectMapper.readValue(file, Game.class);
+                    // check if it is this users turn to make a move
+                    if (game.getGameStatus().equals(playerUsername)) {
+                        // adds the word to words used list
+                        game.getWordsUsed().add(word.toUpperCase());
+                        // check if anyone won or assign next player turn
+                        if (GameLogic.winnerFound(playerUsername, game)) {
+                            game.setGameStatus("finish");
+                            game.setWinner(playerUsername);
+                            updateGamesList(game);
+                            String lostplayer;
+                            if (game.getP1Id().equals(playerUsername)) {
+                                lostplayer = game.getP2Id();
+                            } else {
+                                lostplayer = game.getP1Id();
+                            }
+                            updatePlayersPoints(playerUsername, lostplayer);
+                        } else if (game.getGameStatus().equals(game.getP1Id())) {
+                            game.setGameStatus(game.getP2Id());
+                        } else {
+                            game.setGameStatus(game.getP1Id());
+                        }
+                        objectMapper.writeValue(file, game);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    logger.log(Level.WARNING, "Error in reading/writing game from/to game.json");
+
+                    return new Game();
+                }
+                logfile.close();
+                return game;
+            } else {
+
+                logger.log(Level.SEVERE, "invalid word given");
+                logfile.close();
+                return new Game();
+            }
+
         } catch (SecurityException e1) {
 
             e1.printStackTrace();
@@ -44,51 +94,7 @@ public class MoveService {
 
             e1.printStackTrace();
         }
-        
-        if(GameLogic.valid_move(StringEscapeUtils.escapeJava(word), gameId))
-        {
-            Game game = null;
-            try {
-                File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
-                ObjectMapper objectMapper = new ObjectMapper();
-                game = objectMapper.readValue(file, Game.class);
-                // check if it is this users turn to make a move
-                if (game.getGameStatus().equals(playerUsername)) {
-                    // adds the word to words used list
-                    game.getWordsUsed().add(word.toUpperCase());
-                    // check if anyone won or assign next player turn
-                    if (GameLogic.winnerFound(playerUsername, game)) {
-                        game.setGameStatus("finish");
-                        game.setWinner(playerUsername);
-                        updateGamesList(game);
-                        String lostplayer;
-                        if (game.getP1Id().equals(playerUsername)) {
-                            lostplayer = game.getP2Id();
-                        } else {
-                            lostplayer = game.getP1Id();
-                        }
-                        updatePlayersPoints(playerUsername, lostplayer);
-                    } else if (game.getGameStatus().equals(game.getP1Id())) {
-                        game.setGameStatus(game.getP2Id());
-                    } else {
-                        game.setGameStatus(game.getP1Id());
-                    }
-                    objectMapper.writeValue(file, game);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.log(Level.WARNING, "Error in reading/writing game from/to game.json");
-               
-                return new Game();
-            }
-            return game;
-        }
-        else{
-            
-            logger.log(Level.SEVERE,"invalid word given");
-            return new Game();
-        }
+        return new Game();
     }
 
     /**
@@ -99,18 +105,7 @@ public class MoveService {
      * @return boolean
      */
     public boolean updatePlayersPoints(String playerwonusername, String playerlostusername) {
-        try {
-            Handler logfile = new FileHandler("%t/logs.log");
-            Logger.getLogger("").addHandler(logfile);
-            logger.setLevel(Level.ALL);
-        } catch (SecurityException e1) {
 
-            e1.printStackTrace();
-        } catch (IOException e1) {
-
-            e1.printStackTrace();
-        }
-        
         List<Player> players = null;
 
         try {
@@ -134,7 +129,6 @@ public class MoveService {
 
         } catch (IOException e) {
             e.printStackTrace();
-            logger.log(Level.SEVERE,"Error in reading/writing the player from players.json");
 
             return false;
         }
@@ -147,17 +141,6 @@ public class MoveService {
      * @return boolean
      */
     public boolean updateGamesList(Game game) {
-        try {
-            Handler logfile = new FileHandler("%t/logs.log");
-            Logger.getLogger("").addHandler(logfile);
-            logger.setLevel(Level.ALL);
-        } catch (SecurityException e1) {
-
-            e1.printStackTrace();
-        } catch (IOException e1) {
-
-            e1.printStackTrace();
-        }
 
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -171,7 +154,6 @@ public class MoveService {
 
         } catch (IOException e1) {
             e1.printStackTrace();
-            logger.log(Level.WARNING,"Error in reading/writing the updated games list from/in games.json file");
             return false;
         }
     }
@@ -183,11 +165,42 @@ public class MoveService {
      * @return Game game (updated)
      */
     public Game skipMove(String gameId) {
-        
+
         try {
-            Handler logfile = new FileHandler("%t/logs.log");
+            FileHandler logfile = new FileHandler(
+                    "game/demo/src/main/java/com/example/letterboxed/data/skipmovelogs.log",
+                    2000, 1, true);
             Logger.getLogger("").addHandler(logfile);
             logger.setLevel(Level.ALL);
+
+            Game game = null;
+            String skippedPlayer;
+
+            //System.out.println(gameId + "in service skipmove");
+
+            try {
+                File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
+                ObjectMapper objectMapper = new ObjectMapper();
+                game = objectMapper.readValue(file, Game.class);
+
+                // check if it is this users turn to make a move
+                if (game.getGameStatus().equals(game.getP1Id())) {
+                    skippedPlayer = game.getP1Id();
+                    game.setGameStatus(game.getP2Id());
+                } else {
+                    skippedPlayer = game.getP2Id();
+                    game.setGameStatus(game.getP1Id());
+                }
+                objectMapper.writeValue(file, game);
+                logger.log(Level.FINE, "player " + skippedPlayer + " skipped");
+                logfile.close();
+                return game;
+            } catch (IOException e) {
+                e.printStackTrace();
+                logger.log(Level.WARNING, "Error in reading/writing the updated game from/in game.json file");
+                logfile.close();
+                return new Game();
+            }
         } catch (SecurityException e1) {
 
             e1.printStackTrace();
@@ -195,30 +208,6 @@ public class MoveService {
 
             e1.printStackTrace();
         }
-
-        Game game = null;
-        String skippedPlayer;
-
-        try {
-            File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
-            ObjectMapper objectMapper = new ObjectMapper();
-            game = objectMapper.readValue(file, Game.class);
-            
-            // check if it is this users turn to make a move
-            if (game.getGameStatus().equals(game.getP1Id())) {
-                skippedPlayer = game.getP1Id();
-                game.setGameStatus(game.getP2Id());
-            } else {
-                skippedPlayer = game.getP2Id();
-                game.setGameStatus(game.getP1Id());
-            }
-            objectMapper.writeValue(file, game);
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.log(Level.WARNING,"Error in reading/writing the updated game from/in game.json file");
-            return new Game();
-        }
-        logger.log(Level.FINE,"player "+ skippedPlayer +" skipped");
         return new Game();
     }
 

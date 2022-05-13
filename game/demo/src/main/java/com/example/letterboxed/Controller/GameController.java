@@ -95,9 +95,8 @@ public class GameController {
      * @param id
      * @return Game game
      */
-    @RequestMapping(value = "/gamestatus", method = RequestMethod.POST)
-    public Game getGameStatus(@RequestBody String id) {
-        //System.out.println(id);
+    @RequestMapping(value = "/gamestatus/{id}", method = RequestMethod.GET)
+    public Game getGameStatus(@PathVariable String id) {
         httpSession.setAttribute("gameId", id);
         if (checkGameId(id)){
             Game result = gameService.getGame(id);

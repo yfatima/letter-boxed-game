@@ -13,15 +13,4 @@ public class GameApplication {
 		SpringApplication.run(GameApplication.class, args);
 	}
 
-	// @Bean
-    // public CommandLineRunner demo(PlayerService playerService) {
-    //     return (args) -> {
-
-    //         //save a couple of players
-    //         playerService.savePlayer(new Player("ala", "ala@ala.com", new BCryptPasswordEncoder().encode("ala")));
-    //         playerService.savePlayer(new Player("mary", "mary@mary.com",  new BCryptPasswordEncoder().encode("mary")));
-	// 		return;
-    //     };
-    // }
-
 }

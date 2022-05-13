@@ -24,6 +24,9 @@ export class HomeComponent implements OnInit {
   gameidFormControl = new FormControl('', [Validators.pattern('^[0-9]+$')]);
 
   ngOnInit(): void {
+    if (!this.playerService.isPlayerLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
   }
 
   //send game type to game component and go there

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-13T20:56:27.264343Z</date>
+  <millis>1652475387264</millis>
+  <nanos>343000</nanos>
+  <sequence>100</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameService</class>
+  <method>createNewGame</method>
+  <thread>250</thread>
+  <message>player com.example.letterboxed.classes.Player@18c0969e creating new game</message>
+</record>
+<record>
+  <date>2022-05-13T20:56:27.266236Z</date>
+  <millis>1652475387266</millis>
+  <nanos>236000</nanos>
+  <sequence>101</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameService</class>
+  <method>createNewGame</method>
+  <thread>250</thread>
+  <message>game created successfuly</message>
+</record>
+</log>
