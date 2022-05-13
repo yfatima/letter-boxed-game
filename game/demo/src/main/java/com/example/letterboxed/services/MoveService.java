@@ -3,8 +3,9 @@ package com.example.letterboxed.services;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
+import java.util.logging.*;
 import javax.management.InvalidAttributeValueException;
+import org.apache.commons.text.StringEscapeUtils;
 
 import com.example.letterboxed.classes.*;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,9 +19,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MoveService {
-
-    public MoveService() {
-    }
+    private static Logger logger = Logger.getLogger("letterboxed");
+    public MoveService() {}
 
     /**
      * This method validates the word and then adds it to the game and gives the
@@ -33,7 +33,20 @@ public class MoveService {
      * @throws InvalidAttributeValueException
      */
     public Game createMove(String gameId, String playerUsername, String word) throws InvalidAttributeValueException {
-        if (GameLogic.valid_move(word, gameId)) {
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+        
+        if(GameLogic.valid_move(StringEscapeUtils.escapeJava(word), gameId))
+        {
             Game game = null;
             try {
                 File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
@@ -65,12 +78,15 @@ public class MoveService {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Error in reading/writing the game from/in game.json file");
+                logger.log(Level.WARNING, "Error in reading/writing game from/to game.json");
+               
                 return new Game();
             }
             return game;
-        } else {
-            System.out.println("exception raised\n");
+        }
+        else{
+            
+            logger.log(Level.SEVERE,"invalid word given");
             return new Game();
         }
     }
@@ -83,6 +99,18 @@ public class MoveService {
      * @return boolean
      */
     public boolean updatePlayersPoints(String playerwonusername, String playerlostusername) {
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+        
         List<Player> players = null;
 
         try {
@@ -106,7 +134,8 @@ public class MoveService {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error in reading/writing the player from players.json file");
+            logger.log(Level.SEVERE,"Error in reading/writing the player from players.json");
+
             return false;
         }
     }
@@ -118,6 +147,18 @@ public class MoveService {
      * @return boolean
      */
     public boolean updateGamesList(Game game) {
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
         ObjectMapper objectMapper = new ObjectMapper();
         List<Game> games = null;
@@ -130,7 +171,7 @@ public class MoveService {
 
         } catch (IOException e1) {
             e1.printStackTrace();
-            System.out.println("Error in reading/writing the updated games list from/in games.json file");
+            logger.log(Level.WARNING,"Error in reading/writing the updated games list from/in games.json file");
             return false;
         }
     }
@@ -142,26 +183,43 @@ public class MoveService {
      * @return Game game (updated)
      */
     public Game skipMove(String gameId) {
-        System.out.println(gameId + "in service skip move\n");
+        
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+
         Game game = null;
+        String skippedPlayer;
 
         try {
             File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
             ObjectMapper objectMapper = new ObjectMapper();
             game = objectMapper.readValue(file, Game.class);
+            
             // check if it is this users turn to make a move
             if (game.getGameStatus().equals(game.getP1Id())) {
+                skippedPlayer = game.getP1Id();
                 game.setGameStatus(game.getP2Id());
             } else {
+                skippedPlayer = game.getP2Id();
                 game.setGameStatus(game.getP1Id());
             }
             objectMapper.writeValue(file, game);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error in reading/writing the updated game from/in game.json file");
+            logger.log(Level.WARNING,"Error in reading/writing the updated game from/in game.json file");
             return new Game();
         }
-        return game;
+        logger.log(Level.FINE,"player "+ skippedPlayer +" skipped");
+        return new Game();
     }
 
 }
