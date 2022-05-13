@@ -34,7 +34,7 @@ public class GameLogic {
     public static boolean valid_move(String word, String gameId){
         //check if all letters are in the game
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
         List <Character> letters=null;
         Game game = null;
         try {

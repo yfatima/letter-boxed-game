@@ -78,7 +78,7 @@ public class GameService {
         // find the game in games json file and add player 1 
         // then create a new json file for the game
        
-        File file2 = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+        File file2 = new File("game/demo/src/main/java/com/example/letterboxed/data/game"  + game.getId() + ".json");
         ObjectMapper objectMapper2 = new ObjectMapper();
         try {
             objectMapper2.writeValue(file2, game);
@@ -100,8 +100,8 @@ public class GameService {
         // find the game in json file and add player 2
 
         ObjectMapper objectMapper = new ObjectMapper();
-
-        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+        System.out.println(gameId);
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
 
         Game game = null;
         try {
@@ -130,7 +130,7 @@ public class GameService {
     public Game getGame(String id) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + id + ".json");
 
         Game game = null;
         try {
@@ -178,7 +178,7 @@ public class GameService {
         Game game = getGame(id);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+        File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + game.getId() + ".json");
         try {
             game.setGameStatus(nextPlayerUsername);
             objectMapper.writeValue(file, game);

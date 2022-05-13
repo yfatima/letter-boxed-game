@@ -68,13 +68,15 @@ public class GameController {
     @RequestMapping(value = "/join", method = RequestMethod.POST)
     public Game joinGame(@RequestBody PlayerDTO playerdto) {
         Game game;
-        if (playerdto.gameId.matches("[0-9]+")) {
+        System.out.println(playerdto.gameId);
+        if (checkGameId(playerdto.gameId)) {
             if (this.playerService.clearPlayerScore(playerdto.player.getUserName()) != -1) {
                 game = gameService.joinGame(playerdto.player, playerdto.gameId);
                 return game;
             }
             
         }
+        System.out.println("RE no match\n");
         return new Game();
     }
 
@@ -97,9 +99,12 @@ public class GameController {
     public Game getGameStatus(@RequestBody String id) {
         //System.out.println(id);
         httpSession.setAttribute("gameId", id);
-        Game result = gameService.getGame(id);
+        if (checkGameId(id)){
+            Game result = gameService.getGame(id);
+            return result;
+        }
         //System.out.println(result);
-        return result;
+        return new Game();
     }
 
     /**
@@ -109,11 +114,22 @@ public class GameController {
      * @return Boolean 
      */
     @RequestMapping(value = "/updategamestatus", method = RequestMethod.POST)
-    public Boolean updateGameStatus(@RequestBody PlayerDTO playerdto) {
+    public boolean updateGameStatus(@RequestBody PlayerDTO playerdto) {
         //System.out.println(playerdto);
-        return gameService.updateGameStatus(playerdto.player.getUserName(), playerdto.gameId);
+        if (checkGameId(playerdto.gameId)) {
+            return gameService.updateGameStatus(playerdto.player.getUserName(), playerdto.gameId);
+        }
+        return false;
     }
 
+    /**
+     * This method checks if game id is valid meaning one or more numbers
+     * @param gameId
+     * @return boolean
+     */
+    private boolean checkGameId(String gameId) {
+        return gameId.matches("[0-9]+");
+    }
 
 
 }

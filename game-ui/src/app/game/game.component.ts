@@ -206,7 +206,7 @@ export class GameComponent implements OnInit {
     //make move
     if (!this.wordFormControl.hasError('pattern') && this.game.p2Id != "none") {
       this.timeoutcounter = 0;
-      this.moveService.createMove(this.player, this.wordFormControl.value).subscribe(data => {
+      this.moveService.createMove(this.player, this.wordFormControl.value, this.game.id).subscribe(data => {
         //console.log(data);
         if (data.id == null) {
           alert("word used before or not a valid English word");
@@ -231,7 +231,8 @@ export class GameComponent implements OnInit {
 
   //this function skips the player's turn
   skipMove() {
-    this.moveService.skipMove(this.player).subscribe(data => {
+    console.log(this.game.id);
+    this.moveService.skipMove(this.game.id).subscribe(data => {
       //console.log(data);
       this.game = data;
     });

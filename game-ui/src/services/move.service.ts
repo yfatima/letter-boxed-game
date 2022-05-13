@@ -23,11 +23,11 @@ export class MoveService {
 
   constructor(private http: HttpClient) { }
 
-  createMove(player: Player, word: String) {
-    return this.http.post<Game>(this.baseURL + "/create", { word, player }, httpOptions);
+  createMove(player: Player, word: String, gameid: String) {
+    return this.http.post<Game>(this.baseURL + "/create", { word, player, gameid }, httpOptions);
   }
 
-  skipMove(player: Player) {
-    return this.http.post<Game>(this.baseURL + "/skipmove", player, httpOptions);
+  skipMove(gameid: String) {
+    return this.http.post<Game>(this.baseURL + "/skipmove", gameid, httpOptions);
   }
 }

@@ -1,6 +1,7 @@
 package com.example.letterboxed.Controller;
 
 import com.example.letterboxed.DTO.MoveDTO;
+import com.example.letterboxed.DTO.PlayerDTO;
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.services.GameService;
@@ -16,7 +17,8 @@ import javax.management.InvalidAttributeValueException;
 import javax.servlet.http.HttpSession;
 
 /**
- * This MoveController class processes get and post requests made to move restful api.
+ * This MoveController class processes get and post requests made to move
+ * restful api.
  */
 @RestController
 @RequestMapping("/move")
@@ -34,10 +36,11 @@ public class MoveController {
     @Autowired
     private HttpSession httpSession;
 
-    //Logger logger = LoggerFactory.getLogger(MoveController.class);
+    // Logger logger = LoggerFactory.getLogger(MoveController.class);
 
     /**
      * Method to process default get request to game default path
+     * 
      * @return String msg
      */
     @RequestMapping("")
@@ -46,37 +49,46 @@ public class MoveController {
     }
 
     /**
-     * When 'move/create' restful api gets a post request, we get the game instance with game id and add the move word to it.
+     * When 'move/create' restful api gets a post request, we get the game instance
+     * with game id and add the move word to it.
+     * 
      * @param player1
      * @return Game game (updated)
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Game createMove(@RequestBody MoveDTO moveDTO) throws InvalidAttributeValueException {
-        //get game id from http session 
-        String gameId = (String) httpSession.getAttribute("gameId");
-        // logger.info("move to insert:" + MoveDTO.getWord());
 
-        //get the game with this game id 
-        Game game = gameService.getGame(gameId);
-        Player currentplayer = moveDTO.player; 
-        String word = moveDTO.word;
-        
-        //add move (word) to the game object
-        Game updatedGame = moveService.createMove(game.getId(), currentplayer.getUserName(), word);
-        //if move was successful then update the score of the player who made the move
-        if (updatedGame.getId() != null && (this.playerService.updatePlayerScore(currentplayer.getUserName()) != -1)) {
-            return updatedGame;
+        // get the game with this game id
+        if (moveDTO.gameid.matches("[0-9]+")) {
+            Game game = gameService.getGame(moveDTO.gameid);
+            Player currentplayer = moveDTO.player;
+            String word = moveDTO.word;
+
+            // add move (word) to the game object
+            Game updatedGame = moveService.createMove(game.getId(), currentplayer.getUserName(), word);
+            // if move was successful then update the score of the player who made the move
+            if (updatedGame.getId() != null
+                    && (this.playerService.updatePlayerScore(currentplayer.getUserName()) != -1)) {
+                return updatedGame;
+            }
         }
+
         return new Game();
     }
 
     /**
-     * When 'move/skip' restful api gets a post request, we skip the turn of the given player and update gamestatus.
+     * When 'move/skipmove' restful api gets a post request, we skip the turn of the
+     * given player and update gamestatus.
+     * 
      * @param player
      * @return Game game (updated)
      */
     @RequestMapping(value = "/skipmove", method = RequestMethod.POST)
-    public Game createMove(@RequestBody Player player) {
-        return this.moveService.skipMove(player.getUserName());
+    public Game createSkipMove(@RequestBody String gameId) {
+        if (gameId.matches("[0-9]+")) {
+            return this.moveService.skipMove(gameId);
+        }
+        return new Game();
+        
     }
 }
