@@ -1,15 +1,10 @@
 package com.example.letterboxed.services;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
-import java.io.InputStreamReader;
-import javax.net.ssl.HttpsURLConnection;
-
+import java.util.logging.*;
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,11 +12,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
 import net.minidev.json.JSONObject;
-
 /**
  * This GameLogic class performs input validation for the word and check for a winner.
  */
 public class GameLogic {
+    private static Logger logger = Logger.getLogger("letterboxed");
+    
 
     public GameLogic() {}
 
@@ -32,11 +28,29 @@ public class GameLogic {
      * @return boolean
      */
     public static boolean valid_move(String word, String gameId){
-        //check if all letters are in the game
+
         ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+
+        //check if all letters are in the game
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
+        
         List <Character> letters=null;
         Game game = null;
+        // if (word.length() <3)
+        // {
+        //     return false;
+        // }
         try {
             game = objectMapper.readValue(file, Game.class);
             if (game.getId().equals(gameId)) {
@@ -45,6 +59,7 @@ public class GameLogic {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error in reading the game from game.json file");
+            logger.log(Level.WARNING, "game not found", gameId);
             return false;
         }
         char[] array = word.toUpperCase().toCharArray();
@@ -52,7 +67,7 @@ public class GameLogic {
         {
             if(!letters.contains(i))
             {
-                System.out.println("Word " + word +" is invalid. ");
+                logger.log(Level.WARNING, "invalid word used by user", game.getGameStatus());
                 return false;
             }
         }
@@ -61,41 +76,13 @@ public class GameLogic {
         List<String> previousWords = game.getWordsUsed();
         if (previousWords.contains(word.toUpperCase()))
         {
-            System.out.println("Word " + word+ " is already used");
+            logger.log(Level.WARNING, "invalid word used by user", game.getGameStatus());
             return false;
         }
 
         //check if word exists
         String query = "https://od-api.oxforddictionaries.com:443/api/v2/entries/en-gb/"  + word.toLowerCase() +"?fields=pronunciations&strictMatch=true";
         System.out.println(query);
-        URL url;
-         
-        
-            // try {
-            //     url = new URL(query);
-            //     HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            //     urlConnection.setRequestProperty("Accept","application/json");
-            //     urlConnection.setRequestProperty("app_id","5de54cbd");
-            //     urlConnection.setRequestProperty("app_key","a40855da9cbf40ad98ba228576229644");
-            //     BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            //     StringBuilder stringBuilder = new StringBuilder();
-            //     String line = null;
-            //     while ((line = reader.readLine()) != null) 
-            //     {
-            //         stringBuilder.append(line + "\n");
-            //     }
-    
-            //     System.out.println( stringBuilder.toString()); 
-    
-            // } catch (MalformedURLException e1) {
-            //     // TODO Auto-generated catch block
-            //     e1.printStackTrace();
-            // } catch (IOException e) {
-            //     // TODO Auto-generated catch block
-            //     return false;
-            // }
-                   
-
         previousWords.add(word.toUpperCase());
         game.setWordsUsed(previousWords);
         try {
@@ -106,10 +93,11 @@ public class GameLogic {
             seqWriter.write(game);
             seqWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "invalid word used by user", game.getGameStatus());
             System.out.println("Error in reading/writing the game from/in game.json file");
             return false;
         }
+        logger.log(Level.FINE, "word is valid");
         return true;
     }
 
@@ -120,7 +108,18 @@ public class GameLogic {
      * @return boolean
      */
     public static boolean winnerFound(String username, Game game) {
-        System.out.println("in winnerfound\n");
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+
         int playerScore = 0;
         //list of all players
         List<Player> players = null;
@@ -138,13 +137,15 @@ public class GameLogic {
             }
         } catch (IOException e1) {
             e1.printStackTrace();
-            System.out.println("Error in reading the player from players.json file");
+            logger.log(Level.WARNING, "Error in reading the player from players.json file", game.getGameStatus());
             return false;
         }
         // check if they have won
         if (playerScore+1 == game.getWinScore()) {
+            logger.log(Level.FINE, "player " +game.getGameStatus()+" won");
             return true;
         }
+        logger.log(Level.FINE, "player " +game.getGameStatus()+" hasn't won yet");
         return false;
     }
 

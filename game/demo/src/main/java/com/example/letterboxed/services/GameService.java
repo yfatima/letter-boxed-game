@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.logging.*;
 
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
@@ -20,7 +21,7 @@ import java.util.Collections;
  */
 @Service
 public class GameService {
-
+    private static Logger logger = Logger.getLogger("letterboxed");
     public GameService() {
     }
 
@@ -31,10 +32,20 @@ public class GameService {
      * @return Game game (new)
      */
     public Game createNewGame(Player player) {
-        System.out.println("Creating new game");
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+        logger.log(Level.FINE, "player "+player+" creating new game");
         //create the letters available for the game
         Random random = new SecureRandom();
-        //random.setSeed(12345);
         Character vowels []= {'A', 'E', 'I', 'O', 'U', 'Y'};
         Character consonants [] = {'B', 'C', 'D', 'F', 'G', 'H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z'};
         ArrayList <Character> letters = new ArrayList<Character>();
@@ -82,10 +93,11 @@ public class GameService {
         ObjectMapper objectMapper2 = new ObjectMapper();
         try {
             objectMapper2.writeValue(file2, game);
+            logger.log(Level.FINE,"game created successfuly");
             return game;
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Can't write game in game.json file");
+            logger.log(Level.WARNING,"Can't write game in game.json file");
             return game;
         }
     }
@@ -98,7 +110,17 @@ public class GameService {
      */
     public Game joinGame(Player player, String gameId) {
         // find the game in json file and add player 2
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
 
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
         ObjectMapper objectMapper = new ObjectMapper();
 
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
@@ -112,11 +134,11 @@ public class GameService {
                 game.setGameStatus(game.getP1Id());
                 objectMapper.writeValue(file, game);
             }
-            System.out.println(game.getP2Id());
+            logger.log(Level.FINE,"player "+player.getUserName()+" joined game "+gameId.toString()+" successfully");
             return game;
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Can't write game in game.json file");
+            logger.log(Level.FINE,"Can't write game in game.json file");
             return game;
         }
         
@@ -128,6 +150,17 @@ public class GameService {
      * @return Game game
      */
     public Game getGame(String id) {
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game.json");
@@ -141,7 +174,7 @@ public class GameService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error in reading the game from game.json file");
+            logger.log(Level.WARNING,"Error in reading the game from game.json file");
             return game;
         }
         
@@ -153,6 +186,17 @@ public class GameService {
      * @return List<Game> games
      */
     public List<Game> getGames() {
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
         File file = new File("game/demo/src/main/java/com/example/letterboxed/data/games.json");
         ObjectMapper objectMapper = new ObjectMapper();
         List<Game> games = null;
@@ -162,6 +206,7 @@ public class GameService {
 
         } catch (IOException e1) {
             e1.printStackTrace();
+            logger.log(Level.SEVERE, "Error in reading games from games.json file");
             System.out.println("Error in reading the games from games.json file");
             return games;
         }
@@ -175,6 +220,18 @@ public class GameService {
      * @return boolean
      */
     public boolean updateGameStatus(String nextPlayerUsername, String id) {
+        try {
+            Handler logfile = new FileHandler("%t/logs.log");
+            Logger.getLogger("").addHandler(logfile);
+            logger.setLevel(Level.ALL);
+        } catch (SecurityException e1) {
+
+            e1.printStackTrace();
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+        
         Game game = getGame(id);
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -185,7 +242,7 @@ public class GameService {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error in writing the updated gane in game.json file");
+            logger.log(Level.WARNING,"Error in writing the updated gane in game.json file");
             return false;
         }
     }
