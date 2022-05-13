@@ -32,7 +32,7 @@ public class GameLogic {
         ObjectMapper objectMapper = new ObjectMapper();
         
         try {
-            Handler logfile = new FileHandler("%t/logs.log");
+            Handler logfile = new FileHandler("/Users/utkarshagarwal/Desktop/classes/Masters/spring/681/project/letter-boxed-game/game/demo/src/main/java/com/example/letterboxed/data/logs.log",2000,1);
             Logger.getLogger("").addHandler(logfile);
             logger.setLevel(Level.ALL);
         } catch (SecurityException e1) {
@@ -110,7 +110,7 @@ public class GameLogic {
      */
     public static boolean winnerFound(String username, Game game) {
         try {
-            Handler logfile = new FileHandler("%t/logs.log");
+            Handler logfile = new FileHandler("/Users/utkarshagarwal/Desktop/classes/Masters/spring/681/project/letter-boxed-game/game/demo/src/main/java/com/example/letterboxed/data/logs.log",2000,1);
             Logger.getLogger("").addHandler(logfile);
             logger.setLevel(Level.ALL);
         } catch (SecurityException e1) {
