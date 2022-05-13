@@ -1,4 +1,6 @@
 package com.example.letterboxed.classes;
+import org.apache.commons.text.StringEscapeUtils;
+
 
 /**
  * This player class is used to create an instance of player/user object when a person registers to our application.
@@ -16,8 +18,8 @@ public class Player {
     public Player() {}
 
     public Player(String userName, String email, String password) {
-        this.userName = userName;
-        this.email = email;
+        this.userName = StringEscapeUtils.escapeJava(userName);
+        this.email = StringEscapeUtils.escapeJava(email);
         this.password = password;
         this.gamesLost = 0;
         this.gamesWon = 0;

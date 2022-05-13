@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.logging.*;
-
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
