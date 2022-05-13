@@ -17,20 +17,19 @@ public class backendTest {
         System.out.println(newGame.getLetters());
         MoveService moveserve = new MoveService();
         try {
-            Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "ace");
+            moveserve.createMove(newGame.getId(), myplayer.getUserName(), "ace");
         } catch (InvalidAttributeValueException e) {
-            // TODO Auto-generated catch block
             System.out.println("worked");
         }
         try {
             newGame.setGameStatus("oot");
-            Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "value");
+            moveserve.createMove(newGame.getId(), myplayer.getUserName(), "value");
         } catch (InvalidAttributeValueException e) {
             System.out.println("failed");
         }
         try {
             newGame.setGameStatus("oot");
-            Game newMove = moveserve.createMove(newGame.getId(), myplayer.getUserName(), "value");
+            moveserve.createMove(newGame.getId(), myplayer.getUserName(), "value");
         } catch (InvalidAttributeValueException e) {
             System.out.println("worked 3");
         }
