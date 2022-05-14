@@ -1,40 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
-<record>
-  <date>2022-05-14T03:26:02.235569Z</date>
-  <millis>1652498762235</millis>
-  <nanos>569000</nanos>
-  <sequence>513</sequence>
-  <logger>org.apache.catalina.core.StandardService</logger>
-  <level>INFO</level>
-  <class>org.apache.catalina.core.StandardService</class>
-  <method>startInternal</method>
-  <thread>1151</thread>
-  <message>Starting service [Tomcat]</message>
-</record>
-<record>
-  <date>2022-05-14T03:26:02.235764Z</date>
-  <millis>1652498762235</millis>
-  <nanos>764000</nanos>
-  <sequence>514</sequence>
-  <logger>org.apache.catalina.core.StandardEngine</logger>
-  <level>INFO</level>
-  <class>org.apache.catalina.core.StandardEngine</class>
-  <method>startInternal</method>
-  <thread>1151</thread>
-  <message>Starting Servlet engine: [Apache Tomcat/9.0.56]</message>
-</record>
-<record>
-  <date>2022-05-14T03:26:02.244582Z</date>
-  <millis>1652498762244</millis>
-  <nanos>582000</nanos>
-  <sequence>515</sequence>
-  <logger>org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]</logger>
-  <level>INFO</level>
-  <class>org.apache.catalina.core.ApplicationContext</class>
-  <method>log</method>
-  <thread>1151</thread>
-  <message>Initializing Spring embedded WebApplicationContext</message>
-</record>
 </log>

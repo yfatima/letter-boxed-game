@@ -125,7 +125,7 @@ export class GameComponent implements OnInit {
         console.log('testing intervel player 1');
         //console.log(this.player);
         //check if the player is taking too long or not
-        if (this.timeoutcounter != 10) {
+        if (this.timeoutcounter != 60) {
           console.log(this.timeoutcounter);
           this.gameService.getGameStatus(this.game.id).subscribe(data => {
             this.game = data;
@@ -149,7 +149,7 @@ export class GameComponent implements OnInit {
           this.timeoutcounter = 0;
         }
 
-      }, 10000);
+      }, 5000);
     //if this is true than this player is player 2 in the game
     } else if (username != null && action != "newgame") {
 
@@ -171,7 +171,7 @@ export class GameComponent implements OnInit {
           this.intervelcounter = setInterval(() => {
             console.log('testing intervel player 2');
             //console.log(this.player);
-            if (this.timeoutcounter != 10) {
+            if (this.timeoutcounter != 60) {
               //console.log(this.timeoutcounter);
               this.gameService.getGameStatus(this.game.id).subscribe(data => {
                 this.game = data;
@@ -194,7 +194,7 @@ export class GameComponent implements OnInit {
               }
               this.timeoutcounter = 0;
             }
-          }, 10000);
+          }, 5000);
 
         });
 

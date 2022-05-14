@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
-</log>
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE log SYSTEM "logger.dtd">
-<log>
 <record>
-  <date>2022-05-14T03:25:04.542683Z</date>
-  <millis>1652498704542</millis>
-  <nanos>683000</nanos>
-  <sequence>373</sequence>
+  <date>2022-05-14T13:15:07.722382Z</date>
+  <millis>1652534107722</millis>
+  <nanos>382000</nanos>
+  <sequence>190</sequence>
   <logger>letterboxed</logger>
   <level>FINE</level>
   <class>com.example.letterboxed.services.GameLogic</class>
-  <method>valid_move</method>
-  <thread>828</thread>
-  <message>word is valid</message>
+  <method>winnerFound</method>
+  <thread>496</thread>
+  <message>player yfatima won</message>
 </record>
 </log>

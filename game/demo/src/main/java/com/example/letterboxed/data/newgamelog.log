@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
+<record>
+  <date>2022-05-14T13:08:03.838465Z</date>
+  <millis>1652533683838</millis>
+  <nanos>465000</nanos>
+  <sequence>154</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameService</class>
+  <method>createNewGame</method>
+  <thread>398</thread>
+  <message>game created successfuly</message>
+</record>
 </log>
