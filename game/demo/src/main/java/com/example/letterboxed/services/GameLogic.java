@@ -1,10 +1,17 @@
 package com.example.letterboxed.services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.*;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -79,10 +86,38 @@ public class GameLogic {
             // check if word exists
             String query = "https://od-api.oxforddictionaries.com:443/api/v2/entries/en-gb/" + word.toLowerCase()
                     + "?fields=pronunciations&strictMatch=true";
-            System.out.println(query);
+            URL url;
+
+
+            try 
+            {
+                url = new URL(query);
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Accept","application/json");
+                urlConnection.setRequestProperty("app_id","5de54cbd");
+                urlConnection.setRequestProperty("app_key","a40855da9cbf40ad98ba228576229644");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) 
+                {
+                    stringBuilder.append(line + "\n");
+                }
+
+                System.out.println( stringBuilder.toString()); 
+        
+                } catch (MalformedURLException e1) {
+                    logger.log(Level.WARNING, e1.toString());
+                    e1.printStackTrace();
+                    return false;
+                } catch (IOException e) {
+                    logger.log(Level.WARNING, e.toString());
+                    return false;
+                }
             previousWords.add(word.toUpperCase());
             game.setWordsUsed(previousWords);
             try {
+
                 JSONObject root = objectMapper.readValue(file, JSONObject.class);
                 root.put(game.getId(), game);
                 FileWriter fileWriter = new FileWriter(file, true);
