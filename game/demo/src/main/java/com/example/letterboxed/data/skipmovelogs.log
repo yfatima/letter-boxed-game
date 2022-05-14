@@ -14,3 +14,35 @@
   <message>player yfatima skipped</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-14T03:06:38.376853Z</date>
+  <millis>1652497598376</millis>
+  <nanos>853000</nanos>
+  <sequence>283</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.MoveService</class>
+  <method>skipMove</method>
+  <thread>626</thread>
+  <message>player fmaryam skipped</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-14T03:25:16.394712Z</date>
+  <millis>1652498716394</millis>
+  <nanos>712000</nanos>
+  <sequence>408</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.MoveService</class>
+  <method>skipMove</method>
+  <thread>905</thread>
+  <message>player yfatima skipped</message>
+</record>
+</log>

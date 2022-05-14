@@ -44,7 +44,7 @@ public class GameLogic {
 
         try {
             FileHandler logfile = new FileHandler(
-                    "game/demo/src/main/java/com/example/letterboxed/data/validatemovelogs.log", 2000, 1, true);
+                    "game/demo/src/main/java/com/example/letterboxed/data/validatemovelogs.log", 4000, 1, true);
             Logger.getLogger("").addHandler(logfile);
             logger.setLevel(Level.ALL);
 
@@ -66,12 +66,14 @@ public class GameLogic {
                 e.printStackTrace();
                 System.out.println("Error in reading the game from game.json file");
                 logger.log(Level.WARNING, "game not found", gameId);
+                logfile.close();
                 return false;
             }
             char[] array = word.toUpperCase().toCharArray();
             for (char i : array) {
                 if (!letters.contains(i)) {
                     logger.log(Level.WARNING, "invalid word used by user", game.getGameStatus());
+                    logfile.close();
                     return false;
                 }
             }
@@ -80,6 +82,7 @@ public class GameLogic {
             List<String> previousWords = game.getWordsUsed();
             if (previousWords.contains(word.toUpperCase())) {
                 logger.log(Level.WARNING, "invalid word used by user", game.getGameStatus());
+                logfile.close();
                 return false;
             }
 
@@ -109,9 +112,11 @@ public class GameLogic {
                 } catch (MalformedURLException e1) {
                     logger.log(Level.WARNING, e1.toString());
                     e1.printStackTrace();
+                    logfile.close();
                     return false;
                 } catch (IOException e) {
                     logger.log(Level.WARNING, e.toString());
+                    logfile.close();
                     return false;
                 }
             previousWords.add(word.toUpperCase());
@@ -127,6 +132,7 @@ public class GameLogic {
             } catch (IOException e) {
                 logger.log(Level.WARNING, "invalid word used by user", game.getGameStatus());
                 System.out.println("Error in reading/writing the game from/in game.json file");
+                logfile.close();
                 return false;
             }
             logger.log(Level.FINE, "word is valid");

@@ -68,7 +68,6 @@ public class GameController {
     @RequestMapping(value = "/join", method = RequestMethod.POST)
     public Game joinGame(@RequestBody PlayerDTO playerdto) {
         Game game;
-        System.out.println(playerdto.gameId);
         if (checkGameId(playerdto.gameId)) {
             if (this.playerService.clearPlayerScore(playerdto.player.getUserName()) != -1) {
                 game = gameService.joinGame(playerdto.player, playerdto.gameId);
@@ -76,7 +75,6 @@ public class GameController {
             }
             
         }
-        System.out.println("RE no match\n");
         return new Game();
     }
 
@@ -102,7 +100,6 @@ public class GameController {
             Game result = gameService.getGame(id);
             return result;
         }
-        //System.out.println(result);
         return new Game();
     }
 
@@ -114,7 +111,6 @@ public class GameController {
      */
     @RequestMapping(value = "/updategamestatus", method = RequestMethod.POST)
     public boolean updateGameStatus(@RequestBody PlayerDTO playerdto) {
-        //System.out.println(playerdto);
         if (checkGameId(playerdto.gameId)) {
             return gameService.updateGameStatus(playerdto.player.getUserName(), playerdto.gameId);
         }

@@ -26,3 +26,19 @@
   <message>player fmaryam hasn't won yet</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-14T03:07:42.820899Z</date>
+  <millis>1652497662820</millis>
+  <nanos>899000</nanos>
+  <sequence>453</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.GameLogic</class>
+  <method>winnerFound</method>
+  <thread>1000</thread>
+  <message>player yfatima won</message>
+</record>
+</log>

@@ -9,8 +9,6 @@ import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.hateoas.mediatype.hal.Jackson2HalModule.TrueOnlyBooleanSerializer;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;

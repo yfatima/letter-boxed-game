@@ -25,10 +25,10 @@ public class Test {
 
         for (Player player2 : players) {
             if ("yfatima".equals(player2.getUserName())) {
-                System.out.println(player2.getUserName());
+                //System.out.println(player2.getUserName());
                 //player = player2;
                 String pp = new BCryptPasswordEncoder().encode(player2.getPassword());
-                System.out.println(pp);
+                //System.out.println(pp);
             }
         }
 
@@ -48,13 +48,13 @@ public class Test {
 
         try {
             List<Game> games = objectMapper.readValue(file, new TypeReference<List<Game>>() {});
-            System.out.println(games);
+            //System.out.println(games);
             for (Game game2 : games) {
                 if (game.getId().equals(game2.getId())) {
                     game.setLetters(game2.getLetters());
                 }
             }
-            System.out.println(game.getLetters());
+            //System.out.println(game.getLetters());
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class Test {
         ObjectMapper objectMapper2 = new ObjectMapper();
         try {
             objectMapper2.writeValue(file2, game);
-            System.out.println(game);
+            //System.out.println(game);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,1 +1,29 @@
-[{"id":"232011308","p1Id":"fmaryam","p2Id":"yfatima","gameStatus":"finish","letters":["B","A","Z","P","V","F","Y","I","L","U","J","G"],"wordsUsed":["LAPFU","BIJZY"],"winScore":2,"winner":"fmaryam"},{"id":"1331046081","p1Id":"yfatima","p2Id":"fmaryam","gameStatus":"finish","letters":["E","N","Y","Z","L","H","A","P","S","U","K","W"],"wordsUsed":["KELPY","NAEPZ"],"winScore":2,"winner":"yfatima"},{"id":"194154435","p1Id":"yfatima","p2Id":"fmaryam","gameStatus":"finish","letters":["Z","Y","E","T","A","X","D","G","Q","K","I","P"],"wordsUsed":["PAIYG","DEGAK","KAGEX"],"winScore":2,"winner":"yfatima"},{"id":"427155363","p1Id":"yfatima","p2Id":"fmaryam","gameStatus":"finish","letters":["F","Y","A","I","T","P","L","U","V","R","J","G"],"wordsUsed":["PAIGY","GALIR","FURYV"],"winScore":2,"winner":"fmaryam"},{"id":"580294091","p1Id":"fmaryam","p2Id":"yfatima","gameStatus":"finish","letters":["M","X","A","L","E","O","Z","P","Y","D","J","G"],"wordsUsed":["GAEPX","PAOGZ","MOGAD"],"winScore":2,"winner":"yfatima"},{"id":"285086442","p1Id":"yfatima","p2Id":"fmaryam","gameStatus":"finish","letters":["N","S","R","I","Y","P","F","J","U","E","A","M"],"wordsUsed":["PASJY","EFUSM","YAJIN"],"winScore":2,"winner":"fmaryam"}]
+[
+    {
+        "id": "2039306520",
+        "p1Id": "fmaryam",
+        "p2Id": "yfatima",
+        "gameStatus": "finish",
+        "letters": [
+            "K",
+            "F",
+            "A",
+            "Y",
+            "G",
+            "S",
+            "O",
+            "I",
+            "R",
+            "M",
+            "N",
+            "J"
+        ],
+        "wordsUsed": [
+            "FINNY",
+            "RAINY",
+            "RINGY"
+        ],
+        "winScore": 2,
+        "winner": "yfatima"
+    }
+]

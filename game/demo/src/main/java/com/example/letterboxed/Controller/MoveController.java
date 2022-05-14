@@ -1,7 +1,6 @@
 package com.example.letterboxed.Controller;
 
 import com.example.letterboxed.DTO.MoveDTO;
-import com.example.letterboxed.DTO.PlayerDTO;
 import com.example.letterboxed.classes.Game;
 import com.example.letterboxed.classes.Player;
 import com.example.letterboxed.services.GameService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.management.InvalidAttributeValueException;
-import javax.servlet.http.HttpSession;
 
 /**
  * This MoveController class processes get and post requests made to move
@@ -32,11 +30,6 @@ public class MoveController {
 
     @Autowired
     private GameService gameService;
-
-    @Autowired
-    private HttpSession httpSession;
-
-    // Logger logger = LoggerFactory.getLogger(MoveController.class);
 
     /**
      * Method to process default get request to game default path
@@ -85,7 +78,6 @@ public class MoveController {
      */
     @RequestMapping(value = "/skipmove", method = RequestMethod.POST)
     public Game createSkipMove(@RequestBody String gameId) {
-        //System.out.println(gameId + " in controller skipmove\n");
         if (gameId.matches("[0-9]+")) {
             return this.moveService.skipMove(gameId);
         }

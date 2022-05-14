@@ -176,8 +176,6 @@ public class MoveService {
             Game game = null;
             String skippedPlayer;
 
-            //System.out.println(gameId + "in service skipmove");
-
             try {
                 File file = new File("game/demo/src/main/java/com/example/letterboxed/data/game" + gameId + ".json");
                 ObjectMapper objectMapper = new ObjectMapper();

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-14T03:03:31.957492Z</date>
+  <millis>1652497411957</millis>
+  <nanos>492000</nanos>
+  <sequence>4</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.PlayerService</class>
+  <method>authPlayer</method>
+  <thread>34</thread>
+  <message>user was successfully authenticated</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-05-14T03:04:17.116232Z</date>
+  <millis>1652497457116</millis>
+  <nanos>232000</nanos>
+  <sequence>11</sequence>
+  <logger>letterboxed</logger>
+  <level>FINE</level>
+  <class>com.example.letterboxed.services.PlayerService</class>
+  <method>authPlayer</method>
+  <thread>46</thread>
+  <message>user was successfully authenticated</message>
+</record>
+</log>

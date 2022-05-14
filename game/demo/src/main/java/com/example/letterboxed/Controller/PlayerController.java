@@ -65,13 +65,13 @@ public class PlayerController {
      */
     @RequestMapping(value = "/getplayer/{username}/{hashvalue}", method = RequestMethod.GET)
     public Player getPlayerByUsername(@PathVariable String username, @PathVariable String hashvalue) {
-        // System.out.println(hashvalue);
         try {
             if (!checkIntegrity(username, hashvalue)) {
                 return new Player();
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            return new Player();
         }
         return playerService.getPlayerByUsername(username);
     }
@@ -90,7 +90,8 @@ public class PlayerController {
                 return -1;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            return -1;
         }
         return playerService.getPlayerScore(username);
     }
